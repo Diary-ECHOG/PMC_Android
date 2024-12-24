@@ -5,12 +5,10 @@ import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import com.app.pmc.feat.calendar.navigation.ROUTE_CALENDAR
 import com.app.pmc.feat.calendar.navigation.addCalendarGraph
 import com.app.pmc.feat.home.ROUTE_HOME
 import com.app.pmc.feat.home.addHomeGraph
-import com.app.pmc.feat.join.navigation.ROUTE_JOIN
-import com.app.pmc.feat.join.navigation.addJoinGraph
+import com.app.pmc.feat.auth.navigation.addJoinGraph
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable

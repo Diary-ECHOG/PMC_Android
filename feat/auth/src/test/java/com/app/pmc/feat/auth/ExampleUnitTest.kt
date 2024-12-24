@@ -1,4 +1,4 @@
-package com.app.pmc.feat.join
+package com.app.pmc.feat.auth
 
 import org.junit.Test
 

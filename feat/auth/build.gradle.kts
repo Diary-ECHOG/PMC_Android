@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.app.pmc.feat.join"
+    namespace = "com.app.pmc.feat.auth"
     compileSdk = 35
 
     composeOptions {

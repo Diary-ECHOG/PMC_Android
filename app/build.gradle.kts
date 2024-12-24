@@ -80,6 +80,6 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
 
     implementation(project(":feat:calendar"))
-    implementation(project(":feat:join"))
+    implementation(project(":feat:auth"))
     implementation(project(":core:ui"))
 }
