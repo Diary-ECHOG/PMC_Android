@@ -1,0 +1,12 @@
+package com.app.pmc.feat.vote
+
+import androidx.navigation.NavController
+import androidx.navigation.NavGraphBuilder
+import androidx.navigation.compose.composable
+
+const val ROUTE_VOTE = "vote"
+fun NavGraphBuilder.addVoteGraph(navController: NavController) {
+    composable(ROUTE_VOTE) {
+        VoteListScreen()
+    }
+}

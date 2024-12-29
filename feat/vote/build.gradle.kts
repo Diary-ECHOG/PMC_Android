@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.app.pmc.feat.splash"
+    namespace = "com.app.pmc.feat.vote"
     compileSdk = 35
 
     defaultConfig {
