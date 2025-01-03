@@ -15,11 +15,9 @@ fun VoteListScreen() {
             TopBarWithSearchIcon(
                 topBarTitle = "투표",
                 placeholder = "Search for vote",
-                trailingIcon = {},
                 onSearch = {},
                 recentSearches = listOf("Vote 1", "Vote 2", "Vote 3")
             )
-
         },
         content = { innerPadding ->
             Text(modifier = Modifier.padding(innerPadding), text = "Vote List Screen")

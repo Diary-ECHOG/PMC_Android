@@ -7,13 +7,9 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -26,70 +22,59 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.app.pmc.core.ui.R
-import com.app.pmc.core.ui.textfield.EchogBasicTextField
+import com.app.pmc.core.ui.textfield.EchogSearchTextField
 import com.app.pmc.ui.theme.Gray_400
 import com.app.pmc.ui.theme.Gray_600
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TopBarWithSearchIcon(
     topBarTitle: String = "",
     placeholder: String = stringResource(R.string.search_place_holder),
-    trailingIcon: @Composable (() -> Unit)? = null,
     query: String = "",
     recentSearches: List<String> = emptyList(),
     onSearch: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    var active = remember { mutableStateOf(true) }
     var searchBarVisible = remember { mutableStateOf(false) }
     var innerQuery = remember { mutableStateOf(query) }
 
     Box(modifier = modifier) {
         if (searchBarVisible.value) {
             //최근 검색어
-            LazyColumn {
+            LazyColumn(modifier = modifier.padding(top = 16.dp, start = 20.dp, end = 20.dp)) {
                 item {
                     Row(
                         modifier = modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween,
                     ) {
-                        EchogBasicTextField(
-                            modifier = Modifier.weight(0.9f),
-                            trailingIcon = {
-                                Image(
-                                    modifier = Modifier.clickable {
-                                        innerQuery.value = ""
-                                    },
-                                    imageVector = ImageVector.vectorResource(id = R.drawable.ic_x_circle_solid),
-                                    contentDescription = ""
-                                )
-                            },
-                            placeholder = stringResource(R.string.search_place_holder),
+                        EchogSearchTextField(
+                            modifier = Modifier.weight(0.85f),
                             value = innerQuery.value,
                             onValueChange = { innerQuery.value = it },
+                            placeholder = placeholder,
                         )
                         Text(
                             text = stringResource(R.string.cancel),
+                            textAlign = TextAlign.End,
                             style = MaterialTheme.typography.bodyMedium,
-                            color = Color.White,
                             modifier = Modifier
                                 .padding(start = 16.dp)
                                 .align(Alignment.CenterVertically)
                                 .clickable {
                                     searchBarVisible.value = false
                                 }
-                                .weight(0.2f)
+                                .weight(0.15f)
                         )
                     }
                 }
                 item {
                     Row(
-                        modifier = modifier.fillMaxWidth(),
+                        modifier = modifier.fillMaxWidth().padding(top = 20.dp),
                         horizontalArrangement = Arrangement.SpaceBetween,
                     ) {
                         Text(
@@ -122,17 +107,12 @@ fun TopBarWithSearchIcon(
                     fontSize = 22.sp,
                     fontWeight = FontWeight.W600,
                     style = MaterialTheme.typography.bodyMedium,
-                    color = Color.White
                 )
-                IconButton(
-                    onClick = { searchBarVisible.value = true },
-                ) {
-                    Icon(
-                        imageVector = Icons.Filled.Search,
-                        contentDescription = "Search",
-                        tint = Color.White
-                    )
-                }
+                Image(
+                   modifier = Modifier.clickable { searchBarVisible.value = true },
+                    imageVector = Icons.Filled.Search,
+                    contentDescription = ""
+                )
             }
         }
     }
@@ -160,7 +140,7 @@ private fun RecentItem(modifier: Modifier = Modifier, onSearch: () -> Unit, rece
             color = Color.White
         )
         Image(
-            imageVector = ImageVector.vectorResource(id = R.drawable.ic_x_circle_solid),
+            imageVector = ImageVector.vectorResource(id = R.drawable.ic_x_line),
             contentDescription = ""
         )
     }
