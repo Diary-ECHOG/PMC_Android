@@ -4,6 +4,7 @@ import androidx.compose.ui.graphics.Color
 
 val White = Color(0xFFFFFFFF)
 val Black = Color(0xFF000000)
+val Gray_100 = Color(0xFFE5E5E5)
 val Gray_400 = Color(0xFF999999)
 val Gray_600 = Color(0xFF666666)
 
@@ -39,4 +40,7 @@ val HomeGradientTopBackground = Color(0xFFD2ECBD)
 
 val Slate_25 = Color(0xFFF8F9FB)
 val Slate_400 = Color(0xFF9FA3AB)
+val Slate_800 = Color(0xFF1D2027)
+
+val Red_500 = Color(0xFFEF5350)
 
