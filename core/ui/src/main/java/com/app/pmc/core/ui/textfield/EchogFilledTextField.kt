@@ -1,5 +1,6 @@
 package com.app.pmc.core.ui.textfield
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -17,16 +18,12 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldColors
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
@@ -34,7 +31,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun EchogBasicTextField(
+fun EchogFilledTextField(
     modifier: Modifier = Modifier,
     value: String,
     onValueChange: (String) -> Unit,
@@ -48,7 +45,6 @@ fun EchogBasicTextField(
     leadingIcon: Painter? = null,
     trailingIcon: @Composable (() -> Unit)? = null,
     visualTransformation: VisualTransformation = VisualTransformation.None,
-    decorationBox: @Composable (() -> Unit)? = null,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() }
@@ -65,7 +61,7 @@ fun EchogBasicTextField(
         keyboardActions = keyboardActions,
         interactionSource = interactionSource,
         decorationBox = @Composable { innerTextField ->
-            TextFieldDecorationBox(
+            FilledTextFieldDecorationBox(
                 modifier = modifier,
                 value = value,
                 innerTextField = innerTextField,
@@ -84,7 +80,7 @@ fun EchogBasicTextField(
 }
 
 @Composable
-fun TextFieldDecorationBox(
+fun FilledTextFieldDecorationBox(
     modifier: Modifier = Modifier,
     value: String,
     innerTextField: @Composable () -> Unit,
@@ -94,33 +90,25 @@ fun TextFieldDecorationBox(
     leadingIcon: Painter? = null,
     trailingIcon: @Composable (() -> Unit)? = null,
     supportingText: String? = null,
-    supportingTextColor: Color? = null,
     supportingTextAlign: TextAlign? = null,
     enabled: Boolean,
     isError: Boolean,
 ) {
     val isFocused = interactionSource.collectIsFocusedAsState().value
 
-    TextFieldTransitionScope.Transition(
+    FilledTextFieldTransitionScope.Transition(
         isFocused = isFocused,
         isError = isError,
-        focusedBorderWidth = EchogTextFieldDefaults.Dimensions.focusedBorderWidth,
-        unfocusedBorderWidth = EchogTextFieldDefaults.Dimensions.unfocusedBorderWidth,
-        errorBorderWidth = EchogTextFieldDefaults.Dimensions.errorBorderWidth,
-        focusedBorderColor = EchogTextFieldDefaults.Colors.focusedBorderColor,
-        unfocusedBorderColor = EchogTextFieldDefaults.Colors.unfocusedBorderColor,
-        errorBorderColor = EchogTextFieldDefaults.Colors.errorBorderColor,
-        supportingTextColor = supportingTextColor
-            ?: EchogTextFieldDefaults.Colors.supportingTextColor,
-        errorTextColor = EchogTextFieldDefaults.Colors.errorSupportingTextColor
-    ) { border, _ ->
+        supportingTextColor = FilledTextFieldDefaults.Colors.supportingTextColor,
+        errorTextColor = FilledTextFieldDefaults.Colors.errorSupportingTextColor
+    ) { _ ->
         Column(modifier = modifier) {
             Row {
                 if (label != null) {
                     Text(
                         text = label,
                         modifier = Modifier.padding(start = 4.dp, bottom = 6.dp),
-                        style = EchogTextFieldDefaults.TextStyles.textStyle
+                        style = FilledTextFieldDefaults.TextStyles.textStyle
                     )
                 }
             }
@@ -128,13 +116,12 @@ fun TextFieldDecorationBox(
             Row(
                 modifier = Modifier
                     .defaultMinSize(minHeight = 40.dp)
-                    .border(border = border, shape = RoundedCornerShape(8.dp))
                     .clip(shape = RoundedCornerShape(8.dp))
                     .background(
                         color = if (enabled) {
-                            EchogTextFieldDefaults.Colors.backgroundColor
+                            FilledTextFieldDefaults.Colors.backgroundColor
                         } else {
-                            EchogTextFieldDefaults.Colors.disabledBackgroundColor
+                            FilledTextFieldDefaults.Colors.disabledBackgroundColor
                         }
                     )
                     .padding(10.dp),
@@ -155,12 +142,12 @@ fun TextFieldDecorationBox(
                     if (placeholder != null && value.isEmpty()) {
                         Text(
                             text = placeholder,
-                            style = EchogTextFieldDefaults.TextStyles.textStyle.copy(
+                            style = FilledTextFieldDefaults.TextStyles.textStyle.copy(
                                 color =
                                 if (enabled) {
-                                    EchogTextFieldDefaults.Colors.placeholderTextColor
+                                    FilledTextFieldDefaults.Colors.placeholderTextColor
                                 } else {
-                                    EchogTextFieldDefaults.Colors.disabledPlaceholderTextColor
+                                    FilledTextFieldDefaults.Colors.disabledPlaceholderTextColor
                                 }
                             )
                         )
@@ -179,8 +166,8 @@ fun TextFieldDecorationBox(
                         .padding(10.dp),
                     textAlign = supportingTextAlign ?: TextAlign.Start,
                     text = supportingText,
-                    style = EchogTextFieldDefaults.TextStyles.textStyle.copy(
-                        color = EchogTextFieldDefaults.Colors.supportingTextColor
+                    style = FilledTextFieldDefaults.TextStyles.textStyle.copy(
+                        color = FilledTextFieldDefaults.Colors.supportingTextColor
                     )
                 )
             }
@@ -190,7 +177,7 @@ fun TextFieldDecorationBox(
 
 @Composable
 @Preview
-fun EchogBasicTextFieldPreview() {
+fun EchogFilledTextFieldPreview() {
     EchogBasicTextField(
         label = "Label",
         value = "Hello",

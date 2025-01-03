@@ -45,7 +45,7 @@ fun EchogPasswordTextField(
         onValueChange = onValueChange,
         modifier = modifier,
         enabled = enabled,
-        textStyle = EchogTextFieldDefaults.textStyle,
+        textStyle = EchogTextFieldDefaults.TextStyles.textStyle,
         maxLines = maxLines,
         visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),

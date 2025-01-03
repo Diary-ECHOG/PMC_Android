@@ -42,7 +42,7 @@ internal object TextFieldTransitionScope {
         )
 
         val borderWidth by transition.animateDp(
-            transitionSpec = { tween(durationMillis = EchogTextFieldDefaults.AnimationDuration) },
+            transitionSpec = { tween(durationMillis = EchogTextFieldDefaults.Dimensions.AnimationDuration) },
             label = "EchogTextFieldBorderWidth"
         ) { state ->
             when (state) {
@@ -53,7 +53,7 @@ internal object TextFieldTransitionScope {
         }
 
         val borderColor by transition.animateColor(
-            transitionSpec = { tween(durationMillis = EchogTextFieldDefaults.AnimationDuration) },
+            transitionSpec = { tween(durationMillis = EchogTextFieldDefaults.Dimensions.AnimationDuration) },
             label = "EchogTextFieldBorderColor"
         ) { state ->
             when (state) {
@@ -64,7 +64,7 @@ internal object TextFieldTransitionScope {
         }
 
         val textColor by transition.animateColor(
-            transitionSpec = { tween(durationMillis = EchogTextFieldDefaults.AnimationDuration) },
+            transitionSpec = { tween(durationMillis = EchogTextFieldDefaults.Dimensions.AnimationDuration) },
             label = "EchogTextFieldBorderColor"
         ) { state ->
             when (state) {
