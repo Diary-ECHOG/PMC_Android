@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Divider
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -64,7 +65,7 @@ fun MyPageScreen(
 private fun MenuTitle(
     modifier: Modifier = Modifier,
     onClick: () -> Unit = {},
-    color: Color = Slate_800,
+    color: Color = MaterialTheme.colorScheme.onSurface,
     title : String
 ) {
     Text(
