@@ -51,11 +51,11 @@ fun MyVoteListScreen(
             TabRow(
                 selectedTabIndex = selectedTabIndex,
                 modifier = Modifier.padding(top = 8.dp),
-                contentColor = Slate_800,
+                contentColor = MaterialTheme.colorScheme.onSurface,
                 indicator = { tabPositions ->
                     TabRowDefaults.Indicator(
                         modifier = Modifier.tabIndicatorOffset(tabPositions[selectedTabIndex]),
-                        color = Slate_800,
+                        color = MaterialTheme.colorScheme.onSurface,
                         height = 1.dp
                     )
                 }
@@ -107,7 +107,7 @@ private fun VoteItem(
                 .fillMaxWidth()
                 .padding(16.dp)
         ) {
-            Text(text = title, color = Slate_800, fontWeight = FontWeight.W600, fontSize = 15.sp)
+            Text(text = title, color = MaterialTheme.colorScheme.onSurface, fontWeight = FontWeight.W600, fontSize = 15.sp)
             Text(
                 text = description,
                 modifier = modifier.padding(top = 4.dp, bottom = 12.dp),
