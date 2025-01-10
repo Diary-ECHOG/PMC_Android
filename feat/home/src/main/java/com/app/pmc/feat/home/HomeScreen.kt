@@ -19,12 +19,14 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -57,6 +59,7 @@ private fun HomeScreen(
     modifier: Modifier = Modifier,
     state: HomeUiState
 ) {
+    val gradientList = listOf(Color.Transparent, MaterialTheme.colorScheme.background.copy(alpha = 0.95f))
     GradientSurface(
         modifier = modifier
             .fillMaxSize()
@@ -111,7 +114,7 @@ private fun HomeScreen(
                     .align(Alignment.BottomStart)
             ) {
                 val gradientBrush = Brush.verticalGradient(
-                    colors = listOf(Color.Transparent, White.copy(alpha = 0.95f)),
+                    colors = gradientList,
                     startY = 0f,
                     endY = size.height
                 )
@@ -150,7 +153,8 @@ private fun Top(
             modifier = modifier.weight(1f),
             alignment = Alignment.CenterStart,
             painter = painterResource(id = drawable.ic_app_name),
-            contentDescription = "Logo"
+            contentDescription = "Logo",
+            colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.surfaceTint)
         )
         VoteViewButton()
         IconButton(

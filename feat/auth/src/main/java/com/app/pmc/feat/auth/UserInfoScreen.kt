@@ -80,7 +80,7 @@ internal fun UserInfoScreen(
         }
         item {
             EchogButton(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth().padding(bottom = 20.dp),
                 label = stringResource(R.string.next),
                 onClick = { }
             )
