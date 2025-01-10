@@ -15,9 +15,12 @@
             <option value="$PROJECT_DIR$/core/model" />
             <option value="$PROJECT_DIR$/core/ui" />
             <option value="$PROJECT_DIR$/feat" />
+            <option value="$PROJECT_DIR$/feat/auth" />
             <option value="$PROJECT_DIR$/feat/calendar" />
             <option value="$PROJECT_DIR$/feat/home" />
-            <option value="$PROJECT_DIR$/feat/join" />
+            <option value="$PROJECT_DIR$/feat/mypage" />
+            <option value="$PROJECT_DIR$/feat/splash" />
+            <option value="$PROJECT_DIR$/feat/vote" />
           </set>
         </option>
         <option name="resolveExternalAnnotations" value="false" />

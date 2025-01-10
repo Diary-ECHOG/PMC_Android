@@ -61,3 +61,8 @@ val ButtonLabel500 = TextStyle(
     fontSize = 14.sp,
     lineHeight = 24.sp
 )
+
+val TextSmall = TextStyle(
+    fontSize = 14.sp,
+    lineHeight = 16.sp
+)
