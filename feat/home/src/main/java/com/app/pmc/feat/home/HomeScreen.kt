@@ -59,6 +59,7 @@ private fun HomeScreen(
     modifier: Modifier = Modifier,
     state: HomeUiState
 ) {
+    val gradientList = listOf(Color.Transparent, MaterialTheme.colorScheme.background.copy(alpha = 0.95f))
     GradientSurface(
         modifier = modifier
             .fillMaxSize()
@@ -113,7 +114,7 @@ private fun HomeScreen(
                     .align(Alignment.BottomStart)
             ) {
                 val gradientBrush = Brush.verticalGradient(
-                    colors = listOf(Color.Transparent, White.copy(alpha = 0.95f)),
+                    colors = gradientList,
                     startY = 0f,
                     endY = size.height
                 )
