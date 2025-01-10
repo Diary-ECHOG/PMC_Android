@@ -33,15 +33,18 @@ import com.app.pmc.ui.theme.Slate_400
 import com.app.pmc.ui.theme.Slate_600
 import com.app.pmc.ui.theme.Slate_800
 import com.app.pmc.ui.theme.TextSmall
+
 @Composable
 fun MyVoteListScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    popToBackStack: () -> Unit = {}
 ) {
     var selectedTabIndex by remember { mutableIntStateOf(0) }
     LazyColumn {
         item {
             TopBarWithBackButton(
-                topBarTitle = stringResource(id = string.my_vote_list)
+                topBarTitle = stringResource(id = string.my_vote_list),
+                popToBackStack = popToBackStack
             )
         }
         item {
@@ -57,14 +60,18 @@ fun MyVoteListScreen(
                     )
                 }
             ) {
-                Column(modifier = Modifier.padding(20.dp).clickable {
-                    selectedTabIndex = 0
-                }, horizontalAlignment = Alignment.CenterHorizontally) {
-                     Text(text = stringResource(id = string.proceeding_vote))
+                Column(modifier = Modifier
+                    .padding(20.dp)
+                    .clickable {
+                        selectedTabIndex = 0
+                    }, horizontalAlignment = Alignment.CenterHorizontally) {
+                    Text(text = stringResource(id = string.proceeding_vote))
                 }
-                Column(modifier = Modifier.padding(20.dp).clickable {
-                    selectedTabIndex = 1
-                }, horizontalAlignment = Alignment.CenterHorizontally) {
+                Column(modifier = Modifier
+                    .padding(20.dp)
+                    .clickable {
+                        selectedTabIndex = 1
+                    }, horizontalAlignment = Alignment.CenterHorizontally) {
                     Text(text = stringResource(id = string.completed_vote))
                 }
             }
@@ -101,13 +108,24 @@ private fun VoteItem(
                 .padding(16.dp)
         ) {
             Text(text = title, color = Slate_800, fontWeight = FontWeight.W600, fontSize = 15.sp)
-            Text(text = description, modifier = modifier.padding(top = 4.dp, bottom = 12.dp), color = Slate_600, style = MaterialTheme.typography.bodyMedium, fontSize = TextSmall.fontSize)
+            Text(
+                text = description,
+                modifier = modifier.padding(top = 4.dp, bottom = 12.dp),
+                color = Slate_600,
+                style = MaterialTheme.typography.bodyMedium,
+                fontSize = TextSmall.fontSize
+            )
             Row(
                 modifier = modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
             ) {
                 Text(text = date, color = Slate_400, fontSize = 13.sp, fontWeight = FontWeight.W500)
-                Text(text = voteCount.toString(), color = Slate_400,fontSize = 13.sp, fontWeight = FontWeight.W500)
+                Text(
+                    text = voteCount.toString(),
+                    color = Slate_400,
+                    fontSize = 13.sp,
+                    fontWeight = FontWeight.W500
+                )
             }
         }
         Divider(

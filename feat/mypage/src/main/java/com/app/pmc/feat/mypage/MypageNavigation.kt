@@ -33,7 +33,11 @@ const val ROUTE_WITHDRAW = "withdraw"
         composable(
             route = ROUTE_MY_VOTE
         ) {
-            MyVoteListScreen()
+            MyVoteListScreen(
+                popToBackStack = {
+                    navController.popBackStack()
+                }
+            )
         }
         composable(
             route = ROUTE_MY_REPORT

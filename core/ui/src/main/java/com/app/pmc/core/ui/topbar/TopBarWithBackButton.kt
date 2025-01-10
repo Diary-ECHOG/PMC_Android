@@ -1,6 +1,7 @@
 package com.app.pmc.core.ui.topbar
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -20,6 +21,7 @@ import com.app.pmc.core.ui.R
 @Composable
 fun TopBarWithBackButton(
     topBarTitle: String = "",
+    popToBackStack: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -27,6 +29,9 @@ fun TopBarWithBackButton(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Image(
+            modifier = Modifier.clickable {
+                popToBackStack()
+            },
             imageVector = Icons.Filled.ArrowBack,
             contentDescription = ""
         )
