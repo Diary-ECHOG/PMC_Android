@@ -1,6 +1,7 @@
 package com.app.pmc.feat.mypage
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -27,7 +28,14 @@ import com.app.pmc.ui.theme.Red_500
 import com.app.pmc.ui.theme.Slate_800
 
 @Composable
-fun MyPageScreen(modifier: Modifier = Modifier) {
+fun MyPageScreen(
+    modifier: Modifier = Modifier,
+    navigateToMyVoteList : () -> Unit = {},
+    navigateToMyReportList : () -> Unit = {},
+    navigateToLogout : () -> Unit = {},
+    navigateToWithdraw : () -> Unit = {},
+    popBackStack : () -> Unit = {}
+) {
     Column(modifier = modifier.fillMaxSize(), verticalArrangement = Arrangement.spacedBy(20.dp)) {
         Row(
             modifier = Modifier.fillMaxWidth().padding(start = 20.dp, end = 20.dp, top = 80.dp),
@@ -36,27 +44,36 @@ fun MyPageScreen(modifier: Modifier = Modifier) {
         ) {
             Text(text = stringResource(id = string.my_page_title), fontWeight = FontWeight.W600, fontSize = 24.sp)
             Image(
-                modifier = Modifier.size(24.dp),
+                modifier = Modifier.size(24.dp).clickable {
+                    popBackStack()
+                },
                 painter = painterResource(id = drawable.ic_x_line),
                 contentDescription = null,
             )
         }
         Divider(color = Gray_100)
-        MenuTitle(title = stringResource(id = string.my_vote_list))
-        MenuTitle(title = stringResource(id = string.my_report_list))
+        MenuTitle(title = stringResource(id = string.my_vote_list), onClick = navigateToMyVoteList)
+        MenuTitle(title = stringResource(id = string.my_report_list), onClick = navigateToMyReportList)
         Divider(color = Gray_100)
-        MenuTitle(title = stringResource(id = string.logout))
-        MenuTitle(title = stringResource(id = string.withdraw), color = Red_500 )
+        MenuTitle(title = stringResource(id = string.logout), onClick = navigateToLogout)
+        MenuTitle(title = stringResource(id = string.withdraw), color = Red_500, onClick = navigateToWithdraw)
     }
 }
 
 @Composable
 private fun MenuTitle(
     modifier: Modifier = Modifier,
+    onClick: () -> Unit = {},
     color: Color = Slate_800,
     title : String
 ) {
-    Text(text = title, fontWeight = FontWeight.W500, color = color, fontSize = 15.sp, modifier = modifier.padding(start = 20.dp))
+    Text(
+        text = title,
+        fontWeight = FontWeight.W500,
+        color = color, fontSize = 15.sp,
+        modifier = modifier.padding(start = 20.dp)
+            .clickable { onClick() }
+    )
 }
 
 @Composable

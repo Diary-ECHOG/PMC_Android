@@ -15,3 +15,7 @@
 local.properties
 /.idea
 /.idea
+/.idea
+/feat/vote/build
+feat/vote/consumer-rules 2.pro
+/.idea

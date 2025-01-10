@@ -5,8 +5,46 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 
 const val ROUTE_MY_PAGE = "mypage"
+const val ROUTE_MY_VOTE = "myVote"
+const val ROUTE_MY_REPORT = "myReport"
+const val ROUTE_LOGOUT = "logout"
+const val ROUTE_WITHDRAW = "withdraw"
+
     fun NavGraphBuilder.addMyPageGraph(navController: NavController) {
         composable(ROUTE_MY_PAGE) {
-            MyPageScreen()
+            MyPageScreen(
+                navigateToMyVoteList = {
+                    navController.navigate(ROUTE_MY_VOTE)
+                },
+                navigateToMyReportList = {
+                    navController.navigate(ROUTE_MY_REPORT)
+                },
+                navigateToLogout = {
+                    navController.navigate(ROUTE_LOGOUT)
+                },
+                navigateToWithdraw = {
+                    navController.navigate(ROUTE_WITHDRAW)
+                },
+                popBackStack = {
+                    navController.popBackStack()
+                }
+            )
+        }
+        composable(
+            route = ROUTE_MY_VOTE
+        ) {
+            MyVoteListScreen()
+        }
+        composable(
+            route = ROUTE_MY_REPORT
+        ) {
+        }
+        composable(
+            route = ROUTE_LOGOUT
+        ) {
+        }
+        composable(
+            route = ROUTE_WITHDRAW
+        ) {
         }
     }

@@ -12,6 +12,4 @@ class HomeViewModel @Inject constructor(): ViewModel(), ContainerHost<HomeUiStat
     override val container: Container<HomeUiState, Unit> = container(HomeUiState())
 
     init {}
-
-
 }
