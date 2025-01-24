@@ -5,17 +5,14 @@ import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import com.app.pmc.feat.auth.navigation.ROUTE_JOIN
 import com.app.pmc.feat.auth.navigation.addJoinGraph
-import com.app.pmc.feat.calendar.navigation.ROUTE_CALENDAR
 import com.app.pmc.feat.calendar.navigation.addCalendarGraph
 import com.app.pmc.feat.home.ROUTE_HOME
 import com.app.pmc.feat.home.addHomeGraph
-import com.app.pmc.feat.mypage.ROUTE_MY_PAGE
 import com.app.pmc.feat.mypage.addMyPageGraph
 import com.app.pmc.feat.vote.addVoteGraph
+import com.app.pmc.feat.vote.navigateVote
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun PMCNavHost(
     navController: NavHostController
@@ -23,7 +20,9 @@ fun PMCNavHost(
     NavHost(navController = navController, startDestination = ROUTE_HOME) {
         addCalendarGraph(navController = navController)
         addJoinGraph(navController = navController)
-        addHomeGraph(navController = navController)
+        addHomeGraph(navController = navController, navigateToVoteList = {
+            navController.navigateVote()
+        })
         addVoteGraph(navController = navController)
         addMyPageGraph(navController = navController)
     }
