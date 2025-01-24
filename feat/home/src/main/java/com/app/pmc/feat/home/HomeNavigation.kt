@@ -5,8 +5,11 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 
 const val ROUTE_HOME = "home"
-fun NavGraphBuilder.addHomeGraph(navController: NavController) {
+
+fun NavGraphBuilder.addHomeGraph(navController: NavController, navigateToVoteList: () -> Unit) {
     composable(ROUTE_HOME) {
-        HomeScreen()
+        HomeScreen(
+            navigateToVoteList = navigateToVoteList
+        )
     }
 }

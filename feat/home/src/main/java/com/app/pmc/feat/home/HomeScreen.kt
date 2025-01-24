@@ -3,6 +3,7 @@ package com.app.pmc.feat.home
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -45,21 +46,26 @@ import org.orbitmvi.orbit.compose.collectAsState
 
 @Composable
 fun HomeScreen(
-    viewModel: HomeViewModel = hiltViewModel()
+    viewModel: HomeViewModel = hiltViewModel(),
+    navigateToVoteList: () -> Unit = {},
 ) {
     val state = viewModel.collectAsState()
 
     HomeScreen(
-        state = state.value
+        state = state.value,
+        navigateToVoteList = navigateToVoteList
     )
 }
 
 @Composable
 private fun HomeScreen(
     modifier: Modifier = Modifier,
-    state: HomeUiState
+    state: HomeUiState,
+    navigateToVoteList: () -> Unit
 ) {
-    val gradientList = listOf(Color.Transparent, MaterialTheme.colorScheme.background.copy(alpha = 0.95f))
+    val gradientList =
+        listOf(Color.Transparent, MaterialTheme.colorScheme.background.copy(alpha = 0.95f))
+
     GradientSurface(
         modifier = modifier
             .fillMaxSize()
@@ -71,7 +77,10 @@ private fun HomeScreen(
                     .padding(horizontal = 20.dp)
             ) {
                 item {
-                    Top()
+                    Top(
+                        navigateToVoteList = navigateToVoteList
+
+                    )
                 }
                 item {
                     Text(
@@ -121,7 +130,7 @@ private fun HomeScreen(
                 drawRect(brush = gradientBrush)
             }
             FloatingActionButton(
-                onClick = { /*TODO*/ },
+                onClick = {},
                 shape = RoundedCornerShape(50),
                 containerColor = White,
                 modifier = modifier
@@ -139,7 +148,8 @@ private fun HomeScreen(
 
 @Composable
 private fun Top(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    navigateToVoteList: () -> Unit = {}
 ) {
     Row(
         modifier = modifier
@@ -147,8 +157,7 @@ private fun Top(
             .padding(top = 62.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
-    )
-    {
+    ) {
         Image(
             modifier = modifier.weight(1f),
             alignment = Alignment.CenterStart,
@@ -156,7 +165,9 @@ private fun Top(
             contentDescription = "Logo",
             colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.surfaceTint)
         )
-        VoteViewButton()
+        VoteViewButton(
+            onClick = navigateToVoteList
+        )
         IconButton(
             onClick = {},
         ) {
@@ -169,8 +180,13 @@ private fun Top(
 }
 
 @Composable
-private fun VoteViewButton() {
+private fun VoteViewButton(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit = {}
+) {
     Card(
+        modifier = modifier
+            .clickable { onClick() },
         colors = CardDefaults.cardColors(
             containerColor = White
         ),
@@ -199,6 +215,7 @@ private fun VoteViewButton() {
 @Preview(showBackground = true)
 private fun HomeScreenPreview() {
     HomeScreen(
+        navigateToVoteList = {},
         state = HomeUiState(
             month = "10월",
             diaryList = listOf(
