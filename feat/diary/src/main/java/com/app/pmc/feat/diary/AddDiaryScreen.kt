@@ -1,6 +1,7 @@
 package com.app.pmc.feat.diary
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -37,11 +38,14 @@ import java.time.LocalDateTime
 fun AddDiaryScreen(
     viewModel: AddDiaryViewModel = hiltViewModel(),
     popToBackStack: () -> Unit,
+    navigateToVote: () -> Unit
 ) {
     val state = viewModel.collectAsState()
 
     AddDiaryScreen(
         state = state.value,
+        openGallery = {},
+        navigateToVote = navigateToVote,
         popToBackStack = popToBackStack,
         onTitleChange = viewModel::onTitleChange,
         onContentChange = viewModel::onContentChange
@@ -52,6 +56,8 @@ fun AddDiaryScreen(
 fun AddDiaryScreen(
     modifier: Modifier = Modifier,
     state: AddDiaryScreenState,
+    openGallery: () -> Unit,
+    navigateToVote: () -> Unit,
     popToBackStack: () -> Unit,
     onTitleChange: (String) -> Unit,
     onContentChange: (String) -> Unit
@@ -64,7 +70,10 @@ fun AddDiaryScreen(
             )
         },
         bottomBar = {
-            BottomBar()
+            BottomBar(
+                navigateToVote = navigateToVote,
+                openGallery = openGallery
+            )
         },
         content = { innerPadding ->
             LazyColumn(
@@ -136,7 +145,10 @@ private fun Topbar(
 }
 
 @Composable
-private fun BottomBar() {
+private fun BottomBar(
+    navigateToVote: () -> Unit,
+    openGallery:() -> Unit
+) {
     Column(modifier = Modifier.imePadding()) {
         Divider(
             color = Slate_600
@@ -147,31 +159,40 @@ private fun BottomBar() {
                 .padding(20.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Image(
-                    painter = painterResource(R.drawable.ic_image),
-                    contentDescription = ""
-                )
-                Text(
-                    modifier = Modifier.padding(start = 6.dp),
-                    text = stringResource(R.string.diary_add_image)
-                )
-            }
-            Row(
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Image(
-                    painter = painterResource(R.drawable.ic_rounded_check),
-                    contentDescription = ""
-                )
-                Text(
-                    modifier = Modifier.padding(start = 6.dp),
-                    text = stringResource(R.string.diary_cast_a_vote)
-                )
-            }
+            BottombarButton(
+                onClick = openGallery,
+                iconRes = R.drawable.ic_image,
+                labelRes = R.string.diary_add_image
+            )
+            BottombarButton(
+                onClick = navigateToVote,
+                iconRes = R.drawable.ic_rounded_check,
+                labelRes = R.string.diary_cast_a_vote
+            )
         }
+    }
+}
+
+@Composable
+private fun BottombarButton(
+    onClick:() -> Unit,
+    iconRes: Int,
+    labelRes: Int
+) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier.clickable {
+            onClick()
+        }
+    ) {
+        Image(
+            painter = painterResource(iconRes),
+            contentDescription = ""
+        )
+        Text(
+            modifier = Modifier.padding(start = 6.dp),
+            text = stringResource(labelRes)
+        )
     }
 }
 
@@ -182,6 +203,8 @@ fun AddDiaryScreenPreview() {
         state = AddDiaryScreenState(
             date = LocalDateTime.now()
         ),
+        openGallery = {},
+        navigateToVote = {},
         onContentChange = {},
         onTitleChange = {},
         popToBackStack = {}

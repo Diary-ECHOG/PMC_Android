@@ -30,6 +30,8 @@ fun PMCNavHost(
         )
         addVoteGraph(navController = navController)
         addMyPageGraph(navController = navController)
-        addDiaryGraph(navController = navController)
+        addDiaryGraph(navController = navController, navigateToVote = {
+            navController.navigateVote()
+        })
     }
 }

@@ -13,12 +13,14 @@ fun NavController.navigateToAddDiary() {
 
 fun NavGraphBuilder.addDiaryGraph(
     navController: NavController,
+    navigateToVote: () -> Unit
 ) {
     composable(ROUTE_DIARY) {
         AddDiaryScreen(
             popToBackStack = {
                 navController.popBackStack()
-            }
+            },
+            navigateToVote = navigateToVote
         )
     }
 }
