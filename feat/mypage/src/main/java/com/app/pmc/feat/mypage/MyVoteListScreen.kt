@@ -44,7 +44,8 @@ fun MyVoteListScreen(
         item {
             TopBarWithBackButton(
                 topBarTitle = stringResource(id = string.my_vote_list),
-                popToBackStack = popToBackStack
+                popToBackStack = popToBackStack,
+
             )
         }
         item {

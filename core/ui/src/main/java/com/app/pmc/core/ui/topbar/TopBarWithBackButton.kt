@@ -2,6 +2,7 @@ package com.app.pmc.core.ui.topbar
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -24,10 +25,13 @@ import com.app.pmc.core.ui.R
 fun TopBarWithBackButton(
     topBarTitle: String = "",
     popToBackStack: () -> Unit = {},
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    trailingIcon: @Composable () -> Unit = {},
+    horizontalArrangement: Arrangement.Horizontal = Arrangement.Start
 ) {
     Row(
         modifier = modifier.fillMaxWidth().padding(top = 54.dp, start = 20.dp, end = 20.dp),
+        horizontalArrangement = horizontalArrangement,
         verticalAlignment = Alignment.CenterVertically
     ) {
         Image(
@@ -44,6 +48,7 @@ fun TopBarWithBackButton(
             fontSize = 17.sp,
             fontWeight = FontWeight.W600
         )
+        trailingIcon.invoke()
     }
 }
 
@@ -53,5 +58,11 @@ fun TopBarWithBackButton(
 fun TopBarWithBackButtonPreview() {
     TopBarWithBackButton(
         topBarTitle = stringResource(R.string.vote_list_title),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        trailingIcon = {
+            Text(
+                text = "test"
+            )
+        }
     )
 }

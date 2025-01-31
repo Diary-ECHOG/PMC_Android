@@ -47,12 +47,14 @@ import org.orbitmvi.orbit.compose.collectAsState
 @Composable
 fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
+    addDiary: () -> Unit = {},
     navigateToVoteList: () -> Unit = {},
 ) {
     val state = viewModel.collectAsState()
 
     HomeScreen(
         state = state.value,
+        addDiary = addDiary,
         navigateToVoteList = navigateToVoteList
     )
 }
@@ -61,6 +63,7 @@ fun HomeScreen(
 private fun HomeScreen(
     modifier: Modifier = Modifier,
     state: HomeUiState,
+    addDiary:() -> Unit,
     navigateToVoteList: () -> Unit
 ) {
     val gradientList =
@@ -130,7 +133,7 @@ private fun HomeScreen(
                 drawRect(brush = gradientBrush)
             }
             FloatingActionButton(
-                onClick = {},
+                onClick = addDiary,
                 shape = RoundedCornerShape(50),
                 containerColor = White,
                 modifier = modifier
@@ -216,6 +219,7 @@ private fun VoteViewButton(
 private fun HomeScreenPreview() {
     HomeScreen(
         navigateToVoteList = {},
+        addDiary = {},
         state = HomeUiState(
             month = "10월",
             diaryList = listOf(

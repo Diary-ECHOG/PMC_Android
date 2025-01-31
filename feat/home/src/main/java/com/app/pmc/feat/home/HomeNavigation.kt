@@ -6,10 +6,15 @@ import androidx.navigation.compose.composable
 
 const val ROUTE_HOME = "home"
 
-fun NavGraphBuilder.addHomeGraph(navController: NavController, navigateToVoteList: () -> Unit) {
+fun NavGraphBuilder.addHomeGraph(
+    navController: NavController,
+    navigateToVoteList: () -> Unit,
+    navigateToAddDiary: () -> Unit
+) {
     composable(ROUTE_HOME) {
         HomeScreen(
-            navigateToVoteList = navigateToVoteList
+            navigateToVoteList = navigateToVoteList,
+            addDiary = navigateToAddDiary
         )
     }
 }
