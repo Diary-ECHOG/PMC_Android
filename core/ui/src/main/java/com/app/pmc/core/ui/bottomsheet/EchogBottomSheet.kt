@@ -14,34 +14,27 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EchogBottomSheet(
+    onDismiss: () -> Unit = {},
     content: @Composable () -> Unit = {},
     bottomSheetDefault: BottomSheetDefaults = BottomSheetDefaults,
-    showBottomSheet: Boolean = false,
     saveShowBottomSheetState: (Boolean) -> Unit = {},
     sheetState: SheetState = rememberModalBottomSheetState(),
 ) {
-    val scope = rememberCoroutineScope()
-
-    if (showBottomSheet) {
-        ModalBottomSheet(
-            sheetState = sheetState,
-            dragHandle = {
-                bottomSheetDefault.DragHandle()
-            },
-            shape = BottomSheetDefaults.ExpandedShape,
-            containerColor = BottomSheetDefaults.ContainerColor,
-            contentColor = contentColorFor(BottomSheetDefaults.ContainerColor),
-            tonalElevation = BottomSheetDefaults.Elevation,
-            scrimColor = BottomSheetDefaults.ScrimColor,
-            onDismissRequest = {
-                scope.launch {
-                    sheetState.hide()
-                    saveShowBottomSheetState(false)
-                }
-            }
-        ) {
-            content()
+    ModalBottomSheet(
+        sheetState = sheetState,
+        dragHandle = {
+            bottomSheetDefault.DragHandle()
+        },
+        shape = BottomSheetDefaults.ExpandedShape,
+        containerColor = BottomSheetDefaults.ContainerColor,
+        contentColor = contentColorFor(BottomSheetDefaults.ContainerColor),
+        tonalElevation = BottomSheetDefaults.Elevation,
+        scrimColor = BottomSheetDefaults.ScrimColor,
+        onDismissRequest = {
+            onDismiss()
         }
+    ) {
+        content()
     }
 }
 
@@ -51,6 +44,5 @@ fun EchogBottomSheet(
 private fun EchogBottomSheetPreview() {
     EchogBottomSheet(
         sheetState = rememberModalBottomSheetState(),
-        showBottomSheet = true
     )
 }
