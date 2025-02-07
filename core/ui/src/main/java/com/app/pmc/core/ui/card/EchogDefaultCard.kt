@@ -22,11 +22,11 @@ import com.app.pmc.ui.theme.NormalDiaryCardTitleColor
 import com.app.pmc.ui.theme.White
 
 @Composable
-fun DiaryCard(
+fun EchogDefaultCard(
     modifier: Modifier = Modifier,
     title: String,
     description: String,
-    date: String
+    subDescription: @Composable() () -> Unit
 ) {
     Card(
         shape = RoundedCornerShape(12.dp),
@@ -52,12 +52,7 @@ fun DiaryCard(
                 style = MaterialTheme.typography.bodyMedium
             )
             Spacer(modifier = Modifier.height(12.dp))
-            Text(
-                text = date,
-                color = NormalDiaryCardDescriptionColor,
-                fontWeight = FontWeight.W500,
-                fontSize = 13.sp
-            )
+            subDescription()
         }
     }
 }
@@ -65,9 +60,15 @@ fun DiaryCard(
 @Composable
 @Preview
 fun CardPreview() {
-    DiaryCard(
+    EchogDefaultCard(
         title = "Title",
         description = "Description",
-        date = "Date"
+        subDescription = {
+            Text(
+                text = "Sub Description",
+                color = NormalDiaryCardDescriptionColor,
+                style = MaterialTheme.typography.bodyMedium
+            )
+        }
     )
 }

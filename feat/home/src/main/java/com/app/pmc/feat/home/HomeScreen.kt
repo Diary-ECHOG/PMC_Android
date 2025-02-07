@@ -37,7 +37,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.app.pmc.core.model.Diary
 import com.app.pmc.core.ui.R.drawable
 import com.app.pmc.core.ui.R.string
-import com.app.pmc.core.ui.card.DiaryCard
+import com.app.pmc.core.ui.card.EchogDefaultCard
 import com.app.pmc.core.ui.surface.GradientSurface
 import com.app.pmc.ui.theme.NormalButtonBorderColor
 import com.app.pmc.ui.theme.NormalButtonContentColor
@@ -77,7 +77,8 @@ private fun HomeScreen(
             LazyColumn(
                 modifier = modifier
                     .fillMaxSize()
-                    .padding(horizontal = 20.dp)
+                    .padding(horizontal = 20.dp),
+                verticalArrangement = Arrangement.spacedBy(10.dp)
             ) {
                 item {
                     Top(
@@ -93,11 +94,14 @@ private fun HomeScreen(
                     )
                 }
                 items(state.diaryList.size, key = { index -> state.diaryList[index].id }) { _ ->
-                    DiaryCard(
-                        modifier = Modifier.padding(top = 10.dp),
+                    EchogDefaultCard(
                         title = "Title",
                         description = "Description",
-                        date = "2021.10.10"
+                        subDescription = {
+                            Text(
+                                text = "2021.10.10"
+                            )
+                        }
                     )
                 }
                 item {
@@ -110,11 +114,15 @@ private fun HomeScreen(
                 items(
                     state.monthlyDiaryList.size,
                     key = { index -> state.monthlyDiaryList[index].id }) { _ ->
-                    DiaryCard(
+                    EchogDefaultCard(
                         modifier = Modifier.padding(top = 10.dp),
                         title = "Title",
                         description = "Description",
-                        date = "2021.10.10"
+                        subDescription = {
+                            Text(
+                                text = "2021.10.10"
+                            )
+                        }
                     )
 
                 }
