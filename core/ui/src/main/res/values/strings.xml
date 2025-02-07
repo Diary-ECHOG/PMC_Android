@@ -50,4 +50,10 @@
     <string name="diary_content_placeholder">일기의 내용을 적어주세요.</string>
     <string name="diary_add_image">이미지 추가</string>
     <string name="diary_cast_a_vote">투표하기</string>
+    <string name="select_category">카테고리를 선택해 주세요.</string>
+    <string name="diary_vote_option">투표 항목</string>
+    <string name="diary_add_vote_option">+ 항목 추가</string>
+    <string name="diary_allow_duplicate_selection">복수 선택 가능</string>
+    <string name="diary_vote_option_placeholder">항목을 입력해 주세요.</string>
+    <string name="diary_create_vote">투표 만들기</string>
 </resources>
