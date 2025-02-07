@@ -211,7 +211,6 @@ private fun DiaryViewButton(
             )
             Text(
                 fontWeight = FontWeight.W700,
-                color = NormalButtonContentColor,
                 text = stringResource(id = R.string.show_my_diary),
             )
         }
