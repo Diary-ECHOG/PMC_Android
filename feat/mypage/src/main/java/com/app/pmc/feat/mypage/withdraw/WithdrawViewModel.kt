@@ -18,6 +18,11 @@ class WithdrawViewModel : ViewModel(), ContainerHost<WithdrawState, Unit> {
             state.copy(selectedReason = reason)
         }
     }
+    fun onWithdrawSentenceChanged(sentence: String) = intent {
+        reduce {
+            state.copy(withdrawSentence = sentence)
+        }
+    }
 }
 
 data class WithdrawState(
@@ -31,4 +36,5 @@ data class WithdrawState(
         Resources.getSystem().getString(R.string.withdraw_reason_7),
     ),
     val selectedReason: String = "",
+    val withdrawSentence: String = ""
 )

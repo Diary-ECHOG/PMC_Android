@@ -1,121 +1,112 @@
 package com.app.pmc.feat.mypage.withdraw
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Checkbox
-import androidx.compose.material3.CheckboxDefaults
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.app.pmc.core.ui.topbar.TopBarWithBackButton
+import androidx.compose.ui.unit.sp
 import com.app.pmc.core.ui.R
+import com.app.pmc.core.ui.button.EchogButton
 import com.app.pmc.core.ui.textfield.EchogBasicTextField
-import com.app.pmc.core.ui.theme.Checkbox_UnChecked
+import com.app.pmc.core.ui.theme.Black
 import com.app.pmc.core.ui.theme.Gray_100
+import com.app.pmc.core.ui.theme.Withdraw_Confirm
+import com.app.pmc.core.ui.theme.Withdraw_Info_Title
 
 @Composable
 fun WithdrawConfirmScreen(
     modifier: Modifier = Modifier,
-    state: WithdrawState,
-    onReasonSelected: (String) -> Unit
+    onWithdrawSentenceChanged: (String) -> Unit,
+    withdrawSentence: String
 ) {
-    Scaffold(
-        modifier = modifier,
-        topBar = {
-            TopBarWithBackButton(
-                topBarTitle = stringResource(R.string.withdraw_title),
-                modifier = modifier.padding(bottom = 25.dp)
+    Column(modifier = modifier) {
+        Column(modifier.padding(18.dp)) {
+            InfoTitle(
+                title = stringResource(R.string.withdraw_info_title)
             )
-        },
-        content = { innerPadding ->
-            LazyColumn(modifier = modifier.padding(innerPadding)) {
-                items(
-                    count = state.withdrawReasonList.size,
-                    key = { index -> state.withdrawReasonList[index] },
-                    itemContent = { index ->
-                        WithdrawReasonItem(
-                            reason = state.withdrawReasonList[index],
-                            isSelected = state.withdrawReasonList[index] == state.selectedReason,
-                            onReasonSelected = { onReasonSelected(state.withdrawReasonList[index]) }
-                        )
-                    }
-                )
-            }
+            InfoDescription(
+                description = stringResource(R.string.withdraw_info_content)
+            )
         }
-    )
-}
-
-@Composable
-private fun WithdrawReasonItem(
-    modifier: Modifier = Modifier,
-    reason: String,
-    isSelected: Boolean,
-    onReasonSelected: () -> Unit
-) {
-    val isEtcField = reason == stringResource(R.string.withdraw_reason_7)
-    Spacer(
-        modifier = modifier
-            .height(1.dp)
-            .fillMaxWidth()
-            .background(Gray_100)
-    )
-    Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(1.dp),
-        verticalAlignment = if (isEtcField) Alignment.Top else Alignment.CenterVertically
-    ) {
-        Checkbox(
-            modifier = modifier.clip(shape = RoundedCornerShape(4.dp)),
-            colors = CheckboxDefaults.colors(
-                uncheckedColor = Checkbox_UnChecked
-            ),
-            checked = isSelected,
-            onCheckedChange = { onReasonSelected() }
+        Spacer(
+            modifier = modifier
+                .height(1.dp)
+                .fillMaxWidth()
+                .background(Gray_100)
         )
-        Column {
-            Text(
-                modifier = Modifier.padding(start = 8.dp, top = if (isEtcField) 13.dp else 0.dp),
-                text = reason
+        Column(modifier.padding(18.dp)) {
+            InfoTitle(
+                title = stringResource(R.string.withdraw_confirm_title)
             )
-            if (isEtcField) EchogBasicTextField(
-                modifier = Modifier.padding(top = 13.dp, end = 18.dp),
-                value = "",
-                placeholder = stringResource(R.string.withdraw),
-                enabled = isSelected,
-                onValueChange = {},
-                defaultMinHeight = 100.dp
+            InfoDescription(
+                color = Withdraw_Confirm,
+                description = stringResource(R.string.withdraw_confirm_sentence)
             )
         }
+        EchogBasicTextField(
+            modifier = modifier.padding(horizontal = 18.dp),
+            value = withdrawSentence,
+            onValueChange = onWithdrawSentenceChanged,
+            placeholder = stringResource(R.string.withdraw_confirm_sentence),
+        )
+        Spacer(modifier = modifier.weight(1f))
+        EchogButton(
+            modifier = modifier
+                .padding(18.dp)
+                .fillMaxWidth(),
+            label = stringResource(R.string.withdraw_confirm_button_label),
+            onClick = {},
+            enabled = withdrawSentence == stringResource(R.string.withdraw_confirm_sentence)
+        )
     }
 }
 
 @Composable
-@Preview
+private fun InfoTitle(
+    modifier: Modifier = Modifier,
+    title: String
+) {
+    Text(
+        modifier = modifier,
+        fontWeight = FontWeight.W600,
+        fontSize = 13.sp,
+        text = title,
+        color = Withdraw_Info_Title
+    )
+}
+
+@Composable
+private fun InfoDescription(
+    modifier: Modifier = Modifier,
+    color: Color = Black,
+    description: String
+) {
+    Text(
+        style = TextStyle(
+            lineHeight = 28.sp,
+        ),
+        color = color,
+        modifier = modifier.padding(top = 6.dp),
+        text = description
+    )
+}
+
+@Composable
+@Preview(showBackground = true)
 fun WithdrawConfirmScreenPreview() {
     WithdrawConfirmScreen(
-        state = WithdrawState(
-            selectedReason = stringResource(R.string.withdraw_reason_1)
-        ),
-        onReasonSelected = {}
+        onWithdrawSentenceChanged = {},
+        withdrawSentence = stringResource(R.string.withdraw_confirm_sentence)
     )
 }

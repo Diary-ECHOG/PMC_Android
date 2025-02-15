@@ -29,10 +29,15 @@ fun WithdrawScreen(
         },
         content = { innerPadding ->
             WithdrawConfirmScreen(
-                modifier = modifier.padding(innerPadding),
-                state = state,
-                onReasonSelected = viewModel::onReasonSelected
+                modifier = Modifier.padding(innerPadding),
+                onWithdrawSentenceChanged = viewModel::onWithdrawSentenceChanged,
+                withdrawSentence = state.withdrawSentence
             )
+//            WithdrawReasonScreen(
+//                modifier = modifier.padding(innerPadding),
+//                state = state,
+//                onReasonSelected = viewModel::onReasonSelected
+//            )
         }
     )
 }

@@ -120,7 +120,7 @@ fun TextFieldDecorationBox(
                 if (label != null) {
                     Text(
                         text = label,
-                        modifier = modifier.padding(start = 4.dp, bottom = 6.dp),
+                        modifier = Modifier.padding(start = 4.dp, bottom = 6.dp),
                         style = EchogTextFieldDefaults.TextStyles.textStyle
                     )
                 }

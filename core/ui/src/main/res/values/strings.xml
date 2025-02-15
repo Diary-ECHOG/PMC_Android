@@ -57,6 +57,11 @@
     <string name="withdraw_reason_6">광고 또는 유료 결제 정책이 부담됨</string>
     <string name="withdraw_reason_7">기타 (직접 입력 가능)</string>
     <string name="withdraw_reason_placeholder">탈퇴사유를 입력해 주세요.</string>
+    <string name="withdraw_info_title">탈퇴 안내</string>
+    <string name="withdraw_info_content">탈퇴 후에는 내 일기를 더 이상 보관하거나 볼 수 없어요.\n회원 탈퇴를 신청하려면 아래 문장을 입력해주세요.</string>
+    <string name="withdraw_confirm_title">문구</string>
+    <string name="withdraw_confirm_sentence">탈퇴를 신청하며 더 이상 내 일기를 작성하거나\n투표에 참여할 수 없음을 확인했습니다.</string>
+    <string name="withdraw_confirm_button_label">탈퇴하기</string>
 
     <string name="next">다음</string>
     <string name="complete">완료</string>
