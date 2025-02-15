@@ -16,10 +16,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.app.pmc.ui.theme.NormalButtonContentColor
-import com.app.pmc.ui.theme.NormalDiaryCardDescriptionColor
-import com.app.pmc.ui.theme.NormalDiaryCardTitleColor
-import com.app.pmc.ui.theme.White
+import com.app.pmc.core.ui.theme.NormalButtonContentColor
+import com.app.pmc.core.ui.theme.NormalDiaryCardDescriptionColor
+import com.app.pmc.core.ui.theme.NormalDiaryCardTitleColor
+import com.app.pmc.core.ui.theme.White
 
 @Composable
 fun EchogDefaultCard(

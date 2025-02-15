@@ -3,6 +3,8 @@ package com.app.pmc.feat.mypage
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import com.app.pmc.feat.mypage.report.ReportScreen
+import com.app.pmc.feat.mypage.withdraw.WithdrawScreen
 
 const val ROUTE_MY_PAGE = "mypage"
 const val ROUTE_MY_VOTE = "myVote"
@@ -19,6 +21,8 @@ const val ROUTE_WITHDRAW = "withdraw"
                 navigateToMyReportList = {
                     navController.navigate(ROUTE_MY_REPORT)
                 },
+                navigateToPrivacyPolicy = {},
+                navigateToVoteIParticipatedIn = {},
                 navigateToLogout = {
                     navController.navigate(ROUTE_LOGOUT)
                 },
@@ -42,6 +46,11 @@ const val ROUTE_WITHDRAW = "withdraw"
         composable(
             route = ROUTE_MY_REPORT
         ) {
+            ReportScreen(
+                popBackStack = {
+                    navController.popBackStack()
+                }
+            )
         }
         composable(
             route = ROUTE_LOGOUT
@@ -50,5 +59,6 @@ const val ROUTE_WITHDRAW = "withdraw"
         composable(
             route = ROUTE_WITHDRAW
         ) {
+            WithdrawScreen()
         }
     }

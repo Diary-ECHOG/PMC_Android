@@ -2,16 +2,16 @@ package com.app.pmc.core.ui.textfield
 
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.unit.dp
-import com.app.pmc.ui.theme.Gray_400
-import com.app.pmc.ui.theme.Slate_25
-import com.app.pmc.ui.theme.TextFieldBorderColor_Focused
-import com.app.pmc.ui.theme.TextFieldBorderColor_UnFocused
-import com.app.pmc.ui.theme.TextFieldDisablePlaceholderColor
-import com.app.pmc.ui.theme.TextFieldEnableBackgroundColor
-import com.app.pmc.ui.theme.TextFieldErrorBorderColor
-import com.app.pmc.ui.theme.TextFieldPlaceholderColor
-import com.app.pmc.ui.theme.Typography
-import com.app.pmc.ui.theme.White
+import com.app.pmc.core.ui.theme.Gray_400
+import com.app.pmc.core.ui.theme.Slate_25
+import com.app.pmc.core.ui.theme.TextFieldBorderColor_Focused
+import com.app.pmc.core.ui.theme.TextFieldBorderColor_UnFocused
+import com.app.pmc.core.ui.theme.TextFieldDisablePlaceholderColor
+import com.app.pmc.core.ui.theme.TextFieldEnableBackgroundColor
+import com.app.pmc.core.ui.theme.TextFieldErrorBorderColor
+import com.app.pmc.core.ui.theme.TextFieldPlaceholderColor
+import com.app.pmc.core.ui.theme.Typography
+import com.app.pmc.core.ui.theme.White
 
 @Immutable
 object EchogTextFieldDefaults {
@@ -43,7 +43,7 @@ object EchogTextFieldDefaults {
     }
 
     object TextStylesObject {
-        val textStyle = Typography.bodyMedium
+        val textStyle = Typography.labelMedium
     }
 }
 

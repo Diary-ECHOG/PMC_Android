@@ -1,7 +1,6 @@
 package com.app.pmc.feat.auth.login
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -18,7 +17,7 @@ import com.app.pmc.core.ui.button.EchogButton
 import com.app.pmc.core.ui.surface.GradientSurface
 import com.app.pmc.core.ui.textfield.EchogBasicTextField
 import com.app.pmc.core.ui.textfield.EchogPasswordTextField
-import com.app.pmc.ui.theme.LargeDescription
+import com.app.pmc.core.ui.theme.LargeDescription
 
 @Composable
 fun LoginScreen(

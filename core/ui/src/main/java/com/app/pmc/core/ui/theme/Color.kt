@@ -1,4 +1,4 @@
-package com.app.pmc.ui.theme
+package com.app.pmc.core.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
@@ -38,5 +38,11 @@ val Slate_800 = Color(0xFF1D2027)
 
 val Red_500 = Color(0xFFEF5350)
 
+val Blue_10 = Color(0xFFF5F9FF)
 val Blue_500 = Color(0xFF2277FF)
+val Blue_800 = Color(0xFF0E3066)
 
+val Checkbox_UnChecked = Color(0xFFDBDEE3)
+
+val Withdraw_Info_Title = Color(0xFF3E4651)
+val Withdraw_Confirm = Color(0xFF5872A6)

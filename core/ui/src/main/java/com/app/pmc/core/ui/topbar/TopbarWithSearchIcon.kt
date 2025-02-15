@@ -28,8 +28,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.app.pmc.core.ui.R
 import com.app.pmc.core.ui.textfield.EchogSearchTextField
-import com.app.pmc.ui.theme.Gray_400
-import com.app.pmc.ui.theme.Gray_600
+import com.app.pmc.core.ui.theme.Gray_400
+import com.app.pmc.core.ui.theme.Gray_600
 
 @Composable
 fun TopBarWithSearchIcon(

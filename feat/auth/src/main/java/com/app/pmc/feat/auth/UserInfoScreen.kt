@@ -19,8 +19,8 @@ import com.app.pmc.core.ui.R
 import com.app.pmc.core.ui.button.EchogButton
 import com.app.pmc.core.ui.textfield.EchogBasicTextField
 import com.app.pmc.core.ui.textfield.EchogPasswordTextField
-import com.app.pmc.ui.theme.ButtonLabel500
-import com.app.pmc.ui.theme.LargeDescription
+import com.app.pmc.core.ui.theme.ButtonLabel500
+import com.app.pmc.core.ui.theme.LargeDescription
 import org.orbitmvi.orbit.compose.collectAsState
 
 @Composable
