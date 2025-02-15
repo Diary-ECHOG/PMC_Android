@@ -42,3 +42,5 @@ val Blue_10 = Color(0xFFF5F9FF)
 val Blue_500 = Color(0xFF2277FF)
 val Blue_800 = Color(0xFF0E3066)
 
+val Checkbox_UnChecked = Color(0xFFDBDEE3)
+

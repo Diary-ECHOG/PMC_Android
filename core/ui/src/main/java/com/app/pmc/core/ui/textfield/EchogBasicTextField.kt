@@ -17,9 +17,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldColors
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -31,6 +29,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -47,6 +46,7 @@ fun EchogBasicTextField(
     maxLines: Int = 1,
     leadingIcon: Painter? = null,
     trailingIcon: @Composable (() -> Unit)? = null,
+    defaultMinHeight: Dp? = null,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     decorationBox: @Composable (() -> Unit)? = null,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
@@ -56,7 +56,6 @@ fun EchogBasicTextField(
     BasicTextField(
         value = value,
         onValueChange = onValueChange,
-        modifier = modifier,
         enabled = enabled,
         textStyle = EchogTextFieldDefaults.TextStyles.textStyle,
         maxLines = maxLines,
@@ -68,6 +67,7 @@ fun EchogBasicTextField(
             TextFieldDecorationBox(
                 modifier = modifier,
                 value = value,
+                defaultMinHeight = defaultMinHeight,
                 innerTextField = innerTextField,
                 interactionSource = interactionSource,
                 label = label,
@@ -87,6 +87,7 @@ fun EchogBasicTextField(
 fun TextFieldDecorationBox(
     modifier: Modifier = Modifier,
     value: String,
+    defaultMinHeight: Dp? = null,
     innerTextField: @Composable () -> Unit,
     interactionSource: InteractionSource,
     label: String? = null,
@@ -119,7 +120,7 @@ fun TextFieldDecorationBox(
                 if (label != null) {
                     Text(
                         text = label,
-                        modifier = Modifier.padding(start = 4.dp, bottom = 6.dp),
+                        modifier = modifier.padding(start = 4.dp, bottom = 6.dp),
                         style = EchogTextFieldDefaults.TextStyles.textStyle
                     )
                 }
@@ -127,7 +128,6 @@ fun TextFieldDecorationBox(
 
             Row(
                 modifier = Modifier
-                    .defaultMinSize(minHeight = 40.dp)
                     .border(border = border, shape = RoundedCornerShape(8.dp))
                     .clip(shape = RoundedCornerShape(8.dp))
                     .background(
@@ -148,7 +148,11 @@ fun TextFieldDecorationBox(
                     )
                 }
                 Box(
-                    modifier = Modifier.weight(1f),
+                    modifier = Modifier
+                        .weight(1f)
+                        .defaultMinSize(
+                            minHeight = defaultMinHeight ?: TextFieldDefaults.MinHeight,
+                        ),
                     contentAlignment = Alignment.CenterStart,
                     propagateMinConstraints = true
                 ) {
