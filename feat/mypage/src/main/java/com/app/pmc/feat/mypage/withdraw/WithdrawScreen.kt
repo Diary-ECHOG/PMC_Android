@@ -1,5 +1,6 @@
 package com.app.pmc.feat.mypage.withdraw
 
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -8,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.app.pmc.core.ui.R
 import com.app.pmc.core.ui.topbar.TopBarWithBackButton
 import org.orbitmvi.orbit.compose.collectAsState
@@ -15,10 +17,25 @@ import org.orbitmvi.orbit.compose.collectAsState
 @Composable
 fun WithdrawScreen(
     modifier: Modifier = Modifier,
-    viewModel: WithdrawViewModel
+    viewModel: WithdrawViewModel = hiltViewModel()
 ) {
     val state by viewModel.collectAsState()
 
+    WithdrawScreen(
+        modifier = modifier,
+        state = state,
+        onReasonSelected = viewModel::onReasonSelected,
+        onWithdrawSentenceChanged = viewModel::onWithdrawSentenceChanged
+    )
+}
+
+@Composable
+private fun WithdrawScreen(
+    modifier: Modifier = Modifier,
+    state: WithdrawState,
+    onReasonSelected: (String) -> Unit,
+    onWithdrawSentenceChanged: (String) -> Unit
+) {
     Scaffold(
         modifier = modifier,
         topBar = {
@@ -29,14 +46,14 @@ fun WithdrawScreen(
         },
         content = { innerPadding ->
             WithdrawConfirmScreen(
-                modifier = Modifier.padding(innerPadding),
-                onWithdrawSentenceChanged = viewModel::onWithdrawSentenceChanged,
+                modifier = modifier.padding(innerPadding),
+                onWithdrawSentenceChanged = onWithdrawSentenceChanged,
                 withdrawSentence = state.withdrawSentence
             )
-//            WithdrawReasonScreen(
-//                modifier = modifier.padding(innerPadding),
+//            WithdrawReasonScreen(r
+//                modifier = modifier.fillMaxSize().padding(innerPadding),
 //                state = state,
-//                onReasonSelected = viewModel::onReasonSelected
+//                onReasonSelected = onReasonSelected
 //            )
         }
     )
@@ -46,6 +63,20 @@ fun WithdrawScreen(
 @Preview
 fun WithdrawScreenPreview() {
     WithdrawScreen(
-        viewModel = WithdrawViewModel()
+        state = WithdrawState(
+            withdrawReasonList = listOf(
+                "Reason 1",
+                "Reason 2",
+                "Reason 3",
+                "Reason 4",
+                "Reason 5",
+                "Reason 6",
+                "Reason 7"
+            ),
+            selectedReason = "Reason 1",
+            withdrawSentence = "Withdraw sentence"
+        ),
+        onReasonSelected = {},
+        onWithdrawSentenceChanged = {}
     )
 }

@@ -43,7 +43,7 @@ object EchogTextFieldDefaults {
     }
 
     object TextStylesObject {
-        val textStyle = Typography.bodyMedium
+        val textStyle = Typography.labelMedium
     }
 }
 

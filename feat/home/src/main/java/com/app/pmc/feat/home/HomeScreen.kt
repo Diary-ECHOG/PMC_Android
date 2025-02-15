@@ -49,13 +49,15 @@ fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
     addDiary: () -> Unit = {},
     navigateToVoteList: () -> Unit = {},
+    navigateToMyPage: () -> Unit = {}
 ) {
     val state = viewModel.collectAsState()
 
     HomeScreen(
         state = state.value,
         addDiary = addDiary,
-        navigateToVoteList = navigateToVoteList
+        navigateToVoteList = navigateToVoteList,
+        navigateToMyPage = navigateToMyPage
     )
 }
 
@@ -64,6 +66,7 @@ private fun HomeScreen(
     modifier: Modifier = Modifier,
     state: HomeUiState,
     addDiary:() -> Unit,
+    navigateToMyPage: () -> Unit,
     navigateToVoteList: () -> Unit
 ) {
     val gradientList =
@@ -82,8 +85,8 @@ private fun HomeScreen(
             ) {
                 item {
                     Top(
-                        navigateToVoteList = navigateToVoteList
-
+                        navigateToVoteList = navigateToVoteList,
+                        navigateToMyPage = navigateToMyPage
                     )
                 }
                 item {
@@ -160,7 +163,8 @@ private fun HomeScreen(
 @Composable
 private fun Top(
     modifier: Modifier = Modifier,
-    navigateToVoteList: () -> Unit = {}
+    navigateToVoteList: () -> Unit = {},
+    navigateToMyPage: () -> Unit = {}
 ) {
     Row(
         modifier = modifier
@@ -180,7 +184,7 @@ private fun Top(
             onClick = navigateToVoteList
         )
         IconButton(
-            onClick = {},
+            onClick = navigateToMyPage,
         ) {
             Image(
                 painter = painterResource(id = drawable.ic_meatball),
@@ -227,6 +231,7 @@ private fun VoteViewButton(
 private fun HomeScreenPreview() {
     HomeScreen(
         navigateToVoteList = {},
+        navigateToMyPage = {},
         addDiary = {},
         state = HomeUiState(
             month = "10월",

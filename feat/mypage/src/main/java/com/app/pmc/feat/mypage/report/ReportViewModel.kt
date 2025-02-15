@@ -1,11 +1,14 @@
 package com.app.pmc.feat.mypage.report
 
 import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.viewmodel.container
+import javax.inject.Inject
 
-class ReportViewModel: ViewModel(), ContainerHost<ReportState, Unit> {
+@HiltViewModel
+class ReportViewModel @Inject constructor() : ViewModel(), ContainerHost<ReportState, Unit> {
     override val container: Container<ReportState, Unit> = container(ReportState())
 
 }

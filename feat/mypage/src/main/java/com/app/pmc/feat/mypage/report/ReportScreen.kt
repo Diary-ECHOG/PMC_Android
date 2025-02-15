@@ -31,6 +31,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.app.pmc.core.ui.R
 import com.app.pmc.core.ui.topbar.TopBarWithBackButton
 import com.app.pmc.core.ui.theme.Blue_10
@@ -42,24 +43,28 @@ import org.orbitmvi.orbit.compose.collectAsState
 
 @Composable
 fun ReportScreen(
-    viewModel: ReportViewModel
+    viewModel: ReportViewModel = hiltViewModel(),
+    popBackStack: () -> Unit
 ) {
     val state by viewModel.collectAsState()
 
     ReportScreen(
-        state = state
+        state = state,
+        popBackStack = popBackStack
     )
 }
 
 @Composable
 private fun ReportScreen(
     modifier: Modifier = Modifier,
+    popBackStack: () -> Unit,
     state: ReportState
 ) {
     Scaffold(
         topBar = {
             TopBarWithBackButton(
-                topBarTitle = stringResource(R.string.report_list)
+                topBarTitle = stringResource(R.string.report_list),
+                popToBackStack = popBackStack,
             )
         },
         content = { innerPadding ->
@@ -136,6 +141,7 @@ private fun ReportItem(
 @Preview
 fun ReportScreenPreview() {
     ReportScreen(
+        popBackStack = {},
         state = ReportState(
             reportList = listOf(
                 Report(

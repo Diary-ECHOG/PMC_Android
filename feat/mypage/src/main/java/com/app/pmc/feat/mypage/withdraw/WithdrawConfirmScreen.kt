@@ -1,5 +1,6 @@
 package com.app.pmc.feat.mypage.withdraw
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -30,8 +31,16 @@ fun WithdrawConfirmScreen(
     onWithdrawSentenceChanged: (String) -> Unit,
     withdrawSentence: String
 ) {
+    Log.e("WithdrawConfirmScreen", "withdrawSentence: $withdrawSentence")
+    Log.e("WithdrawConfirmScreen", "${withdrawSentence == stringResource(R.string.withdraw_confirm_sentence)}")
     Column(modifier = modifier) {
-        Column(modifier.padding(18.dp)) {
+        Spacer(
+            modifier = Modifier
+                .height(1.dp)
+                .fillMaxWidth()
+                .background(Gray_100)
+        )
+        Column(Modifier.padding(18.dp)) {
             InfoTitle(
                 title = stringResource(R.string.withdraw_info_title)
             )
@@ -40,12 +49,12 @@ fun WithdrawConfirmScreen(
             )
         }
         Spacer(
-            modifier = modifier
+            modifier = Modifier
                 .height(1.dp)
                 .fillMaxWidth()
                 .background(Gray_100)
         )
-        Column(modifier.padding(18.dp)) {
+        Column(Modifier.padding(18.dp)) {
             InfoTitle(
                 title = stringResource(R.string.withdraw_confirm_title)
             )
@@ -55,7 +64,7 @@ fun WithdrawConfirmScreen(
             )
         }
         EchogBasicTextField(
-            modifier = modifier.padding(horizontal = 18.dp),
+            modifier = Modifier.padding(horizontal = 18.dp),
             value = withdrawSentence,
             onValueChange = onWithdrawSentenceChanged,
             placeholder = stringResource(R.string.withdraw_confirm_sentence),

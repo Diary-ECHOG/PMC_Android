@@ -1,9 +1,11 @@
 package com.app.pmc.feat.mypage.withdraw
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -33,7 +35,7 @@ fun WithdrawReasonScreen(
     LazyColumn(modifier = modifier) {
         item {
             Spacer(
-                modifier = modifier
+                modifier = Modifier
                     .height(1.dp)
                     .fillMaxWidth()
                     .background(Gray_100)
@@ -104,6 +106,15 @@ private fun WithdrawReasonItem(
 fun WithdrawReasonScreenPreview() {
     WithdrawReasonScreen(
         state = WithdrawState(
+            withdrawReasonList = listOf(
+                stringResource(R.string.withdraw_reason_1),
+                stringResource(R.string.withdraw_reason_2),
+                stringResource(R.string.withdraw_reason_3),
+                stringResource(R.string.withdraw_reason_4),
+                stringResource(R.string.withdraw_reason_5),
+                stringResource(R.string.withdraw_reason_6),
+                stringResource(R.string.withdraw_reason_7)
+            ),
             selectedReason = stringResource(R.string.withdraw_reason_1)
         ),
         onReasonSelected = {}

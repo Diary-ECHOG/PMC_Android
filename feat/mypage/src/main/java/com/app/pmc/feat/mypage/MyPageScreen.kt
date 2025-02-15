@@ -31,8 +31,10 @@ import com.app.pmc.core.ui.theme.Red_500
 fun MyPageScreen(
     modifier: Modifier = Modifier,
     navigateToMyVoteList : () -> Unit = {},
+    navigateToVoteIParticipatedIn : () -> Unit = {},
     navigateToMyReportList : () -> Unit = {},
     navigateToLogout : () -> Unit = {},
+    navigateToPrivacyPolicy : () -> Unit = {},
     navigateToWithdraw : () -> Unit = {},
     popBackStack : () -> Unit = {}
 ) {
@@ -53,9 +55,11 @@ fun MyPageScreen(
         }
         Divider(color = Gray_100)
         MenuTitle(title = stringResource(id = string.my_vote_list), onClick = navigateToMyVoteList)
+        MenuTitle(title = stringResource(id = string.list_of_votes_i_participated_in), onClick = navigateToVoteIParticipatedIn)
         MenuTitle(title = stringResource(id = string.my_report_list), onClick = navigateToMyReportList)
         Divider(color = Gray_100)
         MenuTitle(title = stringResource(id = string.logout), onClick = navigateToLogout)
+        MenuTitle(title = stringResource(id = string.privacy_policy), onClick = navigateToPrivacyPolicy)
         MenuTitle(title = stringResource(id = string.withdraw), color = Red_500, onClick = navigateToWithdraw)
     }
 }

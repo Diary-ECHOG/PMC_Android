@@ -14,6 +14,9 @@ fun NavGraphBuilder.addHomeGraph(
     composable(ROUTE_HOME) {
         HomeScreen(
             navigateToVoteList = navigateToVoteList,
+            navigateToMyPage = {
+                navController.navigate("mypage")
+            },
             addDiary = navigateToAddDiary
         )
     }

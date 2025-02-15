@@ -197,7 +197,7 @@ fun TextFieldDecorationBox(
 fun EchogBasicTextFieldPreview() {
     EchogBasicTextField(
         label = "Label",
-        value = "Hello",
+        value = "HelloHelloHelloHelloHello\nHelloHelloHello",
         onValueChange = { },
         enabled = true,
         modifier = Modifier,
