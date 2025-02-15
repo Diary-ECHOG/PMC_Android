@@ -1,6 +1,5 @@
 package com.app.pmc.feat.mypage.withdraw
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -31,8 +30,6 @@ fun WithdrawConfirmScreen(
     onWithdrawSentenceChanged: (String) -> Unit,
     withdrawSentence: String
 ) {
-    Log.e("WithdrawConfirmScreen", "withdrawSentence: $withdrawSentence")
-    Log.e("WithdrawConfirmScreen", "${withdrawSentence == stringResource(R.string.withdraw_confirm_sentence)}")
     Column(modifier = modifier) {
         Spacer(
             modifier = Modifier
