@@ -39,8 +39,7 @@ fun TopBarWithBackButton(
                 popToBackStack()
             },
             imageVector = Icons.Filled.ArrowBack,
-            contentDescription = "",
-            colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.primary)
+            contentDescription = ""
         )
         Text(
             modifier = Modifier.padding(start = 10.dp),

@@ -1,6 +1,5 @@
 package com.app.pmc.feat.diary
 
-import android.media.tv.TvContract.Channels.Logo
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -22,10 +21,8 @@ import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -48,13 +45,13 @@ import com.app.pmc.core.ui.button.EchogButton
 import com.app.pmc.core.ui.textfield.EchogBasicTextField
 import com.app.pmc.core.ui.textfield.EchogNoLineTextField
 import com.app.pmc.core.util.LocalDateTimeExtension.toDiaryDate
-import com.app.pmc.ui.theme.Blue_500
-import com.app.pmc.ui.theme.ButtonLabel500
-import com.app.pmc.ui.theme.ButtonLabel600
-import com.app.pmc.ui.theme.Slate_100
-import com.app.pmc.ui.theme.Slate_25
-import com.app.pmc.ui.theme.Slate_600
-import com.app.pmc.ui.theme.TextFieldBorderColor_UnFocused
+import com.app.pmc.core.ui.theme.Blue_500
+import com.app.pmc.core.ui.theme.ButtonLabel500
+import com.app.pmc.core.ui.theme.ButtonLabel600
+import com.app.pmc.core.ui.theme.Slate_100
+import com.app.pmc.core.ui.theme.Slate_25
+import com.app.pmc.core.ui.theme.Slate_600
+import com.app.pmc.core.ui.theme.TextFieldBorderColor_UnFocused
 import org.orbitmvi.orbit.compose.collectAsState
 import java.time.LocalDateTime
 

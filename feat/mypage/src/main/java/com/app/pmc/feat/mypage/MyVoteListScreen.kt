@@ -28,11 +28,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.app.pmc.core.ui.topbar.TopBarWithBackButton
 import com.app.pmc.core.ui.R.string
-import com.app.pmc.ui.theme.Gray_100
-import com.app.pmc.ui.theme.Slate_400
-import com.app.pmc.ui.theme.Slate_600
-import com.app.pmc.ui.theme.Slate_800
-import com.app.pmc.ui.theme.TextSmall
+import com.app.pmc.core.ui.theme.Gray_100
+import com.app.pmc.core.ui.theme.Slate_400
+import com.app.pmc.core.ui.theme.Slate_600
+import com.app.pmc.core.ui.theme.TextSmall
 
 @Composable
 fun MyVoteListScreen(

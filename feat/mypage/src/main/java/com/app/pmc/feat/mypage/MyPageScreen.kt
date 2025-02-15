@@ -24,9 +24,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.app.pmc.core.ui.R.drawable
 import com.app.pmc.core.ui.R.string
-import com.app.pmc.ui.theme.Gray_100
-import com.app.pmc.ui.theme.Red_500
-import com.app.pmc.ui.theme.Slate_800
+import com.app.pmc.core.ui.theme.Gray_100
+import com.app.pmc.core.ui.theme.Red_500
 
 @Composable
 fun MyPageScreen(

@@ -39,9 +39,9 @@ import com.app.pmc.core.ui.R.drawable
 import com.app.pmc.core.ui.R.string
 import com.app.pmc.core.ui.card.EchogDefaultCard
 import com.app.pmc.core.ui.surface.GradientSurface
-import com.app.pmc.ui.theme.NormalButtonBorderColor
-import com.app.pmc.ui.theme.NormalButtonContentColor
-import com.app.pmc.ui.theme.White
+import com.app.pmc.core.ui.theme.NormalButtonBorderColor
+import com.app.pmc.core.ui.theme.NormalButtonContentColor
+import com.app.pmc.core.ui.theme.White
 import org.orbitmvi.orbit.compose.collectAsState
 
 @Composable

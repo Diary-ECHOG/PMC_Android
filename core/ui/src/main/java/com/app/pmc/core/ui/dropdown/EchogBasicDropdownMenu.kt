@@ -22,7 +22,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.app.pmc.core.ui.R
-import com.app.pmc.ui.theme.TextFieldBorderColor_UnFocused
+import com.app.pmc.core.ui.theme.TextFieldBorderColor_UnFocused
 
 @Composable
 fun EchogBasicDropdownMenu(
