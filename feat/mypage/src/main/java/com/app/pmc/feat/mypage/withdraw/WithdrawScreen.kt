@@ -45,16 +45,18 @@ private fun WithdrawScreen(
             )
         },
         content = { innerPadding ->
-            WithdrawConfirmScreen(
-                modifier = modifier.padding(innerPadding),
-                onWithdrawSentenceChanged = onWithdrawSentenceChanged,
-                withdrawSentence = state.withdrawSentence
-            )
-//            WithdrawReasonScreen(r
-//                modifier = modifier.fillMaxSize().padding(innerPadding),
-//                state = state,
-//                onReasonSelected = onReasonSelected
+//            WithdrawConfirmScreen(
+//                modifier = modifier.padding(innerPadding),
+//                onWithdrawSentenceChanged = onWithdrawSentenceChanged,
+//                withdrawSentence = state.withdrawSentence
 //            )
+            WithdrawReasonScreen(
+                modifier = modifier
+                    .fillMaxSize()
+                    .padding(innerPadding),
+                state = state,
+                onReasonSelected = onReasonSelected
+            )
         }
     )
 }
@@ -65,16 +67,16 @@ fun WithdrawScreenPreview() {
     WithdrawScreen(
         state = WithdrawState(
             withdrawReasonList = listOf(
-                "Reason 1",
-                "Reason 2",
-                "Reason 3",
-                "Reason 4",
-                "Reason 5",
-                "Reason 6",
-                "Reason 7"
+                stringResource(R.string.withdraw_reason_1),
+                stringResource(R.string.withdraw_reason_2),
+                stringResource(R.string.withdraw_reason_3),
+                stringResource(R.string.withdraw_reason_4),
+                stringResource(R.string.withdraw_reason_5),
+                stringResource(R.string.withdraw_reason_6),
+                stringResource(R.string.withdraw_reason_7),
             ),
-            selectedReason = "Reason 1",
-            withdrawSentence = "Withdraw sentence"
+            selectedReason = stringResource(R.string.withdraw_reason_7),
+            withdrawSentence = ""
         ),
         onReasonSelected = {},
         onWithdrawSentenceChanged = {}

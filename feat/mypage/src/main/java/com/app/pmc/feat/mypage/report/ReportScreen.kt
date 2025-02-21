@@ -147,22 +147,22 @@ fun ReportScreenPreview() {
                 Report(
                     state = "처리 대기",
                     date = "2021.10.10",
-                    title = "title",
+                    title = "제목1제묵1제목1제묵1제목1제묵1",
                 ),
                 Report(
                     state = "처리 중",
                     date = "2021.10.10",
-                    title = "title",
+                    title = "제목1제묵1제목1제묵1제목1제묵1제목1제묵1제목1",
                 ),
                 Report(
                     state = "처리 중",
                     date = "2021.10.10",
-                    title = "title",
+                    title = "제목1제묵1제목1제묵1제목1제묵1",
                 ),
                 Report(
                     state = "처리 완료",
                     date = "2021.10.10",
-                    title = "title",
+                    title = "제목1제묵1제목1제묵1제목1제묵1제목1제묵1",
                 )
             )
         )
