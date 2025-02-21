@@ -11,13 +11,20 @@
     <string name="user_info_email">이메일</string>
     <string name="user_info_placeholder_email">비밀번호 재설정에 필요해요.</string>
     <string name="user_info_verify_button_label">인증 요청</string>
+    <string name="user_info_splash_content">먼저 당신의 정보를\n알고 싶어요</string>
 
 <!--    default text-->
     <string name="search_place_holder">검색어를 입력해 주세요.</string>
     <string name="recent_search_keyword">최근 검색</string>
     <string name="delete_all">전체 삭제</string>
 
-<!--    login-->
+    <!--    onboarding-->
+    <string name="onboarding_description_1">나의 일기를 작성하고</string>
+    <string name="onboarding_description_2">궁금한 투표도 할 수 있어요</string>
+    <string name="onboarding_description_3">아무도 못보게 지켜줄게요</string>
+    <string name="onboarding_start_description">시작하기</string>
+
+    <!--    login-->
     <string name="login">로그인</string>
     <string name="find_my_password">비밀번호를 찾고 싶어요!</string>
 

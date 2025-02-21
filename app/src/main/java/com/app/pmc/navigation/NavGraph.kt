@@ -4,12 +4,15 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.app.pmc.feat.auth.navigation.addJoinGraph
+import com.app.pmc.feat.auth.navigation.navigateToJoin
 import com.app.pmc.feat.calendar.navigation.addCalendarGraph
 import com.app.pmc.feat.diary.navigation.addDiaryGraph
 import com.app.pmc.feat.diary.navigation.navigateToAddDiary
 import com.app.pmc.feat.home.ROUTE_HOME
 import com.app.pmc.feat.home.addHomeGraph
 import com.app.pmc.feat.mypage.addMyPageGraph
+import com.app.pmc.feat.splash.ROUTE_SPLASH
+import com.app.pmc.feat.splash.addSplashGraph
 import com.app.pmc.feat.vote.addVoteGraph
 import com.app.pmc.feat.vote.navigateVote
 
@@ -17,9 +20,15 @@ import com.app.pmc.feat.vote.navigateVote
 fun PMCNavHost(
     navController: NavHostController
 ) {
-    NavHost(navController = navController, startDestination = ROUTE_HOME) {
+    NavHost(navController = navController, startDestination = ROUTE_SPLASH) {
         addCalendarGraph(navController = navController)
         addJoinGraph(navController = navController)
+        addSplashGraph(
+            navController = navController,
+            onNavigateToJoinScreen = {
+                navController.navigateToJoin()
+            }
+        )
         addHomeGraph(
             navController = navController, navigateToVoteList = {
                 navController.navigateVote()
