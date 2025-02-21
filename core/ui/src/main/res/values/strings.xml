@@ -17,7 +17,13 @@
     <string name="recent_search_keyword">최근 검색</string>
     <string name="delete_all">전체 삭제</string>
 
-<!--    login-->
+    <!--    onboarding-->
+    <string name="onboarding_description_1">나의 일기를 작성하고</string>
+    <string name="onboarding_description_2">궁금한 투표도 할 수 있어요</string>
+    <string name="onboarding_description_3">아무도 못보게 지켜줄게요</string>
+    <string name="onboarding_start_description">시작하기</string>
+
+    <!--    login-->
     <string name="login">로그인</string>
     <string name="find_my_password">비밀번호를 찾고 싶어요!</string>
 

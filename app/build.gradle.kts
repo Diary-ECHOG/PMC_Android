@@ -61,6 +61,7 @@ dependencies {
     implementation(project(":feat:vote"))
     implementation(project(":feat:mypage"))
     implementation(project(":feat:diary"))
+    implementation(project(":feat:splash"))
     ksp(libs.hilt.compiler)
     ksp(libs.androidx.hilt.complier)
 
