@@ -57,11 +57,6 @@ dependencies {
     //hilt
     implementation(libs.hilt.android)
     implementation(libs.androidx.hilt.navigation.compose)
-    implementation(project(":feat:home"))
-    implementation(project(":feat:vote"))
-    implementation(project(":feat:mypage"))
-    implementation(project(":feat:diary"))
-    implementation(project(":feat:splash"))
     ksp(libs.hilt.compiler)
     ksp(libs.androidx.hilt.complier)
 
@@ -86,4 +81,9 @@ dependencies {
     implementation(project(":feat:calendar"))
     implementation(project(":feat:auth"))
     implementation(project(":core:ui"))
+    implementation(project(":feat:home"))
+    implementation(project(":feat:vote"))
+    implementation(project(":feat:mypage"))
+    implementation(project(":feat:diary"))
+    implementation(project(":feat:splash"))
 }
