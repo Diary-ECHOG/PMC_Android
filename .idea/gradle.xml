@@ -14,9 +14,12 @@
             <option value="$PROJECT_DIR$/core" />
             <option value="$PROJECT_DIR$/core/model" />
             <option value="$PROJECT_DIR$/core/ui" />
+            <option value="$PROJECT_DIR$/core/util" />
+            <option value="$PROJECT_DIR$/data" />
             <option value="$PROJECT_DIR$/feat" />
             <option value="$PROJECT_DIR$/feat/auth" />
             <option value="$PROJECT_DIR$/feat/calendar" />
+            <option value="$PROJECT_DIR$/feat/diary" />
             <option value="$PROJECT_DIR$/feat/home" />
             <option value="$PROJECT_DIR$/feat/mypage" />
             <option value="$PROJECT_DIR$/feat/splash" />
