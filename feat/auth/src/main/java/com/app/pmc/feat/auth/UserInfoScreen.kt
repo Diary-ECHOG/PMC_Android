@@ -200,21 +200,20 @@ private fun VerifyPasswordField(
 
 @Composable
 private fun EmailField(
+    modifier: Modifier = Modifier,
     email: String,
     onEmailChanged: (String) -> Unit
 ) {
-    Row {
+    Row() {
         EchogBasicTextField(
-            modifier = Modifier.fillMaxWidth(0.8f),
+            modifier = modifier.fillMaxWidth(0.8f),
             label = stringResource(R.string.user_info_email),
             placeholder = stringResource(R.string.user_info_placeholder_email),
             value = email,
             onValueChange = onEmailChanged,
         )
         EchogButton(
-            modifier = Modifier
-                .fillMaxWidth(.2f)
-                .padding(bottom = 20.dp),
+            modifier = modifier.padding(top = 13.dp, start = 8.dp),
             label = stringResource(R.string.verify),
             onClick = { }
         )
