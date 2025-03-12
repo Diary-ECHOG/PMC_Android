@@ -149,10 +149,7 @@ fun TextFieldDecorationBox(
                 }
                 Box(
                     modifier = Modifier
-                        .weight(1f)
-                        .defaultMinSize(
-                            minHeight = defaultMinHeight ?: TextFieldDefaults.MinHeight,
-                        ),
+                        .weight(1f),
                     contentAlignment = Alignment.CenterStart,
                     propagateMinConstraints = true
                 ) {

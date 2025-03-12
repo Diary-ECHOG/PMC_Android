@@ -71,7 +71,7 @@ internal fun UserInfoScreen(
         delay(800L)
     }
 
-    if(!isVisible) LazyColumn(
+    if (!isVisible) LazyColumn(
         modifier = modifier
             .padding(horizontal = 20.dp)
             .fillMaxSize(),
@@ -203,12 +203,22 @@ private fun EmailField(
     email: String,
     onEmailChanged: (String) -> Unit
 ) {
-    EchogBasicTextField(
-        label = stringResource(R.string.user_info_email),
-        placeholder = stringResource(R.string.user_info_placeholder_email),
-        value = email,
-        onValueChange = onEmailChanged,
-    )
+    Row {
+        EchogBasicTextField(
+            modifier = Modifier.fillMaxWidth(0.8f),
+            label = stringResource(R.string.user_info_email),
+            placeholder = stringResource(R.string.user_info_placeholder_email),
+            value = email,
+            onValueChange = onEmailChanged,
+        )
+        EchogButton(
+            modifier = Modifier
+                .fillMaxWidth(.2f)
+                .padding(bottom = 20.dp),
+            label = stringResource(R.string.verify),
+            onClick = { }
+        )
+    }
 }
 
 @Composable
