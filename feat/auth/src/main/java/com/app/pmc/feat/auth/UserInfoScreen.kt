@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Text
@@ -71,7 +72,7 @@ internal fun UserInfoScreen(
         delay(800L)
     }
 
-    if(!isVisible) LazyColumn(
+    LazyColumn(
         modifier = modifier
             .padding(horizontal = 20.dp)
             .fillMaxSize(),
@@ -114,9 +115,9 @@ internal fun UserInfoScreen(
             )
         }
     }
-    else SplashContent(
-        isVisible = isVisible
-    )
+//    else SplashContent(
+//        isVisible = isVisible
+//    )
 }
 
 @Composable
@@ -155,6 +156,7 @@ private fun VerifyNumberField(
         modifier = Modifier.fillMaxWidth()
     ) {
         EchogBasicTextField(
+            defaultMinHeight = 40.dp,
             modifier = modifier.weight(0.8f),
             label = stringResource(R.string.user_info_verify_number),
             placeholder = stringResource(R.string.user_info_placeholder_verify_number_required),
@@ -204,8 +206,9 @@ private fun EmailField(
     onEmailChanged: (String) -> Unit
 ) {
     EchogBasicTextField(
+        defaultMinHeight = 40.dp,
         label = stringResource(R.string.user_info_email),
-        placeholder = stringResource(R.string.user_info_placeholder_email),
+        placeholder = stringResource(R.string.user_info_email),
         value = email,
         onValueChange = onEmailChanged,
     )
