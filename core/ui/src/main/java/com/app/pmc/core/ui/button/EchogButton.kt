@@ -70,7 +70,7 @@ fun EchogButton(
                 )
             }
             Text(
-                modifier = Modifier.padding(vertical = 11.dp),
+                modifier = Modifier.padding(vertical = 10.dp),
                 text = label,
                 color = contentColor,
                 style = labelStyle

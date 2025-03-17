@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -20,7 +21,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -28,7 +28,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.transition.Visibility
 import com.app.pmc.core.ui.R
 import com.app.pmc.core.ui.button.EchogButton
 import com.app.pmc.core.ui.textfield.EchogBasicTextField
@@ -46,6 +45,7 @@ fun UserInfoScreen(
 
     UserInfoScreen(
         state = state.value,
+        onSendCode = viewModel::onSendCode,
         onVerifyNumberChanged = viewModel::onVerifyNumberChanged,
         onPasswordChanged = viewModel::onPasswordChanged,
         onPasswordVerifyChanged = viewModel::onPasswordVerifyChanged,
@@ -57,6 +57,7 @@ fun UserInfoScreen(
 internal fun UserInfoScreen(
     modifier: Modifier = Modifier,
     state: UserInfoState = UserInfoState(),
+    onSendCode: () -> Unit = { },
     onVerifyNumberChanged: (String) -> Unit = { },
     onPasswordChanged: (String) -> Unit = { },
     onPasswordVerifyChanged: (String) -> Unit = { },
@@ -71,7 +72,7 @@ internal fun UserInfoScreen(
         delay(800L)
     }
 
-    if (!isVisible) LazyColumn(
+    LazyColumn(
         modifier = modifier
             .padding(horizontal = 20.dp)
             .fillMaxSize(),
@@ -88,7 +89,8 @@ internal fun UserInfoScreen(
                 )
                 EmailField(
                     email = state.email,
-                    onEmailChanged = onEmailChanged
+                    onEmailChanged = onEmailChanged,
+                    onSendCodeClick = onSendCode
                 )
                 VerifyNumberField(
                     verifyNumber = state.verifyNumber,
@@ -114,9 +116,9 @@ internal fun UserInfoScreen(
             )
         }
     }
-    else SplashContent(
-        isVisible = isVisible
-    )
+//    else SplashContent(
+//        isVisible = isVisible
+//    )
 }
 
 @Composable
@@ -155,7 +157,7 @@ private fun VerifyNumberField(
         modifier = Modifier.fillMaxWidth()
     ) {
         EchogBasicTextField(
-            modifier = modifier.weight(0.8f),
+            modifier = modifier.fillMaxWidth(0.8f),
             label = stringResource(R.string.user_info_verify_number),
             placeholder = stringResource(R.string.user_info_placeholder_verify_number_required),
             value = verifyNumber,
@@ -163,7 +165,6 @@ private fun VerifyNumberField(
         )
         EchogButton(
             modifier = modifier
-                .weight(0.2f)
                 .padding(start = 8.dp),
             label = stringResource(R.string.verify),
             labelStyle = ButtonLabel500,
@@ -193,6 +194,7 @@ private fun VerifyPasswordField(
 ) {
     EchogPasswordTextField(
         label = stringResource(R.string.user_info_confirm_password),
+        placeholder = stringResource(R.string.user_info_placeholder_password_confirm),
         value = confirmPassword,
         onValueChange = onPasswordVerifyChanged,
     )
@@ -202,9 +204,12 @@ private fun VerifyPasswordField(
 private fun EmailField(
     modifier: Modifier = Modifier,
     email: String,
-    onEmailChanged: (String) -> Unit
+    onEmailChanged: (String) -> Unit,
+    onSendCodeClick: () -> Unit
 ) {
-    Row() {
+    Row(
+        verticalAlignment = Alignment.Bottom,
+    ) {
         EchogBasicTextField(
             modifier = modifier.fillMaxWidth(0.8f),
             label = stringResource(R.string.user_info_email),
@@ -213,9 +218,10 @@ private fun EmailField(
             onValueChange = onEmailChanged,
         )
         EchogButton(
-            modifier = modifier.padding(top = 13.dp, start = 8.dp),
-            label = stringResource(R.string.verify),
-            onClick = { }
+            enabled = email.isNotEmpty(),
+            modifier = modifier.padding(start = 8.dp).fillMaxHeight(),
+            label = stringResource(R.string.user_info_send_code),
+            onClick = onSendCodeClick
         )
     }
 }

@@ -59,7 +59,7 @@ fun EchogPasswordTextField(
                 label = label,
                 trailingIcon = {
                     Image(
-                        modifier = Modifier.size(24.dp).clickable {
+                        modifier = Modifier.size(16.dp).clickable {
                             passwordVisible = !passwordVisible
                         },
                         painter = painterResource(id =if(passwordVisible) R.drawable.ic_eye else R.drawable.ic_eye_off),

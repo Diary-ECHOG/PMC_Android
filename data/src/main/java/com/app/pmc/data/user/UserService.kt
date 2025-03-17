@@ -1,4 +1,4 @@
-package com.app.pmc.data
+package com.app.pmc.data.user
 
 import com.app.pmc.data.model.ReportRequest
 import retrofit2.http.POST

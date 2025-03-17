@@ -1,21 +1,22 @@
 package com.app.pmc.feat.auth
 
 import androidx.lifecycle.ViewModel
+import com.app.pmc.core.usecase.SendCodeUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.blockingIntent
+import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
 import javax.inject.Inject
 
 @HiltViewModel
-class UserInfoViewModel @Inject constructor() : ViewModel(), ContainerHost<UserInfoState, Unit> {
+class UserInfoViewModel @Inject constructor(
+    val sendCodeUseCase: SendCodeUseCase
+) : ViewModel(), ContainerHost<UserInfoState, Unit> {
     override val container: Container<UserInfoState, Unit> = container(UserInfoState())
 
-    init {
-
-    }
 
     fun onPhoneNumberChanged(name: String) = blockingIntent {
         reduce {
@@ -51,6 +52,14 @@ class UserInfoViewModel @Inject constructor() : ViewModel(), ContainerHost<UserI
         reduce {
             state.copy(
                 email = email
+            )
+        }
+    }
+
+    fun onSendCode() = intent {
+        reduce {
+            state.copy(
+                isSubmitting = true
             )
         }
     }
