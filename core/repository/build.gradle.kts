@@ -1,6 +1,5 @@
 plugins {
     id("java-library")
-    alias(libs.plugins.ksp)
     alias(libs.plugins.jetbrains.kotlin.jvm)
 }
 
@@ -16,5 +15,5 @@ kotlin {
 }
 
 dependencies {
-    implementation ("com.google.dagger:hilt-core:2.55")
+    implementation(libs.hilt.core)
 }

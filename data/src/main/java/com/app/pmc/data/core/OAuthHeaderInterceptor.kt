@@ -2,8 +2,9 @@ package com.app.pmc.data.core
 
 import okhttp3.Interceptor
 import okhttp3.Response
+import javax.inject.Inject
 
-class OAuthHeaderInterceptor(
+class OAuthHeaderInterceptor @Inject constructor(
     private val tokenProvider: TokenProvider
 ) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {

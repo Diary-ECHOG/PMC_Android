@@ -1,5 +1,6 @@
 package com.app.pmc.data.di
 
+import com.app.pmc.data.BuildConfig
 import com.app.pmc.data.core.OAuthHeaderInterceptor
 import com.app.pmc.data.core.OAuthenticator
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory

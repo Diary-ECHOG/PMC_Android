@@ -1,9 +1,26 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt.android)
     kotlin("plugin.serialization") version "2.1.10"
+}
+
+fun Project.gradleLocalProperties(providers: ProviderFactory, rootDir: File): Properties {
+    val properties = Properties()
+    val localPropertiesFile = File(rootDir, "local.properties")
+    if (localPropertiesFile.exists()) {
+        properties.load(localPropertiesFile.inputStream())
+    }
+    return properties
+}
+
+fun Project.getGradleLocalProperties(propertyKey: String): String {
+    val localProperties = gradleLocalProperties(providers, rootDir)
+    return localProperties.getProperty(propertyKey, "")
 }
 
 android {
@@ -15,6 +32,7 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
+        buildConfigField("String", "BASE_URL", getGradleLocalProperties("base.url"))
     }
 
     buildTypes {
@@ -38,7 +56,6 @@ android {
 dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
-    implementation(project(":core:repository"))
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -57,4 +74,5 @@ dependencies {
     implementation(libs.kotlinx.serilization.json)
 
     implementation(project(":core:model"))
+    implementation(project(":core:repository"))
 }

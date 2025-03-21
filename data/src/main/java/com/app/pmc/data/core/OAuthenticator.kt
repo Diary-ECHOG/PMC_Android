@@ -4,8 +4,9 @@ import okhttp3.Authenticator
 import okhttp3.Request
 import okhttp3.Response
 import okhttp3.Route
+import javax.inject.Inject
 
-class OAuthenticator(
+class OAuthenticator @Inject constructor(
     private val tokenProvider: TokenProvider
 ) : Authenticator {
 
@@ -24,7 +25,7 @@ class OAuthenticator(
     }
 }
 
-class TokenProvider {
+class TokenProvider @Inject constructor() {
     private var accessToken: String? = null
 
     fun getAccessToken(): String? = accessToken
