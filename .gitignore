@@ -16,3 +16,7 @@ local.properties
 /.idea
 /feat/mypage/build
 /feat/vote/build
+/core/repository/build
+/core/usecase/build
+data/build/.transforms/07a666b41283077b0fcd0e3205db760e/results.bin
+/data/build
