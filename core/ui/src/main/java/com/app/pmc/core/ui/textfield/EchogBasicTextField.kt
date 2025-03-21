@@ -49,7 +49,6 @@ fun EchogBasicTextField(
     trailingIcon: @Composable (() -> Unit)? = null,
     defaultMinHeight: Dp? = null,
     visualTransformation: VisualTransformation = VisualTransformation.None,
-    decorationBox: @Composable (() -> Unit)? = null,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() }
@@ -68,7 +67,6 @@ fun EchogBasicTextField(
             TextFieldDecorationBox(
                 modifier = modifier,
                 value = value,
-                defaultMinHeight = defaultMinHeight,
                 innerTextField = innerTextField,
                 interactionSource = interactionSource,
                 label = label,
@@ -89,7 +87,6 @@ fun EchogBasicTextField(
 fun TextFieldDecorationBox(
     modifier: Modifier = Modifier,
     value: String,
-    defaultMinHeight: Dp? = null,
     innerTextField: @Composable () -> Unit,
     textAlignment: TextAlign = TextAlign.Start,
     interactionSource: InteractionSource,
@@ -152,10 +149,7 @@ fun TextFieldDecorationBox(
                 }
                 Box(
                     modifier = Modifier
-                        .weight(1f)
-                        .defaultMinSize(
-                            minHeight = defaultMinHeight ?: TextFieldDefaults.MinHeight,
-                        ),
+                        .weight(1f),
                     contentAlignment = Alignment.CenterStart,
                     propagateMinConstraints = true
                 ) {
@@ -213,6 +207,5 @@ fun EchogBasicTextFieldPreview() {
         leadingIcon = null,
         trailingIcon = null,
         visualTransformation = VisualTransformation.None,
-        decorationBox = { }
     )
 }

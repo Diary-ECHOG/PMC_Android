@@ -191,6 +191,5 @@ fun EchogFilledTextFieldPreview() {
         leadingIcon = null,
         trailingIcon = null,
         visualTransformation = VisualTransformation.None,
-        decorationBox = { }
     )
 }

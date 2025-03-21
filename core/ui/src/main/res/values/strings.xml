@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--    userinfo-->
     <string name="user_info_screen_title">정보를\n입력해 주세요.</string>
     <string name="user_info_placeholder_number_only">숫자만 입력해 주세요.</string>
     <string name="user_info_phone_number">휴대폰 번호</string>
@@ -8,12 +9,14 @@
     <string name="user_info_password">비밀번호</string>
     <string name="user_info_placeholder_password_rule">영문, 숫자 조합 8자</string>
     <string name="user_info_confirm_password">비밀번호 재입력</string>
+    <string name="user_info_placeholder_password_confirm">한번 더 입력해 주세요.</string>
     <string name="user_info_email">이메일</string>
     <string name="user_info_placeholder_email">비밀번호 재설정에 필요해요.</string>
+    <string name="user_info_send_code">코드발송</string>
     <string name="user_info_verify_button_label">인증 요청</string>
     <string name="user_info_splash_content">먼저 당신의 정보를\n알고 싶어요</string>
 
-<!--    default text-->
+    <!--    default text-->
     <string name="search_place_holder">검색어를 입력해 주세요.</string>
     <string name="recent_search_keyword">최근 검색</string>
     <string name="delete_all">전체 삭제</string>
@@ -75,7 +78,7 @@
     <string name="next">다음</string>
     <string name="complete">완료</string>
     <string name="confirm">확인</string>
-    <string name="verify">인증</string>
+    <string name="verify">인증하기</string>
     <string name="cancel">취소</string>
     <string name="add">등록</string>
 
