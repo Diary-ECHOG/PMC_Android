@@ -1,6 +1,7 @@
 package com.app.pmc
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
@@ -28,7 +29,10 @@ class MainActivity() : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     PMCNavHost(
-                        navController = navController
+                        navController = navController,
+                        showSnackBar = {
+                            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+                        }
                     )
                 }
             }

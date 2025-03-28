@@ -3,10 +3,12 @@ package com.app.pmc.feat.auth
 import androidx.lifecycle.ViewModel
 import com.app.pmc.core.usecase.SendCodeUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.collectLatest
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.blockingIntent
 import org.orbitmvi.orbit.syntax.simple.intent
+import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
 import javax.inject.Inject
@@ -14,8 +16,8 @@ import javax.inject.Inject
 @HiltViewModel
 class UserInfoViewModel @Inject constructor(
     val sendCodeUseCase: SendCodeUseCase
-) : ViewModel(), ContainerHost<UserInfoState, Unit> {
-    override val container: Container<UserInfoState, Unit> = container(UserInfoState())
+) : ViewModel(), ContainerHost<UserInfoState, Event> {
+    override val container: Container<UserInfoState, Event> = container(UserInfoState())
 
 
     fun onPhoneNumberChanged(name: String) = blockingIntent {
@@ -34,6 +36,7 @@ class UserInfoViewModel @Inject constructor(
             )
         }
     }
+
     fun onPasswordChanged(password: String) = blockingIntent {
         reduce {
             state.copy(
@@ -41,6 +44,7 @@ class UserInfoViewModel @Inject constructor(
             )
         }
     }
+
     fun onPasswordVerifyChanged(password: String) = blockingIntent {
         reduce {
             state.copy(
@@ -48,6 +52,7 @@ class UserInfoViewModel @Inject constructor(
             )
         }
     }
+
     fun onEmailChanged(email: String) = blockingIntent {
         reduce {
             state.copy(
@@ -57,12 +62,8 @@ class UserInfoViewModel @Inject constructor(
     }
 
     fun onSendCode() = intent {
-        reduce {
-            sendCodeUseCase(state.email).collect {
-                state.copy(
-                    isSubmitted = true
-                )
-            }
+        sendCodeUseCase(state.email).collectLatest {
+            postSideEffect(Event.Toast(it))
         }
     }
 }
@@ -82,3 +83,9 @@ data class UserInfoState(
     val isSubmitted: Boolean = false,
     val errorMessage: String = "",
 )
+
+sealed class Event {
+    data class Toast(
+        val message: String
+    ) : Event()
+}

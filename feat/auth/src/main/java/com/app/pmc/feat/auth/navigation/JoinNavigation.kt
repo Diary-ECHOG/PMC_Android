@@ -12,8 +12,10 @@ fun NavController.navigateToJoin() {
     navigate(ROUTE_JOIN)
 }
 
-fun NavGraphBuilder.addJoinGraph(navController: NavController) {
+fun NavGraphBuilder.addJoinGraph(navController: NavController, showSnackBar: (String) -> Unit) {
     composable(ROUTE_JOIN) {
-        UserInfoScreen()
+        UserInfoScreen(
+            showSnackBar = showSnackBar
+        )
     }
 }

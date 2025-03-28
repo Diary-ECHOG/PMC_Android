@@ -6,5 +6,5 @@ import javax.inject.Inject
 class SendCodeUseCase @Inject constructor(
    private val repository: UserRepository
 ) {
-    operator fun invoke() = repository.sendCode()
+    operator fun invoke(email: String) = repository.sendCode(email = email)
 }

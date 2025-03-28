@@ -14,6 +14,7 @@ import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
+import java.util.concurrent.TimeUnit
 import javax.inject.Qualifier
 import javax.inject.Singleton
 
@@ -28,6 +29,9 @@ internal object NetworkModule {
             .addInterceptor(HttpLoggingInterceptor().apply {
                 level = HttpLoggingInterceptor.Level.BODY
             })
+            .connectTimeout(30, TimeUnit.SECONDS) // 연결 타임아웃 (기본 10초 → 30초로 증가)
+            .readTimeout(30, TimeUnit.SECONDS)    // 읽기 타임아웃
+            .writeTimeout(30, TimeUnit.SECONDS)
     }
 
     @Provides

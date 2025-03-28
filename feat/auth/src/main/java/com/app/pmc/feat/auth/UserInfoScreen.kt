@@ -36,12 +36,20 @@ import com.app.pmc.core.ui.theme.ButtonLabel500
 import com.app.pmc.core.ui.theme.LargeDescription
 import kotlinx.coroutines.delay
 import org.orbitmvi.orbit.compose.collectAsState
+import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
 fun UserInfoScreen(
+    showSnackBar: (String) -> Unit,
     viewModel: UserInfoViewModel = hiltViewModel()
 ) {
     val state = viewModel.collectAsState()
+    viewModel.collectSideEffect { sideEffect ->
+        when (sideEffect) {
+            is Event.Toast -> showSnackBar(sideEffect.message)
+            else -> {}
+        }
+    }
 
     UserInfoScreen(
         state = state.value,
