@@ -22,7 +22,7 @@ class UserInfoViewModel @Inject constructor(
         reduce {
             state.copy(
                 phoneNumber = name,
-                isphoneNumberValid = name.length == 11
+                isPhoneNumberValid = name.length == 11
             )
         }
     }
@@ -58,9 +58,11 @@ class UserInfoViewModel @Inject constructor(
 
     fun onSendCode() = intent {
         reduce {
-            state.copy(
-                isSubmitting = true
-            )
+            sendCodeUseCase(state.email).collect {
+                state.copy(
+                    isSubmitted = true
+                )
+            }
         }
     }
 }
@@ -70,7 +72,7 @@ data class UserInfoState(
     val email: String = "",
     val password: String = "",
     val confirmPassword: String = "",
-    val isphoneNumberValid: Boolean = false,
+    val isPhoneNumberValid: Boolean = false,
     val isEmailValid: Boolean = false,
     val isPasswordValid: Boolean = false,
     val isConfirmPasswordValid: Boolean = false,

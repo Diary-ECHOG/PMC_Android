@@ -16,3 +16,23 @@ local.properties
 /.idea
 /feat/mypage/build
 /feat/vote/build
+*.java
+/app/build 2
+/core/model/build 2
+/core/repository/build 2
+/core/ui/build 2
+/core/usecase/build 2
+/core/util/build 2
+/data/build 2
+/feat/auth/build 2
+/feat/calendar/build 2
+/feat/diary/build 2
+/feat/home/build 2
+/feat/mypage/build 2
+/feat/splash/build 2
+/feat/vote/build 2
+data/build.gradle 2.kts
+data/consumer-rules 2.pro
+data/proguard-rules 2.pro
+core/repository/build.gradle 2.kts
+core/usecase/build.gradle 2.kts
