@@ -36,6 +36,7 @@ import androidx.compose.ui.unit.dp
 fun EchogBasicTextField(
     modifier: Modifier = Modifier,
     value: String,
+    textAlignment: TextAlign = TextAlign.Start,
     onValueChange: (String) -> Unit,
     enabled: Boolean = true,
     label: String? = null,
@@ -69,6 +70,7 @@ fun EchogBasicTextField(
                 innerTextField = innerTextField,
                 interactionSource = interactionSource,
                 label = label,
+                textAlignment = textAlignment,
                 leadingIcon = leadingIcon,
                 trailingIcon = trailingIcon,
                 placeholder = placeholder,
@@ -86,6 +88,7 @@ fun TextFieldDecorationBox(
     modifier: Modifier = Modifier,
     value: String,
     innerTextField: @Composable () -> Unit,
+    textAlignment: TextAlign = TextAlign.Start,
     interactionSource: InteractionSource,
     label: String? = null,
     placeholder: String? = null,
@@ -152,6 +155,8 @@ fun TextFieldDecorationBox(
                 ) {
                     if (placeholder != null && value.isEmpty()) {
                         Text(
+                            modifier = Modifier.align(Alignment.Center),
+                            textAlign = textAlignment,
                             text = placeholder,
                             style = EchogTextFieldDefaults.TextStyles.textStyle.copy(
                                 color =

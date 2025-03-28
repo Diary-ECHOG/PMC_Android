@@ -36,3 +36,6 @@ data/consumer-rules 2.pro
 data/proguard-rules 2.pro
 core/repository/build.gradle 2.kts
 core/usecase/build.gradle 2.kts
+/core/repository/build
+/core/usecase/build
+/data/build
