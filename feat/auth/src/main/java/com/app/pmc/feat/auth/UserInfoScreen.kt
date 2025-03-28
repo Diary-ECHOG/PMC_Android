@@ -54,6 +54,7 @@ fun UserInfoScreen(
     UserInfoScreen(
         state = state.value,
         onSendCode = viewModel::onSendCode,
+        onVerify = viewModel::onVerify,
         onVerifyNumberChanged = viewModel::onVerifyNumberChanged,
         onPasswordChanged = viewModel::onPasswordChanged,
         onPasswordVerifyChanged = viewModel::onPasswordVerifyChanged,
@@ -66,6 +67,7 @@ internal fun UserInfoScreen(
     modifier: Modifier = Modifier,
     state: UserInfoState = UserInfoState(),
     onSendCode: () -> Unit = { },
+    onVerify: () -> Unit = { },
     onVerifyNumberChanged: (String) -> Unit = { },
     onPasswordChanged: (String) -> Unit = { },
     onPasswordVerifyChanged: (String) -> Unit = { },
@@ -102,7 +104,8 @@ internal fun UserInfoScreen(
                 )
                 VerifyNumberField(
                     verifyNumber = state.verifyNumber,
-                    onVerifyNumberChanged = onVerifyNumberChanged
+                    onVerifyNumberChanged = onVerifyNumberChanged,
+                    onVerify = onVerify
                 )
                 PasswordField(
                     password = state.password,
@@ -157,6 +160,7 @@ private fun SplashContent(
 private fun VerifyNumberField(
     modifier: Modifier = Modifier,
     verifyNumber: String,
+    onVerify: () -> Unit = { },
     onVerifyNumberChanged: (String) -> Unit
 ) {
     Row(
@@ -177,7 +181,7 @@ private fun VerifyNumberField(
             label = stringResource(R.string.verify),
             labelStyle = ButtonLabel500,
             enabled = verifyNumber.isNotEmpty(),
-            onClick = { }
+            onClick = onVerify
         )
     }
 }

@@ -2,6 +2,7 @@ package com.app.pmc.feat.auth
 
 import androidx.lifecycle.ViewModel
 import com.app.pmc.core.usecase.SendCodeUseCase
+import com.app.pmc.core.usecase.VerifyUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
 import org.orbitmvi.orbit.Container
@@ -15,7 +16,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class UserInfoViewModel @Inject constructor(
-    val sendCodeUseCase: SendCodeUseCase
+    val sendCodeUseCase: SendCodeUseCase,
+    val onVerifyUseCase: VerifyUseCase
 ) : ViewModel(), ContainerHost<UserInfoState, Event> {
     override val container: Container<UserInfoState, Event> = container(UserInfoState())
 
@@ -63,6 +65,12 @@ class UserInfoViewModel @Inject constructor(
 
     fun onSendCode() = intent {
         sendCodeUseCase(state.email).collectLatest {
+            postSideEffect(Event.Toast(it))
+        }
+    }
+
+    fun onVerify() = intent {
+        onVerifyUseCase(token = state.verifyNumber, email = state.email).collectLatest {
             postSideEffect(Event.Toast(it))
         }
     }

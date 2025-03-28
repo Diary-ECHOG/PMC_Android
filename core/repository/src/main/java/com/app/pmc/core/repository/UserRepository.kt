@@ -4,4 +4,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface UserRepository {
     fun sendCode(email: String): Flow<String>
+    fun verify(email: String, token: String): Flow<String>
 }
