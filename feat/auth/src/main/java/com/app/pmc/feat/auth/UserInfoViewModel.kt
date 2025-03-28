@@ -2,27 +2,31 @@ package com.app.pmc.feat.auth
 
 import androidx.lifecycle.ViewModel
 import com.app.pmc.core.usecase.SendCodeUseCase
+import com.app.pmc.core.usecase.VerifyUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.collectLatest
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.blockingIntent
 import org.orbitmvi.orbit.syntax.simple.intent
+import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
 import javax.inject.Inject
 
 @HiltViewModel
 class UserInfoViewModel @Inject constructor(
-    val sendCodeUseCase: SendCodeUseCase
-) : ViewModel(), ContainerHost<UserInfoState, Unit> {
-    override val container: Container<UserInfoState, Unit> = container(UserInfoState())
+    val sendCodeUseCase: SendCodeUseCase,
+    val onVerifyUseCase: VerifyUseCase
+) : ViewModel(), ContainerHost<UserInfoState, Event> {
+    override val container: Container<UserInfoState, Event> = container(UserInfoState())
 
 
     fun onPhoneNumberChanged(name: String) = blockingIntent {
         reduce {
             state.copy(
                 phoneNumber = name,
-                isphoneNumberValid = name.length == 11
+                isPhoneNumberValid = name.length == 11
             )
         }
     }
@@ -34,6 +38,7 @@ class UserInfoViewModel @Inject constructor(
             )
         }
     }
+
     fun onPasswordChanged(password: String) = blockingIntent {
         reduce {
             state.copy(
@@ -41,6 +46,7 @@ class UserInfoViewModel @Inject constructor(
             )
         }
     }
+
     fun onPasswordVerifyChanged(password: String) = blockingIntent {
         reduce {
             state.copy(
@@ -48,6 +54,7 @@ class UserInfoViewModel @Inject constructor(
             )
         }
     }
+
     fun onEmailChanged(email: String) = blockingIntent {
         reduce {
             state.copy(
@@ -57,10 +64,14 @@ class UserInfoViewModel @Inject constructor(
     }
 
     fun onSendCode() = intent {
-        reduce {
-            state.copy(
-                isSubmitting = true
-            )
+        sendCodeUseCase(state.email).collectLatest {
+            postSideEffect(Event.Toast(it))
+        }
+    }
+
+    fun onVerify() = intent {
+        onVerifyUseCase(token = state.verifyNumber, email = state.email).collectLatest {
+            postSideEffect(Event.Toast(it))
         }
     }
 }
@@ -70,7 +81,7 @@ data class UserInfoState(
     val email: String = "",
     val password: String = "",
     val confirmPassword: String = "",
-    val isphoneNumberValid: Boolean = false,
+    val isPhoneNumberValid: Boolean = false,
     val isEmailValid: Boolean = false,
     val isPasswordValid: Boolean = false,
     val isConfirmPasswordValid: Boolean = false,
@@ -80,3 +91,9 @@ data class UserInfoState(
     val isSubmitted: Boolean = false,
     val errorMessage: String = "",
 )
+
+sealed class Event {
+    data class Toast(
+        val message: String
+    ) : Event()
+}

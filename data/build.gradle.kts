@@ -1,4 +1,3 @@
-import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 import java.util.Properties
 
 plugins {
@@ -6,7 +5,8 @@ plugins {
     alias(libs.plugins.jetbrainsKotlinAndroid)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt.android)
-    kotlin("plugin.serialization") version "2.1.10"
+    kotlin("plugin.serialization") version "1.9.23"
+    id("kotlin-parcelize")
 }
 
 fun Project.gradleLocalProperties(providers: ProviderFactory, rootDir: File): Properties {

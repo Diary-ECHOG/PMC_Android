@@ -18,11 +18,12 @@ import com.app.pmc.feat.vote.navigateVote
 
 @Composable
 fun PMCNavHost(
-    navController: NavHostController
+    navController: NavHostController,
+    showSnackBar: (String) -> Unit
 ) {
     NavHost(navController = navController, startDestination = ROUTE_SPLASH) {
         addCalendarGraph(navController = navController)
-        addJoinGraph(navController = navController)
+        addJoinGraph(navController = navController, showSnackBar = showSnackBar)
         addSplashGraph(
             navController = navController,
             onNavigateToJoinScreen = {
