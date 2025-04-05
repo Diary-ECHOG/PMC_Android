@@ -1,7 +1,10 @@
 package com.app.pmc.data.user
 
+import com.app.pmc.data.core.ApiResult
 import com.app.pmc.data.model.BaseResponse
 import com.app.pmc.data.model.ReportRequest
+import com.app.pmc.data.model.SignUpRequest
+import com.app.pmc.data.model.SignUpResponse
 import com.app.pmc.data.model.VerifyRequest
 import retrofit2.http.Body
 import retrofit2.http.POST
@@ -19,7 +22,9 @@ interface UserService {
     ): BaseResponse<String>
 
     @POST("api/users/register")
-    suspend fun registerUser(report: ReportRequest): ReportRequest
+    suspend fun registerUser(
+        @Body request: SignUpRequest
+    ): BaseResponse<SignUpResponse>
 
     @POST("api/users/login")
     suspend fun login(report: ReportRequest): ReportRequest

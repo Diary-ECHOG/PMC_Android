@@ -1,7 +1,10 @@
 package com.app.pmc.feat.auth
 
 import androidx.lifecycle.ViewModel
+import com.app.pmc.core.ui.R
+import com.app.pmc.core.ui.ResourceProvider
 import com.app.pmc.core.usecase.SendCodeUseCase
+import com.app.pmc.core.usecase.SignUpUseCase
 import com.app.pmc.core.usecase.VerifyUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
@@ -17,19 +20,11 @@ import javax.inject.Inject
 @HiltViewModel
 class UserInfoViewModel @Inject constructor(
     val sendCodeUseCase: SendCodeUseCase,
-    val onVerifyUseCase: VerifyUseCase
+    val onVerifyUseCase: VerifyUseCase,
+    val signUpUseCase: SignUpUseCase,
+    private val resourceProvider: ResourceProvider
 ) : ViewModel(), ContainerHost<UserInfoState, Event> {
     override val container: Container<UserInfoState, Event> = container(UserInfoState())
-
-
-    fun onPhoneNumberChanged(name: String) = blockingIntent {
-        reduce {
-            state.copy(
-                phoneNumber = name,
-                isPhoneNumberValid = name.length == 11
-            )
-        }
-    }
 
     fun onVerifyNumberChanged(number: String) = blockingIntent {
         reduce {
@@ -63,6 +58,48 @@ class UserInfoViewModel @Inject constructor(
         }
     }
 
+    fun onSignUp() = intent {
+        try {
+            if (state.confirmPassword != state.password) {
+                postSideEffect(
+                    Event.Toast(
+                        resourceProvider.getString(
+                            R.string.user_password_confirm_failed
+                        )
+                    )
+                )
+                return@intent
+            }
+            if (state.password.length < 8 || !state.password.contains(Regex("[a-zA-Z]")) || !state.password.contains(
+                    Regex("[0-9]")
+                )
+            ) {
+                postSideEffect(
+                    Event.Toast(
+                        resourceProvider.getString(
+                            R.string.user_info_password_full_requirements_toast_message
+                        )
+                    )
+                )
+                return@intent
+            }
+            if (!state.isEmailValid) {
+                postSideEffect(Event.Toast(resourceProvider.getString(R.string.user_email_verity_requires)))
+                return@intent
+            } else {
+                signUpUseCase(
+                    email = state.email,
+                    password = state.password,
+                    agreement = true,
+                ).collectLatest {
+                    postSideEffect(Event.Toast(it))
+                }
+            }
+        } catch (e: Exception) {
+            postSideEffect(Event.Toast(e.message.toString()))
+        }
+    }
+
     fun onSendCode() = intent {
         sendCodeUseCase(state.email).collectLatest {
             postSideEffect(Event.Toast(it))
@@ -71,7 +108,20 @@ class UserInfoViewModel @Inject constructor(
 
     fun onVerify() = intent {
         onVerifyUseCase(token = state.verifyNumber, email = state.email).collectLatest {
-            postSideEffect(Event.Toast(it))
+            when (it) {
+                true -> {
+                    postSideEffect(Event.Toast(resourceProvider.getString(R.string.user_verify_success)))
+                    reduce {
+                        state.copy(
+                            isEmailValid = true
+                        )
+                    }
+                }
+
+                false -> {
+                    postSideEffect(Event.Toast(resourceProvider.getString(R.string.user_verify_failed)))
+                }
+            }
         }
     }
 }
@@ -81,15 +131,8 @@ data class UserInfoState(
     val email: String = "",
     val password: String = "",
     val confirmPassword: String = "",
-    val isPhoneNumberValid: Boolean = false,
     val isEmailValid: Boolean = false,
-    val isPasswordValid: Boolean = false,
-    val isConfirmPasswordValid: Boolean = false,
     val verifyNumber: String = "",
-    val isFormValid: Boolean = false,
-    val isSubmitting: Boolean = false,
-    val isSubmitted: Boolean = false,
-    val errorMessage: String = "",
 )
 
 sealed class Event {

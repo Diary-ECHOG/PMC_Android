@@ -59,7 +59,8 @@ fun UserInfoScreen(
         onVerifyNumberChanged = viewModel::onVerifyNumberChanged,
         onPasswordChanged = viewModel::onPasswordChanged,
         onPasswordVerifyChanged = viewModel::onPasswordVerifyChanged,
-        onEmailChanged = viewModel::onEmailChanged
+        onEmailChanged = viewModel::onEmailChanged,
+        onSignUp = viewModel::onSignUp,
     )
 }
 
@@ -72,7 +73,8 @@ internal fun UserInfoScreen(
     onVerifyNumberChanged: (String) -> Unit = { },
     onPasswordChanged: (String) -> Unit = { },
     onPasswordVerifyChanged: (String) -> Unit = { },
-    onEmailChanged: (String) -> Unit = { }
+    onEmailChanged: (String) -> Unit = { },
+    onSignUp: () -> Unit = { }
 ) {
     var isVisible by remember { mutableStateOf(true) }
 
@@ -124,13 +126,10 @@ internal fun UserInfoScreen(
                     .fillMaxWidth()
                     .padding(bottom = 20.dp),
                 label = stringResource(R.string.next),
-                onClick = { }
+                onClick = onSignUp,
             )
         }
     }
-//    else SplashContent(
-//        isVisible = isVisible
-//    )
 }
 
 @Composable
