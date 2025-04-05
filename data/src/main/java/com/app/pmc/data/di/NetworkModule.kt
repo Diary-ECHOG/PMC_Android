@@ -4,10 +4,13 @@ import com.app.pmc.data.BuildConfig
 import com.app.pmc.data.core.OAuthHeaderInterceptor
 import com.app.pmc.data.core.OAuthenticator
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
@@ -18,6 +21,29 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Qualifier
 import javax.inject.Singleton
 
+
+@Module
+@InstallIn(SingletonComponent::class)
+object DispatcherModule {
+
+    @Provides
+    @IoDispatcher
+    fun provideIoDispatcher(): CoroutineDispatcher = Dispatchers.IO
+}
+
+@Module
+@InstallIn(SingletonComponent::class)
+abstract class SafeApiCallModule {
+
+    @Binds
+    abstract fun bindSafeApiCall(
+        safeApiCallImpl: SafeApiCallImpl
+    ): SafeApiCall
+}
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class IoDispatcher
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -78,7 +104,6 @@ internal object NetworkModule {
                     .build()
             )
             .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
-            .addCallAdapterFactory(ResultCallAdapter.Factory())
             .build()
     }
 }
