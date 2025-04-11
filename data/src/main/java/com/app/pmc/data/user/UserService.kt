@@ -1,7 +1,8 @@
 package com.app.pmc.data.user
 
-import com.app.pmc.data.core.ApiResult
 import com.app.pmc.data.model.BaseResponse
+import com.app.pmc.data.model.LoginRequest
+import com.app.pmc.data.model.LoginResponse
 import com.app.pmc.data.model.ReportRequest
 import com.app.pmc.data.model.SignUpRequest
 import com.app.pmc.data.model.SignUpResponse
@@ -27,7 +28,9 @@ interface UserService {
     ): BaseResponse<SignUpResponse>
 
     @POST("api/users/login")
-    suspend fun login(report: ReportRequest): ReportRequest
+    suspend fun login(
+        @Body request: LoginRequest
+    ): BaseResponse<LoginResponse>
 
     @POST("api/users/delete")
     suspend fun withdraw(report: ReportRequest): ReportRequest

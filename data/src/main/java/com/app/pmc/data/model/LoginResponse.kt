@@ -3,9 +3,9 @@ package com.app.pmc.data.model
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class SignUpResponse(
-    val id: String,
+data class LoginResponse(
     val nickname: String,
     val email: String,
-    val enabled: Boolean,
+    val token: String,
+    val refreshToken: String,
 )

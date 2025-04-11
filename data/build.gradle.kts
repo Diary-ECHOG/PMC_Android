@@ -56,7 +56,7 @@ android {
 dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
-    implementation(project(":core:ui"))
+    implementation(libs.androidx.datastore.preferences)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -76,4 +76,5 @@ dependencies {
 
     implementation(project(":core:model"))
     implementation(project(":core:repository"))
+    implementation(project(":core:ui"))
 }

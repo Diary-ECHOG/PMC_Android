@@ -17,4 +17,5 @@ kotlin {
 dependencies {
     implementation(libs.coroutines)
     implementation(libs.hilt.core)
+    implementation(project(":core:model"))
 }

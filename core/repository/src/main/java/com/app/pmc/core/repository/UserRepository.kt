@@ -1,5 +1,6 @@
 package com.app.pmc.core.repository
 
+import com.app.pmc.core.model.EchogResult
 import kotlinx.coroutines.flow.Flow
 
 interface UserRepository {
@@ -12,4 +13,5 @@ interface UserRepository {
         agreement: Boolean,
         anonymous: Boolean = true
     ): Flow<String>
+    fun login(email: String, password: String): Flow<EchogResult>
 }

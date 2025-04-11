@@ -1,4 +1,4 @@
-package com.app.pmc.feat.auth
+package com.app.pmc.feat.auth.join
 
 import androidx.lifecycle.ViewModel
 import com.app.pmc.core.ui.R
