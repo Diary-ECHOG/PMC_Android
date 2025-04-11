@@ -36,6 +36,7 @@ import kotlinx.coroutines.delay
 @Composable
 fun SplashScreen(
     modifier: Modifier = Modifier,
+    onNavigateToLoginScreen: () -> Unit = {},
     onNavigateToJoinScreen: () -> Unit = {}
 ) {
     GradientSurface {
@@ -46,7 +47,7 @@ fun SplashScreen(
         ) {
             GetContent(
                 modifier = modifier,
-                onNavigateToJoinScreen = onNavigateToJoinScreen
+                onNavigateToJoinScreen = onNavigateToLoginScreen,
             )
         }
     }

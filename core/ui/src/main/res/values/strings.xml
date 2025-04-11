@@ -35,6 +35,7 @@
     <!--    login-->
     <string name="login">로그인</string>
     <string name="find_my_password">비밀번호를 찾고 싶어요!</string>
+    <string name="join_button_label">계정 가입하기</string>
 
 <!--    home-->
     <string name="show_my_vote">투표 보기</string>

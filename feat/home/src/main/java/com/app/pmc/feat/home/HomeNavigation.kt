@@ -6,6 +6,10 @@ import androidx.navigation.compose.composable
 
 const val ROUTE_HOME = "home"
 
+fun NavController.navigateToHome() {
+    navigate(ROUTE_HOME)
+}
+
 fun NavGraphBuilder.addHomeGraph(
     navController: NavController,
     navigateToVoteList: () -> Unit,

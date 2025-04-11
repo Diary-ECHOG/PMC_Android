@@ -3,6 +3,7 @@ package com.app.pmc.navigation
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
+import com.app.pmc.feat.auth.navigation.ROUTE_LOGIN
 import com.app.pmc.feat.auth.navigation.addJoinGraph
 import com.app.pmc.feat.auth.navigation.navigateToJoin
 import com.app.pmc.feat.calendar.navigation.addCalendarGraph
@@ -10,6 +11,7 @@ import com.app.pmc.feat.diary.navigation.addDiaryGraph
 import com.app.pmc.feat.diary.navigation.navigateToAddDiary
 import com.app.pmc.feat.home.ROUTE_HOME
 import com.app.pmc.feat.home.addHomeGraph
+import com.app.pmc.feat.home.navigateToHome
 import com.app.pmc.feat.mypage.addMyPageGraph
 import com.app.pmc.feat.splash.ROUTE_SPLASH
 import com.app.pmc.feat.splash.addSplashGraph
@@ -21,12 +23,17 @@ fun PMCNavHost(
     navController: NavHostController,
     showSnackBar: (String) -> Unit
 ) {
-    NavHost(navController = navController, startDestination = ROUTE_SPLASH) {
+    NavHost(navController = navController, startDestination = ROUTE_LOGIN) {
         addCalendarGraph(navController = navController)
-        addJoinGraph(navController = navController, showSnackBar = showSnackBar)
+        addJoinGraph(navigateToMain = {
+            navController.navigateToHome()
+        }, showSnackBar = showSnackBar)
         addSplashGraph(
             navController = navController,
             onNavigateToJoinScreen = {
+                navController.navigateToJoin()
+            },
+            onNavigateToLoginScreen = {
                 navController.navigateToJoin()
             }
         )
