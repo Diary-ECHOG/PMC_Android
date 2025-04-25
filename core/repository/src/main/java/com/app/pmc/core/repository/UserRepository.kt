@@ -14,4 +14,5 @@ interface UserRepository {
         anonymous: Boolean = true
     ): Flow<String>
     fun login(email: String, password: String): Flow<EchogResult>
+    fun sendResetPasswordEmail(email: String): Flow<EchogResult>
 }

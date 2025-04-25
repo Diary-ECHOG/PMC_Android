@@ -25,7 +25,7 @@ fun PMCNavHost(
 ) {
     NavHost(navController = navController, startDestination = ROUTE_LOGIN) {
         addCalendarGraph(navController = navController)
-        addJoinGraph(navigateToMain = {
+        addJoinGraph(navController = navController, navigateToMain = {
             navController.navigateToHome()
         }, showSnackBar = showSnackBar)
         addSplashGraph(

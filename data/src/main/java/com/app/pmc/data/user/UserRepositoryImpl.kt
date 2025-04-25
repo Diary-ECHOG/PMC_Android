@@ -82,4 +82,7 @@ class UserRepositoryImpl @Inject constructor(
             }
         }
     }
+
+    //todo : api 추가
+    override fun sendResetPasswordEmail(email: String): Flow<EchogResult> = flow {}
 }

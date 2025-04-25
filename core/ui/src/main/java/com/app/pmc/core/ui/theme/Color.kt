@@ -34,6 +34,7 @@ val Slate_25 = Color(0xFFF8F9FB)
 val Slate_100 = Color(0xFFE2E5E9)
 val Slate_400 = Color(0xFF9FA3AB)
 val Slate_600 = Color(0xFF3E4651)
+val Slate_700 = Color(0xFF24282F)
 val Slate_800 = Color(0xFF1D2027)
 
 val Red_500 = Color(0xFFEF5350)

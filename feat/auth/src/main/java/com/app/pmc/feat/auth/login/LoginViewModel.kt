@@ -35,6 +35,10 @@ class LoginViewModel @Inject constructor(
         }
     }
 
+    fun onFindPasswordClicked() = intent {
+        postSideEffect(LoginSideEffect.NavigateToFindPassword)
+    }
+
     fun onPasswordChanged(password: String) = blockingIntent {
         reduce {
             state.copy(password = password)
@@ -51,5 +55,6 @@ data class LoginUiState(
 
 sealed class LoginSideEffect {
     data class ShowToast(val message: String) : LoginSideEffect()
-    object NavigateToMain : LoginSideEffect()
+    data object NavigateToMain : LoginSideEffect()
+    data object NavigateToFindPassword : LoginSideEffect()
 }

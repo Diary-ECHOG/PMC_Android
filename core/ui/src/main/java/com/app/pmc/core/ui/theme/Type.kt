@@ -48,6 +48,13 @@ val LargeDescription = TextStyle(
     lineHeight = 34.sp
 )
 
+val SmallDescription = TextStyle(
+    fontFamily = FontFamily.Default,
+    fontWeight = FontWeight.W400,
+    fontSize = 15.sp,
+    lineHeight = 28.sp,
+)
+
 val ButtonLabel600 = TextStyle(
     fontFamily = FontFamily.Default,
     fontWeight = FontWeight.W600,
