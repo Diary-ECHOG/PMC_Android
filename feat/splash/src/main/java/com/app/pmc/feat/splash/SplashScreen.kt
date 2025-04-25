@@ -27,18 +27,29 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.app.pmc.core.ui.R.drawable
 import com.app.pmc.core.ui.R.string
 import com.app.pmc.core.ui.button.EchogButton
 import com.app.pmc.core.ui.surface.GradientSurface
 import kotlinx.coroutines.delay
+import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
 fun SplashScreen(
     modifier: Modifier = Modifier,
     onNavigateToLoginScreen: () -> Unit = {},
-    onNavigateToJoinScreen: () -> Unit = {}
+    onNavigateToMainScreen: () -> Unit = {},
+    onNavigateToJoinScreen: () -> Unit = {},
+    viewModel: SplashViewModel = hiltViewModel()
 ) {
+    viewModel.collectSideEffect {
+        when (it) {
+            is SplashSideEffect.NavigateToMain -> onNavigateToMainScreen()
+            is SplashSideEffect.NavigateToLogin -> onNavigateToLoginScreen()
+            is SplashSideEffect.ShowToast -> {}
+        }
+    }
     GradientSurface {
         Column(
             modifier = modifier.fillMaxSize(),

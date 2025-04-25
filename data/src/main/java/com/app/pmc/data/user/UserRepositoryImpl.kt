@@ -88,6 +88,16 @@ class UserRepositoryImpl @Inject constructor(
         }
     }
 
+    //todo : string 제거
+    override fun autoLogin(): Flow<EchogResult> = flow {
+        val result = userLocalDataSource.getToken()?.isNotBlank()
+        if (result == true) {
+            emit(EchogResult.Success)
+        } else {
+            emit(EchogResult.Error("로그인 정보가 없습니다."))
+        }
+    }
+
     //todo : api 추가
     override fun sendResetPasswordEmail(email: String): Flow<EchogResult> = flow {}
 }

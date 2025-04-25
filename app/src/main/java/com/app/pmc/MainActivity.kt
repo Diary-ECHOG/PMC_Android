@@ -15,11 +15,14 @@ import androidx.navigation.compose.rememberNavController
 import com.app.pmc.navigation.PMCNavHost
 import com.app.pmc.core.ui.theme.PMCTheme
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity() : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContent {
             val navController = rememberNavController()
             PMCTheme {
@@ -37,21 +40,5 @@ class MainActivity() : ComponentActivity() {
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    PMCTheme {
-        Greeting("Android")
     }
 }
