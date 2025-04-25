@@ -38,7 +38,7 @@ fun LoginScreen(
 
     viewModel.collectSideEffect { sideEffect ->
         when (sideEffect) {
-            is LoginSideEffect.ShowToast -> showSnackBar(sideEffect.toString())
+            is LoginSideEffect.ShowToast -> showSnackBar(sideEffect.message)
             is LoginSideEffect.NavigateToMain -> navigateToMain()
             is LoginSideEffect.NavigateToFindPassword -> navigateToFindPassword()
             else -> {}

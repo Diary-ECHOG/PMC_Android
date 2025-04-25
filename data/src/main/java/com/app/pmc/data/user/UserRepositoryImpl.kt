@@ -78,7 +78,12 @@ class UserRepositoryImpl @Inject constructor(
                         emit(EchogResult.Success)
                     }
                 }
-                is ApiResult.Failure -> emit(EchogResult.Error(result.toThrowable().localizedMessage))
+                is ApiResult.Failure.HttpError -> {
+                    emit(EchogResult.Error(result.getErrorMessage()))
+                }
+                else -> {
+                    emit(EchogResult.Error(result.exceptionOrNull()?.localizedMessage.toString()))
+                }
             }
         }
     }
