@@ -8,7 +8,14 @@ sealed interface ApiResult<out T> {
             val code: Int? = -1,
             val message: String? = "unknown",
             val body: String? = "unknown"
-        ) : Failure
+        ) : Failure {
+            fun getErrorMessage(): String {
+                return when(this.code) {
+                    403 -> "인증되지 않은 사용자입니다."
+                    else -> message ?: "Unknown error"
+                }
+            }
+        }
 
         data class NetworkError(val throwable: Throwable) : Failure
         data class UnknownApiError(val throwable: Throwable) : Failure
@@ -25,7 +32,8 @@ sealed interface ApiResult<out T> {
 
     fun getOrThrow(): T {
         if (this is Failure) throw toThrowable()
-        return (this as? Success<T>)?.data ?: throw IllegalStateException("No success result found.")
+        return (this as? Success<T>)?.data
+            ?: throw IllegalStateException("No success result found.")
     }
 
     fun getOrNull(): T? = (this as? Success<T>)?.data

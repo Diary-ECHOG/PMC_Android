@@ -1,5 +1,6 @@
 package com.app.pmc.feat.auth.login
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -30,14 +31,17 @@ fun LoginScreen(
     modifier: Modifier = Modifier,
     showSnackBar: (String) -> Unit = {},
     navigateToMain: () -> Unit = {},
+    navigateToFindPassword: () -> Unit = {},
     viewModel: LoginViewModel = hiltViewModel()
 ) {
     val state = viewModel.collectAsState()
 
     viewModel.collectSideEffect { sideEffect ->
         when (sideEffect) {
-            is LoginSideEffect.ShowToast -> showSnackBar(sideEffect.toString())
+            is LoginSideEffect.ShowToast -> showSnackBar(sideEffect.message)
             is LoginSideEffect.NavigateToMain -> navigateToMain()
+            is LoginSideEffect.NavigateToFindPassword -> navigateToFindPassword()
+            else -> {}
         }
     }
     GradientSurface {
@@ -73,7 +77,8 @@ fun LoginScreen(
                 ) {
                     Text(
                         modifier = Modifier
-                            .padding(top = 12.dp),
+                            .padding(top = 12.dp)
+                            .clickable { viewModel.onFindPasswordClicked() },
                         text = stringResource(R.string.find_my_password),
                         textAlign = TextAlign.End,
                         color = Slate_600,

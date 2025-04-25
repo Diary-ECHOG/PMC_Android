@@ -78,8 +78,26 @@ class UserRepositoryImpl @Inject constructor(
                         emit(EchogResult.Success)
                     }
                 }
-                is ApiResult.Failure -> emit(EchogResult.Error(result.toThrowable().localizedMessage))
+                is ApiResult.Failure.HttpError -> {
+                    emit(EchogResult.Error(result.getErrorMessage()))
+                }
+                else -> {
+                    emit(EchogResult.Error(result.exceptionOrNull()?.localizedMessage.toString()))
+                }
             }
         }
     }
+
+    //todo : string 제거
+    override fun autoLogin(): Flow<EchogResult> = flow {
+        val result = userLocalDataSource.getToken()?.isNotBlank()
+        if (result == true) {
+            emit(EchogResult.Success)
+        } else {
+            emit(EchogResult.Error("로그인 정보가 없습니다."))
+        }
+    }
+
+    //todo : api 추가
+    override fun sendResetPasswordEmail(email: String): Flow<EchogResult> = flow {}
 }
