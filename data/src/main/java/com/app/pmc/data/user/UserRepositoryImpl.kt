@@ -1,6 +1,8 @@
 package com.app.pmc.data.user
 
 import com.app.pmc.core.model.EchogResult
+import com.app.pmc.core.model.ErrorResult
+import com.app.pmc.core.model.SuccessResult
 import com.app.pmc.core.repository.UserRepository
 import com.app.pmc.data.core.ApiResult
 import com.app.pmc.data.di.SafeApiCall
@@ -59,7 +61,7 @@ class UserRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun login(email: String, password: String): Flow<EchogResult> {
+    override fun login(email: String, password: String): Flow<EchogResult<String>> {
         return flow {
             when (val result = safeApiCall.execute {
                 userService.login(
@@ -75,26 +77,26 @@ class UserRepositoryImpl @Inject constructor(
                         userLocalDataSource.saveUserId(loginResponse.email)
                         userLocalDataSource.saveToken(loginResponse.token)
                         userLocalDataSource.saveRefreshToken(loginResponse.refreshToken)
-                        emit(EchogResult.Success)
+                        emit(SuccessResult(loginResponse.nickname))
                     }
                 }
                 is ApiResult.Failure.HttpError -> {
-                    emit(EchogResult.Error(result.getErrorMessage()))
+                    emit(ErrorResult(result.getErrorMessage()))
                 }
                 else -> {
-                    emit(EchogResult.Error(result.exceptionOrNull()?.localizedMessage.toString()))
+                    emit(ErrorResult(result.exceptionOrNull()?.localizedMessage.toString()))
                 }
             }
         }
     }
 
     //todo : string 제거
-    override fun autoLogin(): Flow<EchogResult> = flow {
+    override fun autoLogin(): Flow<EchogResult<Boolean>> = flow {
         val result = userLocalDataSource.getToken()?.isNotBlank()
         if (result == true) {
-            emit(EchogResult.Success)
+            emit(SuccessResult(result))
         } else {
-            emit(EchogResult.Error("로그인 정보가 없습니다."))
+            emit(ErrorResult("로그인 정보가 없습니다."))
         }
     }
 

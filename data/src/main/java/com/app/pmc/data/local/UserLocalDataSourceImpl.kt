@@ -8,7 +8,9 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import javax.inject.Inject
 import androidx.datastore.preferences.preferencesDataStore
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "user_prefs")
 
@@ -39,8 +41,10 @@ class UserLocalDataSourceImpl @Inject constructor(
         dataStore.edit { it[Keys.TOKEN] = token }
     }
 
-    override suspend fun getToken(): String? {
-        return dataStore.data.first()[Keys.TOKEN]
+    override fun getToken(): String? {
+        return runBlocking(Dispatchers.IO) {
+            dataStore.data.first()[Keys.TOKEN]
+        }
     }
 
     override suspend fun deleteToken() {

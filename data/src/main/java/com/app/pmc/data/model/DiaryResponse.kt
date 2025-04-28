@@ -1,5 +1,8 @@
 package com.app.pmc.data.model
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class DiaryListResponse (
     val content: DiaryResponse,
     val pageNumber: Int,
@@ -8,6 +11,7 @@ data class DiaryListResponse (
     val totalPages: Int
 )
 
+@Serializable
 data class DiaryResponse (
     val id: Int,
     val title: String,

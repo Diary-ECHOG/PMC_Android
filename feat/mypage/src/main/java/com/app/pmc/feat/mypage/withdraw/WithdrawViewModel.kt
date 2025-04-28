@@ -1,6 +1,5 @@
 package com.app.pmc.feat.mypage.withdraw
 
-import android.content.res.Resources
 import androidx.lifecycle.ViewModel
 import com.app.pmc.core.ui.R
 import com.app.pmc.core.ui.ResourceProvider
@@ -15,7 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class WithdrawViewModel @Inject constructor(
-    val resourceProvider: ResourceProvider
+    private val resourceProvider: ResourceProvider
 ) : ViewModel(), ContainerHost<WithdrawState, Unit> {
     override val container: Container<WithdrawState, Unit> = container(WithdrawState())
 

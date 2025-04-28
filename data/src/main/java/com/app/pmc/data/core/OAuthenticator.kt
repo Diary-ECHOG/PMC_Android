@@ -1,5 +1,7 @@
 package com.app.pmc.data.core
 
+import com.app.pmc.data.local.UserLocalDataSource
+import com.app.pmc.data.user.UserService
 import okhttp3.Authenticator
 import okhttp3.Request
 import okhttp3.Response
@@ -7,11 +9,10 @@ import okhttp3.Route
 import javax.inject.Inject
 
 class OAuthenticator @Inject constructor(
-    private val tokenProvider: TokenProvider
+    private val tokenProvider: TokenProvider,
 ) : Authenticator {
 
     override fun authenticate(route: Route?, response: Response): Request? {
-        // 토큰이 만료되었는지 확인
         if (response.request.header("Authorization") == "Bearer ${tokenProvider.getAccessToken()}") {
             // 새 액세스 토큰 요청
             val newToken = tokenProvider.refreshToken() ?: return null
@@ -25,20 +26,21 @@ class OAuthenticator @Inject constructor(
     }
 }
 
-class TokenProvider @Inject constructor() {
+class TokenProvider @Inject constructor(
+    private val dataSource: UserLocalDataSource
+) {
     private var accessToken: String? = null
 
-    fun getAccessToken(): String? = accessToken
+    fun getAccessToken(): String? = dataSource.getToken()
 
     fun refreshToken(): String? {
-        // 네트워크 요청을 통해 새 토큰 받아오기
         val newToken = requestNewAccessToken()
         accessToken = newToken
         return newToken
     }
 
-    private fun requestNewAccessToken(): String? {
-        // 실제 네트워크 요청 코드 추가
+    //todo : 토큰 갱신 로직 추가
+    private fun requestNewAccessToken(): String {
         return "new_access_token"
     }
 }

@@ -1,6 +1,5 @@
 package com.app.pmc.core.model
 
-sealed class EchogResult {
-    data object Success : EchogResult()
-    data class Error(val message: String? = null) : EchogResult()
-}
+data class SuccessResult<T>(val data: T? = null) : EchogResult<T>()
+data class ErrorResult(val message: String? = null) : EchogResult<Nothing>()
+sealed class EchogResult<out T>()

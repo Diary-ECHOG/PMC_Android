@@ -23,8 +23,8 @@ class LoginViewModel @Inject constructor(
     fun login() = intent {
         loginUseCase(state.email, state.password).collectLatest { result ->
             when (result) {
-                is EchogResult.Success -> postSideEffect(LoginSideEffect.NavigateToMain)
-                is EchogResult.Error -> postSideEffect(LoginSideEffect.ShowToast(result.message.toString()))
+                is SuccessResult<*><*> ->postSideEffect(LoginSideEffect.NavigateToMain)
+                is ErrorResult -> postSideEffect(LoginSideEffect.ShowToast(result.message.toString()))
             }
         }
     }

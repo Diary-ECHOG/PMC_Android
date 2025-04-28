@@ -25,8 +25,8 @@ class SplashViewModel @Inject constructor(
     private fun login() = intent {
         loginUseCase().collectLatest { result ->
             when (result) {
-                is EchogResult.Success -> postSideEffect(SplashSideEffect.NavigateToMain)
-                is EchogResult.Error -> postSideEffect(SplashSideEffect.NavigateToLogin)
+                is SuccessResult<*><*> -> postSideEffect(SplashSideEffect.NavigateToMain)
+                is ErrorResult -> postSideEffect(SplashSideEffect.NavigateToLogin)
             }
         }
     }

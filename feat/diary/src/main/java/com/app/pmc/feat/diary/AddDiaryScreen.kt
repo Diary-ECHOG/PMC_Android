@@ -53,6 +53,7 @@ import com.app.pmc.core.ui.theme.Slate_25
 import com.app.pmc.core.ui.theme.Slate_600
 import com.app.pmc.core.ui.theme.TextFieldBorderColor_UnFocused
 import org.orbitmvi.orbit.compose.collectAsState
+import org.orbitmvi.orbit.compose.collectSideEffect
 import java.time.LocalDateTime
 
 @Composable
@@ -63,12 +64,20 @@ fun AddDiaryScreen(
 ) {
     val state = viewModel.collectAsState()
 
+    viewModel.collectSideEffect {
+        when(it) {
+            is AddDiarySideEffect.PopToBackStack -> popToBackStack()
+            else -> {}
+        }
+    }
+
     AddDiaryScreen(
         state = state.value,
         openGallery = {},
         onBottomSheetTitleChanged = viewModel::onBottomSheetTitleChanged,
         navigateToVote = navigateToVote,
         popToBackStack = popToBackStack,
+        createDiary = viewModel::createDiary,
         toggleDuplicateSelection = viewModel::toggleDuplicateSelection,
         addVote = viewModel::addVote,
         addOption = viewModel::addOption,
@@ -90,6 +99,7 @@ fun AddDiaryScreen(
     onBottomSheetContentChanged: (String) -> Unit,
     onBottomSheetTitleChanged: (String) -> Unit,
     popToBackStack: () -> Unit,
+    createDiary: () -> Unit,
     addOption: () -> Unit,
     onSelectedCategory: (String) -> Unit,
     onTitleChange: (String) -> Unit,
@@ -102,7 +112,8 @@ fun AddDiaryScreen(
             topBar = {
                 Topbar(
                     state.date.toDiaryDate(),
-                    popToBackStack
+                    popToBackStack = popToBackStack,
+                    createDiary = createDiary,
                 )
             },
             bottomBar = {
@@ -360,7 +371,8 @@ private fun SelectCategoryDropdown(
 @Composable
 private fun Topbar(
     date: String,
-    popToBackStack: () -> Unit
+    popToBackStack: () -> Unit,
+    createDiary: () -> Unit = {},
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -381,7 +393,7 @@ private fun Topbar(
             text = date
         )
         IconButton(
-            onClick = popToBackStack,
+            onClick = createDiary,
         ) {
             Text(
                 color = Blue_500,
@@ -459,6 +471,7 @@ fun AddDiaryScreenPreview() {
         onSelectedCategory = {},
         onContentChange = {},
         onTitleChange = {},
+        createDiary = {},
         addOption = {},
         popToBackStack = {}
     )

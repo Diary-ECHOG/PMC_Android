@@ -237,19 +237,19 @@ private fun HomeScreenPreview() {
             month = "10월",
             diaryList = listOf(
                 Diary(
-                    id = 1,
+                    id = "111",
                     title = "Title",
                     content = "Content",
                     date = "2021.10.10"
                 ),
                 Diary(
-                    id = 2,
+                    id = "222",
                     title = "Title",
                     content = "Content",
                     date = "2021.10.10"
                 ),
                 Diary(
-                    id = 3,
+                    id = "333",
                     title = "Title",
                     content = "Content",
                     date = "2021.10.10"
@@ -257,19 +257,19 @@ private fun HomeScreenPreview() {
             ),
             monthlyDiaryList = listOf(
                 Diary(
-                    id = 4,
+                    id = "444",
                     title = "Title",
                     content = "Content",
                     date = "2021.10.10"
                 ),
                 Diary(
-                    id = 5,
+                    id = "555",
                     title = "Title",
                     content = "Content",
                     date = "2021.10.10"
                 ),
                 Diary(
-                    id = 6,
+                    id = "666",
                     title = "Title",
                     content = "Content",
                     date = "2021.10.10"

@@ -5,7 +5,7 @@ interface UserLocalDataSource {
     suspend fun getUserId(): String?
     suspend fun deleteUserId()
     suspend fun saveToken(token: String)
-    suspend fun getToken(): String?
+    fun getToken(): String?
     suspend fun deleteToken()
     suspend fun saveRefreshToken(refreshToken: String)
     suspend fun getRefreshToken(): String?
