@@ -63,7 +63,6 @@ dependencies {
     implementation(libs.hilt.android)
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.androidx.lifecycle.viewmodel.android)
-    implementation(project(":core:usecase"))
     ksp(libs.hilt.compiler)
     ksp(libs.androidx.hilt.complier)
 
@@ -76,4 +75,6 @@ dependencies {
 
     implementation(project(":core:ui"))
     implementation(project(":core:model"))
+    implementation(project(":core:util"))
+    implementation(project(":core:usecase"))
 }

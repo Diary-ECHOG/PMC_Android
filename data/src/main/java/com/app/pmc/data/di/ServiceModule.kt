@@ -1,5 +1,6 @@
 package com.app.pmc.data.di
 
+import com.app.pmc.data.core.OAuthService
 import com.app.pmc.data.diary.DiaryService
 import com.app.pmc.data.user.UserService
 import dagger.Module
@@ -20,4 +21,9 @@ internal class ServiceModule {
     internal fun provideDiaryService(
         @NetworkModule.Echog retrofit: Retrofit
     ): DiaryService = retrofit.create(DiaryService::class.java)
+
+    @Provides
+    internal fun provideOAuthService(
+        @NetworkModule.OAuth retrofit: Retrofit
+    ): OAuthService = retrofit.create(OAuthService::class.java)
 }

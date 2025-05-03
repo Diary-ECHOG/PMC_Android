@@ -91,15 +91,15 @@ class UserRepositoryImpl @Inject constructor(
     }
 
     //todo : string 제거
-    override fun autoLogin(): Flow<EchogResult<Boolean>> = flow {
+    override fun autoLogin(): Flow<EchogResult<String>> = flow {
         val result = userLocalDataSource.getToken()?.isNotBlank()
         if (result == true) {
-            emit(SuccessResult(result))
+            emit(SuccessResult("로그인에 성공했습니다"))
         } else {
             emit(ErrorResult("로그인 정보가 없습니다."))
         }
     }
 
     //todo : api 추가
-    override fun sendResetPasswordEmail(email: String): Flow<EchogResult> = flow {}
+    override fun sendResetPasswordEmail(email: String): Flow<EchogResult<Boolean>> = flow {}
 }

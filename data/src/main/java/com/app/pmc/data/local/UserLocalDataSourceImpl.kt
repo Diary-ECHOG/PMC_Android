@@ -16,13 +16,15 @@ val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "us
 
 class UserLocalDataSourceImpl @Inject constructor(
     @ApplicationContext private val context: Context
-): UserLocalDataSource {
+) : UserLocalDataSource {
 
     private val dataStore: DataStore<Preferences> = context.dataStore
+
     private object Keys {
         val USER_ID = stringPreferencesKey("user_id")
         val TOKEN = stringPreferencesKey("token")
         val REFRESH_TOKEN = stringPreferencesKey("refresh_token")
+        val USER_PASSWORD = stringPreferencesKey("user_password")
     }
 
     override suspend fun saveUserId(userId: String) {
@@ -61,5 +63,13 @@ class UserLocalDataSourceImpl @Inject constructor(
 
     override suspend fun deleteRefreshToken() {
         dataStore.edit { it.remove(Keys.REFRESH_TOKEN) }
+    }
+
+    override suspend fun getPassword(): String? {
+       return dataStore.data.first()[Keys.USER_PASSWORD]
+    }
+
+    override suspend fun setPassword(password: String) {
+        dataStore.edit { it[Keys.USER_PASSWORD] = password }
     }
 }

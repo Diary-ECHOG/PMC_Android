@@ -21,7 +21,7 @@ interface DiaryService {
         @Query("page") page: Int,
         @Query("size") size: Int,
         @Query("sort") sort: String
-    ): BaseResponse<DiaryListResponse>
+    ): DiaryListResponse
 
     @DELETE("api/diary/delete/{id}")
     suspend fun deleteDiary(@Path("id") diaryId: String): Unit

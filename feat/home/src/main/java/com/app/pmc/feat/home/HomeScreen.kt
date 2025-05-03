@@ -42,6 +42,7 @@ import com.app.pmc.core.ui.surface.GradientSurface
 import com.app.pmc.core.ui.theme.NormalButtonBorderColor
 import com.app.pmc.core.ui.theme.NormalButtonContentColor
 import com.app.pmc.core.ui.theme.White
+import com.app.pmc.core.util.StringExtension.toDiaryDate
 import org.orbitmvi.orbit.compose.collectAsState
 
 @Composable
@@ -65,7 +66,7 @@ fun HomeScreen(
 private fun HomeScreen(
     modifier: Modifier = Modifier,
     state: HomeUiState,
-    addDiary:() -> Unit,
+    addDiary: () -> Unit,
     navigateToMyPage: () -> Unit,
     navigateToVoteList: () -> Unit
 ) {
@@ -89,45 +90,65 @@ private fun HomeScreen(
                         navigateToMyPage = navigateToMyPage
                     )
                 }
-                item {
-                    Text(
-                        text = stringResource(id = string.yesterday),
-                        fontWeight = FontWeight.W700,
-                        modifier = Modifier.padding(top = 20.dp)
-                    )
+                state.todayDiary?.let {
+                    item {
+                        Text(
+                            text = stringResource(id = string.today),
+                            fontWeight = FontWeight.W700,
+                            modifier = Modifier.padding(top = 20.dp)
+                        )
+                    }
+                    item {
+                        EchogDefaultCard(
+                            title = state.todayDiary.title,
+                            description = state.todayDiary.content,
+                            subDescription = {
+                                Text(
+                                    text = state.todayDiary.date?.toDiaryDate() ?: ""
+                                )
+                            }
+                        )
+                    }
                 }
-                items(state.diaryList.size, key = { index -> state.diaryList[index].id }) { _ ->
-                    EchogDefaultCard(
-                        title = "Title",
-                        description = "Description",
-                        subDescription = {
-                            Text(
-                                text = "2021.10.10"
-                            )
-                        }
-                    )
-                }
-                item {
-                    Text(
-                        text = state.month,
-                        fontWeight = FontWeight.W700,
-                        modifier = Modifier.padding(top = 20.dp)
-                    )
+                state.yesterdayDiary?.let {
+                    item {
+                        Text(
+                            text = stringResource(id = string.yesterday),
+                            fontWeight = FontWeight.W700,
+                            modifier = Modifier.padding(top = 20.dp)
+                        )
+                    }
+                    item {
+                        EchogDefaultCard(
+                            title = state.yesterdayDiary.title,
+                            description = state.yesterdayDiary.content,
+                            subDescription = {
+                                Text(
+                                    text = state.yesterdayDiary.date?.toDiaryDate() ?: ""
+                                )
+                            }
+                        )
+                    }
                 }
                 items(
                     state.monthlyDiaryList.size,
-                    key = { index -> state.monthlyDiaryList[index].id }) { _ ->
-                    EchogDefaultCard(
-                        modifier = Modifier.padding(top = 10.dp),
-                        title = "Title",
-                        description = "Description",
-                        subDescription = {
-                            Text(
-                                text = "2021.10.10"
-                            )
-                        }
+                    key = { index -> state.monthlyDiaryList[index].month }) { index ->
+                    Text(
+                        text = stringResource(id = string.month, state.monthlyDiaryList[index].month),
+                        fontWeight = FontWeight.W700,
+                        modifier = Modifier.padding(vertical = 10.dp)
                     )
-
+                    state.monthlyDiaryList[index].diaryList.forEach { diary ->
+                        EchogDefaultCard(
+                            title = diary.title,
+                            description = diary.content,
+                            subDescription = {
+                                Text(
+                                    text = diary.date?.toDiaryDate() ?: ""
+                                )
+                            }
+                        )
+                    }
                 }
             }
             Canvas(
@@ -234,45 +255,41 @@ private fun HomeScreenPreview() {
         navigateToMyPage = {},
         addDiary = {},
         state = HomeUiState(
-            month = "10월",
-            diaryList = listOf(
-                Diary(
-                    id = "111",
-                    title = "Title",
-                    content = "Content",
-                    date = "2021.10.10"
-                ),
-                Diary(
-                    id = "222",
-                    title = "Title",
-                    content = "Content",
-                    date = "2021.10.10"
-                ),
-                Diary(
-                    id = "333",
-                    title = "Title",
-                    content = "Content",
-                    date = "2021.10.10"
-                )
+            todayDiary = Diary(
+                id = "999",
+                title = "Title",
+                content = "Content",
+                date = "2021.10.10"
+            ),
+            yesterdayDiary = Diary(
+                id = "00000",
+                title = "Title",
+                content = "Content",
+                date = "2021.10.10"
             ),
             monthlyDiaryList = listOf(
-                Diary(
-                    id = "444",
-                    title = "Title",
-                    content = "Content",
-                    date = "2021.10.10"
-                ),
-                Diary(
-                    id = "555",
-                    title = "Title",
-                    content = "Content",
-                    date = "2021.10.10"
-                ),
-                Diary(
-                    id = "666",
-                    title = "Title",
-                    content = "Content",
-                    date = "2021.10.10"
+                MonthlyDiary(
+                    month = 3,
+                    diaryList = listOf(
+                        Diary(
+                            id = "444",
+                            title = "Title",
+                            content = "Content",
+                            date = "2021.10.10"
+                        ),
+                        Diary(
+                            id = "555",
+                            title = "Title",
+                            content = "Content",
+                            date = "2021.10.10"
+                        ),
+                        Diary(
+                            id = "666",
+                            title = "Title",
+                            content = "Content",
+                            date = "2021.10.10"
+                        )
+                    )
                 )
             )
         )

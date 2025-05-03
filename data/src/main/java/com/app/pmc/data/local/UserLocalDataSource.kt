@@ -10,4 +10,6 @@ interface UserLocalDataSource {
     suspend fun saveRefreshToken(refreshToken: String)
     suspend fun getRefreshToken(): String?
     suspend fun deleteRefreshToken()
+    suspend fun getPassword(): String?
+    suspend fun setPassword(password: String)
 }

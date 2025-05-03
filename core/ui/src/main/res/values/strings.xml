@@ -45,6 +45,8 @@
     <!--    home-->
     <string name="show_my_vote">투표 보기</string>
     <string name="yesterday">어제</string>
+    <string name="today">오늘</string>
+    <string name="month">%d월</string>
 
     <!--    vote list-->
     <string name="vote_list_title">투표</string>

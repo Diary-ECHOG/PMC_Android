@@ -1,7 +1,11 @@
 package com.app.pmc.data.core
 
 import com.app.pmc.data.local.UserLocalDataSource
+import com.app.pmc.data.model.BaseResponse
+import com.app.pmc.data.model.LoginRequest
+import com.app.pmc.data.model.LoginResponse
 import com.app.pmc.data.user.UserService
+import kotlinx.coroutines.runBlocking
 import okhttp3.Authenticator
 import okhttp3.Request
 import okhttp3.Response
@@ -13,34 +17,55 @@ class OAuthenticator @Inject constructor(
 ) : Authenticator {
 
     override fun authenticate(route: Route?, response: Response): Request? {
+        if (responseCount(response) >= 2) return null
         if (response.request.header("Authorization") == "Bearer ${tokenProvider.getAccessToken()}") {
-            // 새 액세스 토큰 요청
             val newToken = tokenProvider.refreshToken() ?: return null
-
-            // 새로운 토큰으로 요청 재시도
             return response.request.newBuilder()
                 .header("Authorization", "Bearer $newToken")
                 .build()
         }
         return null
     }
+
+    private fun responseCount(response: Response): Int {
+        var count = 1
+        var prior = response.priorResponse
+        while (prior != null) {
+            count++
+            prior = prior.priorResponse
+        }
+        return count
+    }
 }
 
 class TokenProvider @Inject constructor(
-    private val dataSource: UserLocalDataSource
+    private val dataSource: UserLocalDataSource,
+    private val authService: OAuthService
 ) {
-    private var accessToken: String? = null
+    fun getAccessToken(): String? = dataSource.getToken().takeIf { it?.isNotBlank() == true }
+    fun refreshToken(): String? = runBlocking {
+        val userId = dataSource.getUserId()
+        val password = dataSource.getPassword()
 
-    fun getAccessToken(): String? = dataSource.getToken()
+        if (userId.isNullOrBlank() || password.isNullOrBlank()) {
+            return@runBlocking null
+        }
 
-    fun refreshToken(): String? {
-        val newToken = requestNewAccessToken()
-        accessToken = newToken
-        return newToken
-    }
-
-    //todo : 토큰 갱신 로직 추가
-    private fun requestNewAccessToken(): String {
-        return "new_access_token"
+        val response = authService.login(
+            LoginRequest(
+                loginId = userId,
+                password = password
+            )
+        )
+        if (response.statusCode == 200) {
+            val newToken = response.data?.token
+            newToken?.let {
+                dataSource.deleteToken()
+                dataSource.saveToken(it)
+            }
+            return@runBlocking newToken
+        } else {
+            return@runBlocking null
+        }
     }
 }

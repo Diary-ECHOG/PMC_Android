@@ -12,14 +12,9 @@ import javax.inject.Inject
 class GetDiariesUseCase @Inject constructor(
     private val repository: DiaryRepository
 ) {
-    operator fun invoke(): Flow<EchogResult<Diary>> = repository.getDiaries(
+    operator fun invoke(): Flow<EchogResult<List<Diary>?>> = repository.getDiaries(
         page = 0,
         size = 10,
         sort = "createdAt,desc"
-    ).map {
-        when (it) {
-            is SuccessResult<Diary> -> SuccessResult(it.data)
-            is ErrorResult -> ErrorResult(it.message)
-        }
-    }
+    )
 }

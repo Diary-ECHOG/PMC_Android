@@ -10,7 +10,7 @@ import javax.inject.Inject
 class CreateDiaryUseCase @Inject constructor(
     private val repository: DiaryRepository
 ) {
-    operator fun invoke(diary: Diary): Flow<EchogResult> = repository.createDiary(
+    operator fun invoke(diary: Diary): Flow<EchogResult<Boolean>> = repository.createDiary(
         title = diary.title,
         content = diary.content,
     )
