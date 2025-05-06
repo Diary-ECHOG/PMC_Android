@@ -3,8 +3,8 @@ package com.app.pmc.feat.home
 import com.app.pmc.core.model.Diary
 
 data class HomeUiState(
-    val todayDiary: Diary? = Diary(),
-    val yesterdayDiary: Diary? = Diary(),
+    val todayDiary: List<Diary>? = emptyList(),
+    val yesterdayDiary: List<Diary>? = emptyList(),
     val monthlyDiaryList: List<MonthlyDiary> = emptyList()
 )
 

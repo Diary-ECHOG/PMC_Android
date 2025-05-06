@@ -33,8 +33,8 @@ class HomeViewModel @Inject constructor(
                     result.data?.let { diaries ->
                         reduce {
                             state.copy(
-                                todayDiary = diaries.find { it.date?.isToday() == true },
-                                yesterdayDiary = diaries.find { it.date?.isYesterday() == true},
+                                todayDiary = diaries.filter { it.date?.isToday() == true },
+                                yesterdayDiary = diaries.filter { it.date?.isYesterday() == true},
                                 monthlyDiaryList = diaries.groupBy { it.date?.getMonth() }.map { (month, diaryList) ->
                                     MonthlyDiary(
                                         month = month ?: -1,

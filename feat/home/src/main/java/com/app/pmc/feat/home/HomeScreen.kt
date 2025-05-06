@@ -50,13 +50,15 @@ fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
     addDiary: () -> Unit = {},
     navigateToVoteList: () -> Unit = {},
-    navigateToMyPage: () -> Unit = {}
+    navigateToMyPage: () -> Unit = {},
+    navigateToDiary: (String) -> Unit = {}
 ) {
     val state = viewModel.collectAsState()
 
     HomeScreen(
         state = state.value,
         addDiary = addDiary,
+        navigateToDiary = navigateToDiary,
         navigateToVoteList = navigateToVoteList,
         navigateToMyPage = navigateToMyPage
     )
@@ -68,7 +70,8 @@ private fun HomeScreen(
     state: HomeUiState,
     addDiary: () -> Unit,
     navigateToMyPage: () -> Unit,
-    navigateToVoteList: () -> Unit
+    navigateToVoteList: () -> Unit,
+    navigateToDiary: (String) -> Unit
 ) {
     val gradientList =
         listOf(Color.Transparent, MaterialTheme.colorScheme.background.copy(alpha = 0.95f))
@@ -98,34 +101,44 @@ private fun HomeScreen(
                             modifier = Modifier.padding(top = 20.dp)
                         )
                     }
-                    item {
+                    items(
+                        state.todayDiary.size,
+                        key = { index -> state.todayDiary[index].id }
+                    ) { index ->
                         EchogDefaultCard(
-                            title = state.todayDiary.title,
-                            description = state.todayDiary.content,
+                            title = state.todayDiary[index].title,
+                            description = state.todayDiary[index].content,
                             subDescription = {
                                 Text(
-                                    text = state.todayDiary.date?.toDiaryDate() ?: ""
+                                    text = state.todayDiary[index].date?.toDiaryDate() ?: ""
                                 )
+                            },
+                            onClick = {
+                                navigateToDiary(state.todayDiary[index].id)
                             }
                         )
                     }
                 }
                 state.yesterdayDiary?.let {
-                    item {
+                    items(
+                        state.yesterdayDiary.size,
+                        key = { index -> state.yesterdayDiary[index].id }
+                    ) { index ->
                         Text(
                             text = stringResource(id = string.yesterday),
                             fontWeight = FontWeight.W700,
                             modifier = Modifier.padding(top = 20.dp)
                         )
-                    }
-                    item {
                         EchogDefaultCard(
-                            title = state.yesterdayDiary.title,
-                            description = state.yesterdayDiary.content,
+                            title = state.yesterdayDiary[index].title,
+                            description = state.yesterdayDiary[index].content,
                             subDescription = {
                                 Text(
-                                    text = state.yesterdayDiary.date?.toDiaryDate() ?: ""
+                                    text = state.yesterdayDiary[index].date?.toDiaryDate() ?: ""
                                 )
+                            },
+                            onClick = {
+                                navigateToDiary(state.yesterdayDiary[index].id)
                             }
                         )
                     }
@@ -134,18 +147,25 @@ private fun HomeScreen(
                     state.monthlyDiaryList.size,
                     key = { index -> state.monthlyDiaryList[index].month }) { index ->
                     Text(
-                        text = stringResource(id = string.month, state.monthlyDiaryList[index].month),
+                        text = stringResource(
+                            id = string.month,
+                            state.monthlyDiaryList[index].month
+                        ),
                         fontWeight = FontWeight.W700,
                         modifier = Modifier.padding(vertical = 10.dp)
                     )
                     state.monthlyDiaryList[index].diaryList.forEach { diary ->
                         EchogDefaultCard(
+                            modifier = modifier.padding(bottom = 10.dp),
                             title = diary.title,
                             description = diary.content,
                             subDescription = {
                                 Text(
                                     text = diary.date?.toDiaryDate() ?: ""
                                 )
+                            },
+                            onClick = {
+                                navigateToDiary(diary.id)
                             }
                         )
                     }
@@ -253,19 +273,24 @@ private fun HomeScreenPreview() {
     HomeScreen(
         navigateToVoteList = {},
         navigateToMyPage = {},
+        navigateToDiary = {},
         addDiary = {},
         state = HomeUiState(
-            todayDiary = Diary(
-                id = "999",
-                title = "Title",
-                content = "Content",
-                date = "2021.10.10"
+            todayDiary = listOf(
+                Diary(
+                    id = "999",
+                    title = "Title",
+                    content = "Content",
+                    date = "2021.10.10"
+                )
             ),
-            yesterdayDiary = Diary(
-                id = "00000",
-                title = "Title",
-                content = "Content",
-                date = "2021.10.10"
+            yesterdayDiary = listOf(
+                Diary(
+                    id = "00000",
+                    title = "Title",
+                    content = "Content",
+                    date = "2021.10.10"
+                )
             ),
             monthlyDiaryList = listOf(
                 MonthlyDiary(

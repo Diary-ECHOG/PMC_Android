@@ -1,9 +1,10 @@
-package com.app.pmc.feat.diary
+package com.app.pmc.feat.diary.diarydetail
 
 import androidx.lifecycle.ViewModel
 import com.app.pmc.core.model.Diary
 import com.app.pmc.core.model.SuccessResult
 import com.app.pmc.core.usecase.CreateDiaryUseCase
+import com.app.pmc.feat.diary.AddDiarySideEffect
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
 import org.orbitmvi.orbit.Container
@@ -16,12 +17,12 @@ import org.orbitmvi.orbit.viewmodel.container
 import javax.inject.Inject
 
 @HiltViewModel
-class AddDiaryViewModel @Inject constructor(
+class DiaryDetailViewModel @Inject constructor(
     private val createDiaryUseCase: CreateDiaryUseCase
 ) : ViewModel(),
-    ContainerHost<AddDiaryScreenState, AddDiarySideEffect> {
-    override val container: Container<AddDiaryScreenState, AddDiarySideEffect> = container(
-        AddDiaryScreenState()
+    ContainerHost<DiaryDetailScreenState, DiaryDetailSideEffect> {
+    override val container: Container<DiaryDetailScreenState, DiaryDetailSideEffect> = container(
+        DiaryDetailScreenState()
     )
 
     fun onTitleChange(title: String) = blockingIntent {
@@ -60,8 +61,8 @@ class AddDiaryViewModel @Inject constructor(
             )
         ).collectLatest { result ->
             println("111111 $result")
-            when(result) {
-                is SuccessResult<*> -> postSideEffect(AddDiarySideEffect.PopToBackStack)
+            when (result) {
+                is SuccessResult<*> -> postSideEffect(DiaryDetailSideEffect.PopToBackStack)
                 else -> {}
             }
         }
@@ -110,7 +111,7 @@ class AddDiaryViewModel @Inject constructor(
     }
 }
 
-sealed class AddDiarySideEffect {
-    data class ShowToast(val message: String) : AddDiarySideEffect()
-    data object PopToBackStack : AddDiarySideEffect()
+sealed class DiaryDetailSideEffect {
+    data class ShowToast(val message: String) : DiaryDetailSideEffect()
+    data object PopToBackStack : DiaryDetailSideEffect()
 }

@@ -10,9 +10,11 @@ import com.app.pmc.feat.auth.navigation.navigateToLogin
 import com.app.pmc.feat.calendar.navigation.addCalendarGraph
 import com.app.pmc.feat.diary.navigation.addDiaryGraph
 import com.app.pmc.feat.diary.navigation.navigateToAddDiary
+import com.app.pmc.feat.diary.navigation.navigateToDiary
 import com.app.pmc.feat.home.ROUTE_HOME
 import com.app.pmc.feat.home.addHomeGraph
 import com.app.pmc.feat.home.navigateToHome
+import com.app.pmc.feat.home.navigateToHomeToTop
 import com.app.pmc.feat.mypage.addMyPageGraph
 import com.app.pmc.feat.splash.ROUTE_SPLASH
 import com.app.pmc.feat.splash.addSplashGraph
@@ -46,12 +48,20 @@ fun PMCNavHost(
             },
             navigateToAddDiary = {
                 navController.navigateToAddDiary()
+            },
+            navigateToDiary = {
+                navController.navigateToDiary()
             }
         )
         addVoteGraph(navController = navController)
         addMyPageGraph(navController = navController)
-        addDiaryGraph(navController = navController, navigateToVote = {
-            navController.navigateVote()
-        })
+        addDiaryGraph(
+            navController = navController, navigateToVote = {
+                navController.navigateVote()
+            },
+            navigateToHome = {
+                navController.navigateToHomeToTop()
+            }
+        )
     }
 }

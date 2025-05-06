@@ -29,7 +29,7 @@ class DiaryRepositoryImpl @Inject constructor(
                     )
                 )
             }) {
-                is ApiResult.Success -> emit(SuccessResult(result.data.data != null))
+                is ApiResult.Success -> emit(SuccessResult(true))
                 is ApiResult.Failure.HttpError -> emit(ErrorResult(result.getErrorMessage()))
                 else -> emit(ErrorResult(result.exceptionOrNull()?.localizedMessage.toString()))
             }

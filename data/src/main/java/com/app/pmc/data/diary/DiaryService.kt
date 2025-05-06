@@ -14,7 +14,7 @@ import retrofit2.http.Query
 
 interface DiaryService {
     @POST("api/diary/write")
-    suspend fun saveDiary(@Body request: DiaryRequest): BaseResponse<DiaryRequest>
+    suspend fun saveDiary(@Body request: DiaryRequest): DiaryRequest
 
     @GET("api/diary/view")
     suspend fun getDiaries(
