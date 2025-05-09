@@ -49,12 +49,14 @@ fun PMCNavHost(
             navigateToAddDiary = {
                 navController.navigateToAddDiary()
             },
-            navigateToDiary = {
-                navController.navigateToDiary()
+            navigateToDiary = { id ->
+                navController.navigateToDiary(id)
             }
         )
         addVoteGraph(navController = navController)
-        addMyPageGraph(navController = navController)
+        addMyPageGraph(navController = navController, navigateToLogin = {
+            navController.navigateToLogin()
+        })
         addDiaryGraph(
             navController = navController, navigateToVote = {
                 navController.navigateVote()

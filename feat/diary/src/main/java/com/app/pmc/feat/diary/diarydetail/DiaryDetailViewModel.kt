@@ -1,10 +1,16 @@
 package com.app.pmc.feat.diary.diarydetail
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.app.pmc.core.model.Diary
+import com.app.pmc.core.model.EchogResult
 import com.app.pmc.core.model.SuccessResult
 import com.app.pmc.core.usecase.CreateDiaryUseCase
+import com.app.pmc.core.usecase.GetDiariesUseCase
+import com.app.pmc.core.usecase.GetDiaryUseCase
+import com.app.pmc.core.util.StringExtension.toDiaryDate
 import com.app.pmc.feat.diary.AddDiarySideEffect
+import com.app.pmc.feat.diary.navigation.ROUTE_DIARY_DETAIL_ARGUMENT_ID
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
 import org.orbitmvi.orbit.Container
@@ -18,95 +24,32 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DiaryDetailViewModel @Inject constructor(
-    private val createDiaryUseCase: CreateDiaryUseCase
+    private val savedStateHandle: SavedStateHandle,
+    private val getDiaryUseCase: GetDiaryUseCase
 ) : ViewModel(),
     ContainerHost<DiaryDetailScreenState, DiaryDetailSideEffect> {
     override val container: Container<DiaryDetailScreenState, DiaryDetailSideEffect> = container(
         DiaryDetailScreenState()
     )
+    val id: String = savedStateHandle.get<String>(ROUTE_DIARY_DETAIL_ARGUMENT_ID) ?: ""
 
-    fun onTitleChange(title: String) = blockingIntent {
-        reduce {
-            state.copy(
-                title = title
-            )
-        }
+    init {
+        getDiary(id)
     }
 
-    fun onBottomSheetTitleChanged(title: String) = blockingIntent {
-        reduce {
-            state.copy(
-                bottomSheetState = state.bottomSheetState.copy(
-                    title = title
-                )
-            )
-        }
-    }
-
-    fun onBottomSheetContentChanged(content: String) = blockingIntent {
-        reduce {
-            state.copy(
-                bottomSheetState = state.bottomSheetState.copy(
-                    content = content
-                )
-            )
-        }
-    }
-
-    fun createDiary() = intent {
-        createDiaryUseCase(
-            diary = Diary(
-                title = state.title,
-                content = state.content,
-            )
-        ).collectLatest { result ->
-            println("111111 $result")
+    private fun getDiary(id: String) = intent {
+        getDiaryUseCase(id).collectLatest { result ->
             when (result) {
-                is SuccessResult<*> -> postSideEffect(DiaryDetailSideEffect.PopToBackStack)
+                is SuccessResult -> reduce {
+                    val diary = result.data
+                    state.copy(
+                        date = diary?.date?.toDiaryDate(),
+                        title = diary?.title,
+                        content = diary?.content,
+                    )
+                }
                 else -> {}
             }
-        }
-    }
-
-    fun onBottomSheetCategoryChanged(category: String) = blockingIntent {
-        reduce {
-            state.copy(
-                bottomSheetState = state.bottomSheetState.copy(
-                    selectedCategory = category
-                )
-            )
-        }
-    }
-
-    fun addVote() {
-
-    }
-
-    fun toggleDuplicateSelection(allowDuplicateSelection: Boolean) = intent {
-        reduce {
-            state.copy(
-                bottomSheetState = state.bottomSheetState.copy(
-                    allowDuplicateSelection = allowDuplicateSelection
-                )
-            )
-        }
-    }
-
-    fun addOption() = intent {
-        reduce {
-            state.copy(
-                bottomSheetState = state.bottomSheetState.copy(
-                    option = state.bottomSheetState.option.plus("")
-                )
-            )
-        }
-    }
-
-    fun onContentChange(content: String) = blockingIntent {
-        reduce {
-            state.copy(
-                content = content
-            )
         }
     }
 }

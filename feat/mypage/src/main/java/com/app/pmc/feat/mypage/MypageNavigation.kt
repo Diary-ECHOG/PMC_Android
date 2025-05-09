@@ -9,10 +9,9 @@ import com.app.pmc.feat.mypage.withdraw.WithdrawScreen
 const val ROUTE_MY_PAGE = "mypage"
 const val ROUTE_MY_VOTE = "myVote"
 const val ROUTE_MY_REPORT = "myReport"
-const val ROUTE_LOGOUT = "logout"
 const val ROUTE_WITHDRAW = "withdraw"
 
-    fun NavGraphBuilder.addMyPageGraph(navController: NavController) {
+    fun NavGraphBuilder.addMyPageGraph(navController: NavController, navigateToLogin: () -> Unit) {
         composable(ROUTE_MY_PAGE) {
             MyPageScreen(
                 navigateToMyVoteList = {
@@ -23,9 +22,7 @@ const val ROUTE_WITHDRAW = "withdraw"
                 },
                 navigateToPrivacyPolicy = {},
                 navigateToVoteIParticipatedIn = {},
-                navigateToLogout = {
-                    navController.navigate(ROUTE_LOGOUT)
-                },
+                navigateToLogin = navigateToLogin,
                 navigateToWithdraw = {
                     navController.navigate(ROUTE_WITHDRAW)
                 },
@@ -51,10 +48,6 @@ const val ROUTE_WITHDRAW = "withdraw"
                     navController.popBackStack()
                 }
             )
-        }
-        composable(
-            route = ROUTE_LOGOUT
-        ) {
         }
         composable(
             route = ROUTE_WITHDRAW

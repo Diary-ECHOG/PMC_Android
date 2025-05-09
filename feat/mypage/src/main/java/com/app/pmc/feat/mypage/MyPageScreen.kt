@@ -33,7 +33,7 @@ fun MyPageScreen(
     navigateToMyVoteList : () -> Unit = {},
     navigateToVoteIParticipatedIn : () -> Unit = {},
     navigateToMyReportList : () -> Unit = {},
-    navigateToLogout : () -> Unit = {},
+    navigateToLogin : () -> Unit = {},
     navigateToPrivacyPolicy : () -> Unit = {},
     navigateToWithdraw : () -> Unit = {},
     popBackStack : () -> Unit = {}
@@ -58,7 +58,7 @@ fun MyPageScreen(
         MenuTitle(title = stringResource(id = string.list_of_votes_i_participated_in), onClick = navigateToVoteIParticipatedIn)
         MenuTitle(title = stringResource(id = string.my_report_list), onClick = navigateToMyReportList)
         Divider(color = Gray_100)
-        MenuTitle(title = stringResource(id = string.logout), onClick = navigateToLogout)
+        MenuTitle(title = stringResource(id = string.logout), onClick = navigateToLogin)
         MenuTitle(title = stringResource(id = string.privacy_policy), onClick = navigateToPrivacyPolicy)
         MenuTitle(title = stringResource(id = string.withdraw), color = Red_500, onClick = navigateToWithdraw)
     }

@@ -51,4 +51,15 @@ class DiaryRepositoryImpl @Inject constructor(
             }
         }
     }
+    override fun getDiary(diaryId: String): Flow<EchogResult<Diary?>> {
+        return flow {
+            when (val result = safeApiCall.execute {
+                diaryService.getDiary(diaryId)
+            }) {
+                is ApiResult.Success -> emit(SuccessResult(result.data.toDomain()))
+                is ApiResult.Failure.HttpError -> emit(ErrorResult(result.getErrorMessage()))
+                else -> emit(ErrorResult(result.exceptionOrNull()?.localizedMessage.toString()))
+            }
+        }
+    }
 }

@@ -17,7 +17,10 @@ fun NavController.navigateToJoin() {
 }
 
 fun NavController.navigateToLogin() {
-    navigate(ROUTE_LOGIN)
+    navigate(ROUTE_LOGIN) {
+        popUpTo(0) { inclusive = true }
+        launchSingleTop = true
+    }
 }
 
 fun NavGraphBuilder.addJoinGraph(

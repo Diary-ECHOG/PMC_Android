@@ -7,4 +7,5 @@ import kotlinx.coroutines.flow.Flow
 interface DiaryRepository {
     fun createDiary(title: String, content: String): Flow<EchogResult<Boolean>>
     fun getDiaries(page: Int, size: Int, sort: String): Flow<EchogResult<List<Diary>?>>
+    fun getDiary(diaryId: String): Flow<EchogResult<Diary?>>
 }
