@@ -16,4 +16,5 @@ interface UserRepository {
     fun login(email: String, password: String): Flow<EchogResult<String>>
     fun autoLogin(): Flow<EchogResult<String>>
     fun sendResetPasswordEmail(email: String): Flow<EchogResult<Boolean>>
+    fun logout(): Flow<EchogResult<Boolean>>
 }

@@ -25,7 +25,7 @@ class LoginViewModel @Inject constructor(
         loginUseCase(state.email, state.password).collectLatest { result ->
             when (result) {
                 is SuccessResult ->postSideEffect(LoginSideEffect.NavigateToMain)
-                is ErrorResult -> postSideEffect(LoginSideEffect.ShowToast(result.message.toString()))
+                is ErrorResult -> postSideEffect(LoginSideEffect.ShowToast(result.errorType.name))
             }
         }
     }

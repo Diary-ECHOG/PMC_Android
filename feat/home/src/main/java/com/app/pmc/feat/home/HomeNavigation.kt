@@ -5,13 +5,18 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 
 const val ROUTE_HOME = "home"
+const val ROUTE_HOME_GUEST = "home_guest"
 
 fun NavController.navigateToHome() {
     navigate(ROUTE_HOME)
 }
 
+fun NavController.navigateToGuestMain() {
+    navigate(ROUTE_HOME_GUEST)
+}
+
 fun NavController.navigateToHomeToTop() {
-    navigate(ROUTE_HOME) {
+    navigate(ROUTE_HOME_GUEST) {
         popUpTo(0) { inclusive = true }
         launchSingleTop = true
     }
@@ -31,6 +36,15 @@ fun NavGraphBuilder.addHomeGraph(
             },
             navigateToDiary = { id ->
                 navigateToDiary(id)
+            },
+            addDiary = navigateToAddDiary
+        )
+    }
+    composable(ROUTE_HOME_GUEST) {
+        GuestHomeScreen(
+            navigateToVoteList = navigateToVoteList,
+            navigateToMyPage = {
+                navController.navigate("mypage")
             },
             addDiary = navigateToAddDiary
         )

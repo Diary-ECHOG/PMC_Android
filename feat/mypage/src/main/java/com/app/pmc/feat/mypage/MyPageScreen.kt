@@ -22,45 +22,104 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.app.pmc.core.ui.R.drawable
 import com.app.pmc.core.ui.R.string
 import com.app.pmc.core.ui.theme.Gray_100
 import com.app.pmc.core.ui.theme.Red_500
+import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
 fun MyPageScreen(
     modifier: Modifier = Modifier,
-    navigateToMyVoteList : () -> Unit = {},
-    navigateToVoteIParticipatedIn : () -> Unit = {},
-    navigateToMyReportList : () -> Unit = {},
-    navigateToLogin : () -> Unit = {},
-    navigateToPrivacyPolicy : () -> Unit = {},
-    navigateToWithdraw : () -> Unit = {},
-    popBackStack : () -> Unit = {}
+    navigateToMyVoteList: () -> Unit = {},
+    navigateToVoteIParticipatedIn: () -> Unit = {},
+    navigateToMyReportList: () -> Unit = {},
+    navigateToPrivacyPolicy: () -> Unit = {},
+    navigateToWithdraw: () -> Unit = {},
+    popBackStack: () -> Unit = {},
+    navigateToLogin: () -> Unit = {},
+    viewModel: MypageViewModel = hiltViewModel()
+) {
+    viewModel.collectSideEffect { sideEffect ->
+        when (sideEffect) {
+            is MypageSideEffect.NavigateToLogin -> {
+                navigateToLogin()
+            }
+            is MypageSideEffect.ShowToast -> {
+            }
+
+            else -> {}
+        }
+    }
+
+    MyPageScreen(
+        modifier = modifier,
+        navigateToMyVoteList = navigateToMyVoteList,
+        navigateToVoteIParticipatedIn = navigateToVoteIParticipatedIn,
+        navigateToMyReportList = navigateToMyReportList,
+        logout = viewModel::logout,
+        navigateToPrivacyPolicy = navigateToPrivacyPolicy,
+        navigateToWithdraw = navigateToWithdraw,
+        popBackStack = popBackStack
+    )
+}
+
+@Composable
+private fun MyPageScreen(
+    modifier: Modifier = Modifier,
+    navigateToMyVoteList: () -> Unit = {},
+    navigateToVoteIParticipatedIn: () -> Unit = {},
+    navigateToMyReportList: () -> Unit = {},
+    logout: () -> Unit = {},
+    navigateToPrivacyPolicy: () -> Unit = {},
+    navigateToWithdraw: () -> Unit = {},
+    popBackStack: () -> Unit = {},
 ) {
     Column(modifier = modifier.fillMaxSize(), verticalArrangement = Arrangement.spacedBy(20.dp)) {
         Row(
-            modifier = Modifier.fillMaxWidth().padding(start = 20.dp, end = 20.dp, top = 80.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 20.dp, end = 20.dp, top = 80.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(text = stringResource(id = string.my_page_title), fontWeight = FontWeight.W600, fontSize = 24.sp)
+            Text(
+                text = stringResource(id = string.my_page_title),
+                fontWeight = FontWeight.W600,
+                fontSize = 24.sp
+            )
             Image(
-                modifier = Modifier.size(24.dp).clickable {
-                    popBackStack()
-                },
+                modifier = Modifier
+                    .size(24.dp)
+                    .clickable {
+                        popBackStack()
+                    },
                 painter = painterResource(id = drawable.ic_x_line),
                 contentDescription = null,
             )
         }
         Divider(color = Gray_100)
         MenuTitle(title = stringResource(id = string.my_vote_list), onClick = navigateToMyVoteList)
-        MenuTitle(title = stringResource(id = string.list_of_votes_i_participated_in), onClick = navigateToVoteIParticipatedIn)
-        MenuTitle(title = stringResource(id = string.my_report_list), onClick = navigateToMyReportList)
+        MenuTitle(
+            title = stringResource(id = string.list_of_votes_i_participated_in),
+            onClick = navigateToVoteIParticipatedIn
+        )
+        MenuTitle(
+            title = stringResource(id = string.my_report_list),
+            onClick = navigateToMyReportList
+        )
         Divider(color = Gray_100)
-        MenuTitle(title = stringResource(id = string.logout), onClick = navigateToLogin)
-        MenuTitle(title = stringResource(id = string.privacy_policy), onClick = navigateToPrivacyPolicy)
-        MenuTitle(title = stringResource(id = string.withdraw), color = Red_500, onClick = navigateToWithdraw)
+        MenuTitle(title = stringResource(id = string.logout), onClick = logout)
+        MenuTitle(
+            title = stringResource(id = string.privacy_policy),
+            onClick = navigateToPrivacyPolicy
+        )
+        MenuTitle(
+            title = stringResource(id = string.withdraw),
+            color = Red_500,
+            onClick = navigateToWithdraw
+        )
     }
 }
 
@@ -69,13 +128,14 @@ private fun MenuTitle(
     modifier: Modifier = Modifier,
     onClick: () -> Unit = {},
     color: Color = MaterialTheme.colorScheme.onSurface,
-    title : String
+    title: String
 ) {
     Text(
         text = title,
         fontWeight = FontWeight.W500,
         color = color, fontSize = 15.sp,
-        modifier = modifier.padding(start = 20.dp)
+        modifier = modifier
+            .padding(start = 20.dp)
             .clickable { onClick() }
     )
 }
@@ -83,5 +143,13 @@ private fun MenuTitle(
 @Composable
 @Preview(showBackground = true)
 fun MyPageScreenPreview() {
-    MyPageScreen()
+    MyPageScreen(
+        navigateToMyVoteList = {},
+        navigateToVoteIParticipatedIn = {},
+        navigateToMyReportList = {},
+        logout = {},
+        navigateToPrivacyPolicy = {},
+        navigateToWithdraw = {},
+        popBackStack = {}
+    )
 }

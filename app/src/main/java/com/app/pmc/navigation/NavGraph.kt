@@ -13,6 +13,7 @@ import com.app.pmc.feat.diary.navigation.navigateToAddDiary
 import com.app.pmc.feat.diary.navigation.navigateToDiary
 import com.app.pmc.feat.home.ROUTE_HOME
 import com.app.pmc.feat.home.addHomeGraph
+import com.app.pmc.feat.home.navigateToGuestMain
 import com.app.pmc.feat.home.navigateToHome
 import com.app.pmc.feat.home.navigateToHomeToTop
 import com.app.pmc.feat.mypage.addMyPageGraph
@@ -28,9 +29,16 @@ fun PMCNavHost(
 ) {
     NavHost(navController = navController, startDestination = ROUTE_SPLASH) {
         addCalendarGraph(navController = navController)
-        addJoinGraph(navController = navController, navigateToMain = {
-            navController.navigateToHome()
-        }, showSnackBar = showSnackBar)
+        addJoinGraph(
+            navController = navController,
+            navigateToMain = {
+                navController.navigateToHome()
+            },
+            navigateToGuestMain = {
+                navController.navigateToGuestMain()
+            },
+            showSnackBar = showSnackBar
+        )
         addSplashGraph(
             onNavigateToJoinScreen = {
                 navController.navigateToJoin()
@@ -63,6 +71,9 @@ fun PMCNavHost(
             },
             navigateToHome = {
                 navController.navigateToHomeToTop()
+            },
+            navigateToLogin = {
+                navController.navigateToLogin()
             }
         )
     }

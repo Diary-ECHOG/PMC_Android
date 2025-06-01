@@ -62,6 +62,8 @@ dependencies {
     //hilt
     implementation(libs.hilt.android)
     implementation(libs.androidx.hilt.navigation.compose)
+    implementation(project(":core:usecase"))
+    implementation(project(":core:model"))
     ksp(libs.hilt.compiler)
     ksp(libs.androidx.hilt.complier)
 

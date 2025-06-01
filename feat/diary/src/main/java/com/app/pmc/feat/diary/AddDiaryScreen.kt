@@ -42,6 +42,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.app.pmc.core.ui.R
 import com.app.pmc.core.ui.bottomsheet.EchogBottomSheet
 import com.app.pmc.core.ui.button.EchogButton
+import com.app.pmc.core.ui.dialog.EchogDialog
 import com.app.pmc.core.ui.textfield.EchogBasicTextField
 import com.app.pmc.core.ui.textfield.EchogNoLineTextField
 import com.app.pmc.core.util.LocalDateTimeExtension.toDiaryDate
@@ -60,13 +61,19 @@ import java.time.LocalDateTime
 fun AddDiaryScreen(
     viewModel: AddDiaryViewModel = hiltViewModel(),
     popToBackStack: () -> Unit,
-    navigateToVote: () -> Unit
+    navigateToVote: () -> Unit,
+    navigateToLogin: () -> Unit,
 ) {
     val state = viewModel.collectAsState()
+    var isLoginDialogOpened by remember { mutableStateOf(false) }
 
     viewModel.collectSideEffect {
-        when(it) {
+        when (it) {
             is AddDiarySideEffect.PopToBackStack -> popToBackStack()
+            is AddDiarySideEffect.ShowLoginDialog -> {
+                isLoginDialogOpened = true
+            }
+
             else -> {}
         }
     }
@@ -85,6 +92,17 @@ fun AddDiaryScreen(
         onBottomSheetContentChanged = viewModel::onBottomSheetContentChanged,
         onTitleChange = viewModel::onTitleChange,
         onContentChange = viewModel::onContentChange
+    )
+
+    if (isLoginDialogOpened) EchogDialog(
+        title = stringResource(R.string.login_required_dialog_title),
+        message = stringResource(R.string.login_required_dialog_message),
+        confirmButtonLabel = stringResource(R.string.login_required_dialog_positive_button),
+        cancelButtonLabel = stringResource(R.string.login_required_dialog_negative_button),
+        onConfirm = { navigateToLogin() },
+        onCancel = {
+            //do nothing
+        }
     )
 }
 
@@ -214,11 +232,11 @@ private fun AddVoteBottomSheet(
                     )
                 }
                 item {
-                   SelectCategoryDropdown(
-                       selectedCategory = bottomSheetState.selectedCategory,
-                       onSelectedCategory = onSelectedCategory,
-                       categoryList = bottomSheetState.categoryList
-                   )
+                    SelectCategoryDropdown(
+                        selectedCategory = bottomSheetState.selectedCategory,
+                        onSelectedCategory = onSelectedCategory,
+                        categoryList = bottomSheetState.categoryList
+                    )
                 }
                 item {
                     Column(
@@ -315,9 +333,9 @@ private fun DuplicateSelectionCheckBox(
 
 @Composable
 private fun SelectCategoryDropdown(
-     selectedCategory: String,
-     categoryList: List<String>,
-     onSelectedCategory: (String) -> Unit
+    selectedCategory: String,
+    categoryList: List<String>,
+    onSelectedCategory: (String) -> Unit
 ) {
     var expanded by remember { mutableStateOf(false) }
 

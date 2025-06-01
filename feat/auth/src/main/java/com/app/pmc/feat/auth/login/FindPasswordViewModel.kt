@@ -26,7 +26,7 @@ class FindPasswordViewModel @Inject constructor(
         sendResetPasswordEmailUseCase(state.email).collectLatest { result ->
             when (result) {
                 is SuccessResult<*> -> postSideEffect(FindPasswordSideEffect.NavigateToBackstack)
-                is ErrorResult -> postSideEffect(FindPasswordSideEffect.ShowToast(result.message.toString()))
+                is ErrorResult -> postSideEffect(FindPasswordSideEffect.ShowToast(result.errorType.name))
             }
         }
     }

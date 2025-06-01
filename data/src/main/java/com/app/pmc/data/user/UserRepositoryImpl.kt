@@ -2,6 +2,7 @@ package com.app.pmc.data.user
 
 import com.app.pmc.core.model.EchogResult
 import com.app.pmc.core.model.ErrorResult
+import com.app.pmc.core.model.ErrorType
 import com.app.pmc.core.model.SuccessResult
 import com.app.pmc.core.repository.UserRepository
 import com.app.pmc.data.core.ApiResult
@@ -81,10 +82,10 @@ class UserRepositoryImpl @Inject constructor(
                     }
                 }
                 is ApiResult.Failure.HttpError -> {
-                    emit(ErrorResult(result.getErrorMessage()))
+                    emit(ErrorResult(result.getError()))
                 }
                 else -> {
-                    emit(ErrorResult(result.exceptionOrNull()?.localizedMessage.toString()))
+                    emit(ErrorResult(ErrorType.UNKNOWN))
                 }
             }
         }
@@ -96,10 +97,16 @@ class UserRepositoryImpl @Inject constructor(
         if (result == true) {
             emit(SuccessResult("로그인에 성공했습니다"))
         } else {
-            emit(ErrorResult("로그인 정보가 없습니다."))
+            emit(ErrorResult(ErrorType.FORBIDDEN))
         }
     }
 
     //todo : api 추가
     override fun sendResetPasswordEmail(email: String): Flow<EchogResult<Boolean>> = flow {}
+    override fun logout(): Flow<EchogResult<Boolean>> = flow {
+        userLocalDataSource.deleteToken()
+        userLocalDataSource.deleteRefreshToken()
+        userLocalDataSource.deleteUserId()
+        emit(SuccessResult(true))
+    }
 }

@@ -3,6 +3,7 @@ package com.app.pmc.data.diary
 import com.app.pmc.core.model.Diary
 import com.app.pmc.core.model.EchogResult
 import com.app.pmc.core.model.ErrorResult
+import com.app.pmc.core.model.ErrorType
 import com.app.pmc.core.model.SuccessResult
 import com.app.pmc.core.repository.DiaryRepository
 import com.app.pmc.data.core.ApiResult
@@ -30,8 +31,8 @@ class DiaryRepositoryImpl @Inject constructor(
                 )
             }) {
                 is ApiResult.Success -> emit(SuccessResult(true))
-                is ApiResult.Failure.HttpError -> emit(ErrorResult(result.getErrorMessage()))
-                else -> emit(ErrorResult(result.exceptionOrNull()?.localizedMessage.toString()))
+                is ApiResult.Failure.HttpError -> emit(ErrorResult(result.getError()))
+                else -> emit(ErrorResult(ErrorType.UNKNOWN))
             }
         }
     }
@@ -46,8 +47,8 @@ class DiaryRepositoryImpl @Inject constructor(
                 )
             }) {
                 is ApiResult.Success -> emit(SuccessResult(result.data.toDomain()))
-                is ApiResult.Failure.HttpError -> emit(ErrorResult(result.getErrorMessage()))
-                else -> emit(ErrorResult(result.exceptionOrNull()?.localizedMessage.toString()))
+                is ApiResult.Failure.HttpError -> emit(ErrorResult(result.getError()))
+                else -> emit(ErrorResult(ErrorType.UNKNOWN))
             }
         }
     }
@@ -57,8 +58,8 @@ class DiaryRepositoryImpl @Inject constructor(
                 diaryService.getDiary(diaryId)
             }) {
                 is ApiResult.Success -> emit(SuccessResult(result.data.toDomain()))
-                is ApiResult.Failure.HttpError -> emit(ErrorResult(result.getErrorMessage()))
-                else -> emit(ErrorResult(result.exceptionOrNull()?.localizedMessage.toString()))
+                is ApiResult.Failure.HttpError -> emit(ErrorResult(result.getError()))
+                else -> emit(ErrorResult(ErrorType.UNKNOWN))
             }
         }
     }

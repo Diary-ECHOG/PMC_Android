@@ -20,15 +20,17 @@ const val ROUTE_WITHDRAW = "withdraw"
                 navigateToMyReportList = {
                     navController.navigate(ROUTE_MY_REPORT)
                 },
+                navigateToLogin = {
+                    navigateToLogin()
+                },
                 navigateToPrivacyPolicy = {},
                 navigateToVoteIParticipatedIn = {},
-                navigateToLogin = navigateToLogin,
-                navigateToWithdraw = {
+                 navigateToWithdraw = {
                     navController.navigate(ROUTE_WITHDRAW)
                 },
                 popBackStack = {
                     navController.popBackStack()
-                }
+                },
             )
         }
         composable(

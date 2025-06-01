@@ -47,3 +47,5 @@ val Checkbox_UnChecked = Color(0xFFDBDEE3)
 
 val Withdraw_Info_Title = Color(0xFF3E4651)
 val Withdraw_Confirm = Color(0xFF5872A6)
+
+val Action_PrimaryTonal = Color(0x1A717680)
