@@ -2,6 +2,8 @@ package com.app.pmc.feat.auth.login
 
 import androidx.lifecycle.ViewModel
 import com.app.pmc.core.model.EchogResult
+import com.app.pmc.core.model.ErrorResult
+import com.app.pmc.core.model.SuccessResult
 import com.app.pmc.core.usecase.SendResetPasswordEmailUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
@@ -23,8 +25,8 @@ class FindPasswordViewModel @Inject constructor(
     fun sendResetPasswordMail() = intent {
         sendResetPasswordEmailUseCase(state.email).collectLatest { result ->
             when (result) {
-                is EchogResult.Success -> postSideEffect(FindPasswordSideEffect.NavigateToBackstack)
-                is EchogResult.Error -> postSideEffect(FindPasswordSideEffect.ShowToast(result.message.toString()))
+                is SuccessResult<*> -> postSideEffect(FindPasswordSideEffect.NavigateToBackstack)
+                is ErrorResult -> postSideEffect(FindPasswordSideEffect.ShowToast(result.errorType.name))
             }
         }
     }

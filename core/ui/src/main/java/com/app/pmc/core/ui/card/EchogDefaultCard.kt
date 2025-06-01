@@ -1,5 +1,6 @@
 package com.app.pmc.core.ui.card
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -26,12 +27,16 @@ fun EchogDefaultCard(
     modifier: Modifier = Modifier,
     title: String,
     description: String,
-    subDescription: @Composable() () -> Unit
+    subDescription: @Composable() () -> Unit,
+    onClick: () -> Unit = {},
 ) {
     Card(
         shape = RoundedCornerShape(12.dp),
         modifier = modifier
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .clickable {
+                onClick()
+            },
         colors = CardDefaults.cardColors(
             containerColor = White,
         ),

@@ -106,4 +106,26 @@ internal object NetworkModule {
             .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
             .build()
     }
+
+    @Qualifier
+    @Retention(AnnotationRetention.BINARY)
+    annotation class OAuth
+
+    @OptIn(ExperimentalSerializationApi::class)
+    @Provides
+    @Singleton
+    @OAuth
+    fun provideOAuthRetrofit(
+        okhttpClientBuilder: OkHttpClient.Builder,
+        json: Json,
+    ): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl(BuildConfig.BASE_URL)
+            .client(
+                okhttpClientBuilder
+                    .build()
+            )
+            .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
+            .build()
+    }
 }

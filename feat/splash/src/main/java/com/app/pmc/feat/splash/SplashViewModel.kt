@@ -2,6 +2,8 @@ package com.app.pmc.feat.splash
 
 import androidx.lifecycle.ViewModel
 import com.app.pmc.core.model.EchogResult
+import com.app.pmc.core.model.ErrorResult
+import com.app.pmc.core.model.SuccessResult
 import com.app.pmc.core.usecase.LoginUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
@@ -25,8 +27,8 @@ class SplashViewModel @Inject constructor(
     private fun login() = intent {
         loginUseCase().collectLatest { result ->
             when (result) {
-                is EchogResult.Success -> postSideEffect(SplashSideEffect.NavigateToMain)
-                is EchogResult.Error -> postSideEffect(SplashSideEffect.NavigateToLogin)
+                is SuccessResult -> postSideEffect(SplashSideEffect.NavigateToMain)
+                is ErrorResult -> postSideEffect(SplashSideEffect.NavigateToLogin)
             }
         }
     }

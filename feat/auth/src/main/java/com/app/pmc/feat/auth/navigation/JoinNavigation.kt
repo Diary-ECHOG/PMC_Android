@@ -17,11 +17,15 @@ fun NavController.navigateToJoin() {
 }
 
 fun NavController.navigateToLogin() {
-    navigate(ROUTE_LOGIN)
+    navigate(ROUTE_LOGIN) {
+        popUpTo(0) { inclusive = true }
+        launchSingleTop = true
+    }
 }
 
 fun NavGraphBuilder.addJoinGraph(
     navigateToMain: () -> Unit,
+    navigateToGuestMain: () -> Unit,
     showSnackBar: (String) -> Unit,
     navController: NavController
 ) {
@@ -34,6 +38,9 @@ fun NavGraphBuilder.addJoinGraph(
         LoginScreen(
             navigateToMain = navigateToMain,
             navigateToFindPassword = { navController.navigate(ROUTE_FIND_PASSWORD) },
+            onBrowseAsGuestButtonClicked = {
+                navigateToGuestMain()
+            },
             showSnackBar = showSnackBar
         )
     }

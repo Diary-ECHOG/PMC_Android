@@ -13,7 +13,8 @@ interface UserRepository {
         agreement: Boolean,
         anonymous: Boolean = true
     ): Flow<String>
-    fun login(email: String, password: String): Flow<EchogResult>
-    fun autoLogin(): Flow<EchogResult>
-    fun sendResetPasswordEmail(email: String): Flow<EchogResult>
+    fun login(email: String, password: String): Flow<EchogResult<String>>
+    fun autoLogin(): Flow<EchogResult<String>>
+    fun sendResetPasswordEmail(email: String): Flow<EchogResult<Boolean>>
+    fun logout(): Flow<EchogResult<Boolean>>
 }

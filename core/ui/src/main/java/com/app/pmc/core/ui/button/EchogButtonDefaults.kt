@@ -2,10 +2,12 @@ package com.app.pmc.core.ui.button
 
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
+import com.app.pmc.core.ui.theme.Action_PrimaryTonal
 import com.app.pmc.core.ui.theme.Black
 import com.app.pmc.core.ui.theme.ButtonDisableBackgroundColor
 import com.app.pmc.core.ui.theme.ButtonDisableContentColor
 import com.app.pmc.core.ui.theme.ButtonLabel600
+import com.app.pmc.core.ui.theme.Slate_100
 import com.app.pmc.core.ui.theme.White
 
 internal class EchogButtonDefaults(
@@ -21,6 +23,7 @@ internal class EchogButtonDefaults(
     companion object {
         fun fromType(buttonType: ButtonType): EchogButtonDefaults = when (buttonType) {
             ButtonType.Default -> defaultFillButtonDefaults()
+            ButtonType.Gray -> defaultGrayFillButtonDefaults()
         }
 
         private fun defaultFillButtonDefaults(): EchogButtonDefaults = EchogButtonDefaults(
@@ -33,9 +36,21 @@ internal class EchogButtonDefaults(
             contentColor = White,
             disabledContentColor = ButtonDisableContentColor
         )
+
+        private fun defaultGrayFillButtonDefaults(): EchogButtonDefaults = EchogButtonDefaults(
+            iconSize = 22,
+            minWidth = 64,
+            minHeight = 40,
+            textStyle = ButtonLabel600,
+            backgroundColor = Action_PrimaryTonal,
+            disabledBackgroundColor = ButtonDisableBackgroundColor,
+            contentColor = Black,
+            disabledContentColor = ButtonDisableContentColor
+        )
     }
 }
 
 enum class ButtonType {
-    Default
+    Default,
+    Gray
 }

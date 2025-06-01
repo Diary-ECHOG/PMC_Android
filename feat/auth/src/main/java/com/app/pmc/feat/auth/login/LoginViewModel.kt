@@ -1,7 +1,8 @@
 package com.app.pmc.feat.auth.login
 
 import androidx.lifecycle.ViewModel
-import com.app.pmc.core.model.EchogResult
+import com.app.pmc.core.model.ErrorResult
+import com.app.pmc.core.model.SuccessResult
 import com.app.pmc.core.usecase.LoginUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
@@ -23,8 +24,8 @@ class LoginViewModel @Inject constructor(
     fun login() = intent {
         loginUseCase(state.email, state.password).collectLatest { result ->
             when (result) {
-                is EchogResult.Success -> postSideEffect(LoginSideEffect.NavigateToMain)
-                is EchogResult.Error -> postSideEffect(LoginSideEffect.ShowToast(result.message.toString()))
+                is SuccessResult ->postSideEffect(LoginSideEffect.NavigateToMain)
+                is ErrorResult -> postSideEffect(LoginSideEffect.ShowToast(result.errorType.name))
             }
         }
     }

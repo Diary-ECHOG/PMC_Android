@@ -1,5 +1,7 @@
 package com.app.pmc.data.core
 
+import com.app.pmc.core.model.ErrorType
+
 sealed interface ApiResult<out T> {
     data class Success<T>(val data: T) : ApiResult<T>
 
@@ -9,10 +11,11 @@ sealed interface ApiResult<out T> {
             val message: String? = "unknown",
             val body: String? = "unknown"
         ) : Failure {
-            fun getErrorMessage(): String {
+            fun getError(): ErrorType {
                 return when(this.code) {
-                    403 -> "인증되지 않은 사용자입니다."
-                    else -> message ?: "Unknown error"
+                    401 -> ErrorType.UNAUTHORIZED
+                    403 -> ErrorType.FORBIDDEN
+                    else -> ErrorType.UNKNOWN
                 }
             }
         }

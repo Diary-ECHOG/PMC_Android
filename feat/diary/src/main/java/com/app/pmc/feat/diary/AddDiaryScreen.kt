@@ -42,6 +42,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.app.pmc.core.ui.R
 import com.app.pmc.core.ui.bottomsheet.EchogBottomSheet
 import com.app.pmc.core.ui.button.EchogButton
+import com.app.pmc.core.ui.dialog.EchogDialog
 import com.app.pmc.core.ui.textfield.EchogBasicTextField
 import com.app.pmc.core.ui.textfield.EchogNoLineTextField
 import com.app.pmc.core.util.LocalDateTimeExtension.toDiaryDate
@@ -53,15 +54,29 @@ import com.app.pmc.core.ui.theme.Slate_25
 import com.app.pmc.core.ui.theme.Slate_600
 import com.app.pmc.core.ui.theme.TextFieldBorderColor_UnFocused
 import org.orbitmvi.orbit.compose.collectAsState
+import org.orbitmvi.orbit.compose.collectSideEffect
 import java.time.LocalDateTime
 
 @Composable
 fun AddDiaryScreen(
     viewModel: AddDiaryViewModel = hiltViewModel(),
     popToBackStack: () -> Unit,
-    navigateToVote: () -> Unit
+    navigateToVote: () -> Unit,
+    navigateToLogin: () -> Unit,
 ) {
     val state = viewModel.collectAsState()
+    var isLoginDialogOpened by remember { mutableStateOf(false) }
+
+    viewModel.collectSideEffect {
+        when (it) {
+            is AddDiarySideEffect.PopToBackStack -> popToBackStack()
+            is AddDiarySideEffect.ShowLoginDialog -> {
+                isLoginDialogOpened = true
+            }
+
+            else -> {}
+        }
+    }
 
     AddDiaryScreen(
         state = state.value,
@@ -69,6 +84,7 @@ fun AddDiaryScreen(
         onBottomSheetTitleChanged = viewModel::onBottomSheetTitleChanged,
         navigateToVote = navigateToVote,
         popToBackStack = popToBackStack,
+        createDiary = viewModel::createDiary,
         toggleDuplicateSelection = viewModel::toggleDuplicateSelection,
         addVote = viewModel::addVote,
         addOption = viewModel::addOption,
@@ -76,6 +92,17 @@ fun AddDiaryScreen(
         onBottomSheetContentChanged = viewModel::onBottomSheetContentChanged,
         onTitleChange = viewModel::onTitleChange,
         onContentChange = viewModel::onContentChange
+    )
+
+    if (isLoginDialogOpened) EchogDialog(
+        title = stringResource(R.string.login_required_dialog_title),
+        message = stringResource(R.string.login_required_dialog_message),
+        confirmButtonLabel = stringResource(R.string.login_required_dialog_positive_button),
+        cancelButtonLabel = stringResource(R.string.login_required_dialog_negative_button),
+        onConfirm = { navigateToLogin() },
+        onCancel = {
+            //do nothing
+        }
     )
 }
 
@@ -90,6 +117,7 @@ fun AddDiaryScreen(
     onBottomSheetContentChanged: (String) -> Unit,
     onBottomSheetTitleChanged: (String) -> Unit,
     popToBackStack: () -> Unit,
+    createDiary: () -> Unit,
     addOption: () -> Unit,
     onSelectedCategory: (String) -> Unit,
     onTitleChange: (String) -> Unit,
@@ -102,7 +130,8 @@ fun AddDiaryScreen(
             topBar = {
                 Topbar(
                     state.date.toDiaryDate(),
-                    popToBackStack
+                    popToBackStack = popToBackStack,
+                    createDiary = createDiary,
                 )
             },
             bottomBar = {
@@ -203,11 +232,11 @@ private fun AddVoteBottomSheet(
                     )
                 }
                 item {
-                   SelectCategoryDropdown(
-                       selectedCategory = bottomSheetState.selectedCategory,
-                       onSelectedCategory = onSelectedCategory,
-                       categoryList = bottomSheetState.categoryList
-                   )
+                    SelectCategoryDropdown(
+                        selectedCategory = bottomSheetState.selectedCategory,
+                        onSelectedCategory = onSelectedCategory,
+                        categoryList = bottomSheetState.categoryList
+                    )
                 }
                 item {
                     Column(
@@ -304,9 +333,9 @@ private fun DuplicateSelectionCheckBox(
 
 @Composable
 private fun SelectCategoryDropdown(
-     selectedCategory: String,
-     categoryList: List<String>,
-     onSelectedCategory: (String) -> Unit
+    selectedCategory: String,
+    categoryList: List<String>,
+    onSelectedCategory: (String) -> Unit
 ) {
     var expanded by remember { mutableStateOf(false) }
 
@@ -360,7 +389,8 @@ private fun SelectCategoryDropdown(
 @Composable
 private fun Topbar(
     date: String,
-    popToBackStack: () -> Unit
+    popToBackStack: () -> Unit,
+    createDiary: () -> Unit = {},
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -381,7 +411,7 @@ private fun Topbar(
             text = date
         )
         IconButton(
-            onClick = popToBackStack,
+            onClick = createDiary,
         ) {
             Text(
                 color = Blue_500,
@@ -459,6 +489,7 @@ fun AddDiaryScreenPreview() {
         onSelectedCategory = {},
         onContentChange = {},
         onTitleChange = {},
+        createDiary = {},
         addOption = {},
         popToBackStack = {}
     )
